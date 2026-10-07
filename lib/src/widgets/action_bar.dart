@@ -2,26 +2,49 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
-/// The bottom action bar (C1 SheenActionBar): the total for the stay and one prominent action on glass, above the home
-/// indicator. The price is always the final price for the stay.
+/// A bottom bar on glass with a figure and one prominent action: a total and Book, a count and Continue.
+///
+/// When [value] changes, its digits roll ([SheenRollingDigits]). The bar keeps its text at the system size, as
+/// iOS tab, navigation and tool bars do, so it stays one bar at large text sizes.
+///
+/// ```dart
+/// SheenActionBar(
+///   value: '€ 1,240',
+///   caption: 'Total for 3 nights',
+///   actionLabel: 'Book',
+///   onAction: book,
+/// )
+/// ```
+///
+/// {@category Navigation}
 class SheenActionBar extends StatelessWidget {
+  /// A bar showing [value] and an [actionLabel] button.
   const SheenActionBar({
     super.key,
-    required this.price,
-    required this.action,
+    required this.value,
+    required this.actionLabel,
     required this.onAction,
     this.caption,
     this.loading = false,
     this.leading,
   });
 
-  final String price;
+  /// The figure, already formatted (a total, a count).
+  final String value;
+
+  /// A line under [value], such as "Total for 3 nights".
   final String? caption;
-  final String action;
+
+  /// The label of the action button.
+  final String actionLabel;
+
+  /// Called by the action button; null disables it.
   final VoidCallback? onAction;
+
+  /// Shows a spinner in the action button and ignores taps.
   final bool loading;
 
-  /// Replaces the price block (e.g. a hold timer or a note).
+  /// Replaces the value block (for example a countdown or a note).
   final Widget? leading;
 
   @override
@@ -45,12 +68,12 @@ class SheenActionBar extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // a new total rolls its digits (M07); a long one scales down rather than lose its last digits
+                        // a new value rolls its digits; a long one scales down rather than lose its last digits
                         FittedBox(
                           fit: BoxFit.scaleDown,
                           alignment: AlignmentDirectional.centerStart,
                           child: SheenRollingDigits(
-                            price,
+                            value,
                             style: t.type.sized(t.type.price, 18).copyWith(color: t.colors.text, height: 1.25),
                           ),
                         ),
@@ -65,7 +88,7 @@ class SheenActionBar extends StatelessWidget {
                     ),
               ),
               const SizedBox(width: 10),
-              SheenPrimaryButton(label: action, onPressed: onAction, loading: loading, height: 52),
+              SheenPrimaryButton(label: actionLabel, onPressed: onAction, loading: loading, height: 52),
             ],
           ),
         ),

@@ -2,9 +2,14 @@ import 'dart:math' as math;
 
 import 'package:flutter/widgets.dart';
 
-/// The ring spinner of the boards: a faint track with a bright quarter that turns (keeps turning with reduced
-/// motion, like the system spinner).
+/// A ring spinner: a faint track with a bright quarter that turns. Like the system spinner it keeps turning with
+/// Reduce Motion, since the turning is the message.
+///
+/// White by default, for prominent buttons; pass [color] elsewhere.
+///
+/// {@category Feedback}
 class SheenSpinner extends StatefulWidget {
+  /// A spinner [size] points across.
   const SheenSpinner({
     super.key,
     this.size = 18,
@@ -13,8 +18,13 @@ class SheenSpinner extends StatefulWidget {
     this.trackColor,
   });
 
+  /// The diameter in points.
   final double size;
+
+  /// The colour of the turning arc.
   final Color color;
+
+  /// The ring's stroke width.
   final double stroke;
 
   /// The ring under the arc; defaults to [color] at .35.

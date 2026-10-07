@@ -51,7 +51,7 @@ void main() {
               minimized: true,
               accessory: const SheenTabAccessory(
                 title: 'Room held',
-                subtitle: 'Palace Downtown',
+                subtitle: 'Hotel Aurora',
                 trailing: SheenCountdownPill(remaining: Duration(minutes: 12), semanticLabel: 'Room held'),
               ),
             ),
@@ -68,23 +68,23 @@ void main() {
           app(
             SheenToolbar(
               leading: SheenIconButton(icon: 'back', semanticLabel: 'Back', onTap: () {}),
-              center: SheenToolbarSummary(title: 'Dubai', subtitle: '20–22 Oct · 2 adults', onTap: () {}),
+              center: SheenToolbarSummary(title: 'Lisbon', subtitle: '20–22 Oct · 2 adults', onTap: () {}),
               trailing: SheenIconButton(icon: 'sliders', semanticLabel: 'Filters', onTap: () {}),
             ),
             scale,
           ),
         );
         expect(t.takeException(), isNull);
-        expect(fontOf(t, 'Dubai'), 15);
+        expect(fontOf(t, 'Lisbon'), 15);
       });
 
       testWidgets('action bar keeps its 72 pt', (t) async {
         await t.pumpWidget(
           app(
             SheenActionBar(
-              price: 'AED 2,770.80',
+              value: 'USD 2,770.80',
               caption: 'Total for 2 nights',
-              action: 'Choose a room',
+              actionLabel: 'Choose a room',
               onAction: () {},
             ),
             scale,
@@ -179,7 +179,7 @@ void main() {
           () => Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SheenPrimaryButton(label: 'Choose a room', subLabel: 'AED 2,770.80', expand: true, onPressed: () {}),
+              SheenPrimaryButton(label: 'Choose a room', subLabel: 'USD 2,770.80', expand: true, onPressed: () {}),
               SheenSecondaryButton(label: 'Pay with card', icon: 'card', onPressed: () {}),
               SheenFloatingButton(label: 'Map', icon: 'map', onPressed: () {}),
             ],

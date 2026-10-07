@@ -23,11 +23,11 @@ Widget app(
 
 Widget photo(BuildContext c, int i) => ColoredBox(color: Color(0xFF203040 + i * 0x101010));
 
-SheenHotelCard palace({int photos = 3, double scale = 1, VoidCallback? onTap, VoidCallback? onSave}) => SheenHotelCard(
-  name: 'Palace Downtown',
-  total: 'AED 1,448',
-  perNight: 'AED 724 a night',
-  headline: 'Downtown Dubai · 0.4 km to Dubai Mall',
+SheenHotelCard aurora({int photos = 3, double scale = 1, VoidCallback? onTap, VoidCallback? onSave}) => SheenHotelCard(
+  name: 'Hotel Aurora',
+  total: 'USD 1,448',
+  perNight: 'USD 724 a night',
+  headline: 'Baixa · 0.4 km to Rossio',
   score: '4.7',
   recommend: '98% recommend',
   board: 'Room only',
@@ -49,13 +49,13 @@ void main() {
       app(
         SizedBox(
           width: 358,
-          child: palace(onTap: () => opened++, onSave: () => saved++),
+          child: aurora(onTap: () => opened++, onSave: () => saved++),
         ),
       ),
     );
     expect(find.byType(PageView), findsOneWidget);
     expect(find.byType(SheenPagerDots), findsOneWidget);
-    expect(find.text('AED 1,448'), findsOneWidget);
+    expect(find.text('USD 1,448'), findsOneWidget);
     await t.tap(find.bySemanticsLabel('Save'));
     expect(saved, 1);
     expect(opened, 0);
@@ -65,11 +65,11 @@ void main() {
       find.ancestor(of: find.byType(SheenGlass).first, matching: find.byType(SheenPressable)).first,
     );
     expect(save.width, greaterThanOrEqualTo(44));
-    expect(find.bySemanticsLabel(RegExp('Palace Downtown, AED 1,448')), findsOneWidget);
+    expect(find.bySemanticsLabel(RegExp('Hotel Aurora, USD 1,448')), findsOneWidget);
   });
 
   testWidgets('SheenHotelCard: a swipe moves the active dot', (t) async {
-    await t.pumpWidget(app(SizedBox(width: 358, child: palace())));
+    await t.pumpWidget(app(SizedBox(width: 358, child: aurora())));
     expect(t.widget<SheenPagerDots>(find.byType(SheenPagerDots)).index, 0);
     await t.drag(find.byType(PageView), const Offset(-300, 0));
     await t.pumpAndSettle();
@@ -77,7 +77,7 @@ void main() {
   });
 
   testWidgets('SheenHotelCard: no photo shows the bed and the passed-in label, no pager', (t) async {
-    await t.pumpWidget(app(SizedBox(width: 358, child: palace(photos: 0))));
+    await t.pumpWidget(app(SizedBox(width: 358, child: aurora(photos: 0))));
     expect(find.byType(PageView), findsNothing);
     expect(find.text('No photo yet'), findsOneWidget);
     expect(
@@ -93,7 +93,7 @@ void main() {
           width: 358,
           child: SheenHotelCard(
             name: 'Hotel',
-            total: 'AED 900',
+            total: 'USD 900',
             photoCount: 1,
             photoBuilder: photo,
             noPhotoLabel: 'No photo yet',
@@ -110,12 +110,12 @@ void main() {
   });
 
   testWidgets('SheenHotelCard fits at text scale 2', (t) async {
-    await t.pumpWidget(app(SizedBox(width: 358, child: palace()), scale: 2));
+    await t.pumpWidget(app(SizedBox(width: 358, child: aurora()), scale: 2));
     expect(t.takeException(), isNull);
   });
 
   testWidgets('SheenHotelCard Save sits at the end edge and mirrors in RTL', (t) async {
-    await t.pumpWidget(app(SizedBox(width: 358, child: palace()), dir: TextDirection.rtl));
+    await t.pumpWidget(app(SizedBox(width: 358, child: aurora()), dir: TextDirection.rtl));
     final card = t.getRect(find.byType(SheenHotelCard));
     final save = t.getRect(find.bySemanticsLabel('Save'));
     expect(save.center.dx, lessThan(card.center.dx));
@@ -152,11 +152,11 @@ void main() {
     await t.pumpWidget(
       app(
         SheenPremiumCard(
-          name: 'Atlantis The Royal',
-          total: 'AED 6,120',
+          name: 'Hotel Mirador',
+          total: 'USD 6,120',
           nightsLabel: '2 nights',
           score: '4.8',
-          headline: 'Palm Jumeirah',
+          headline: 'Old Town',
           photo: const ColoredBox(color: Color(0xFF334455)),
           saveLabel: 'Save',
           onSave: () {},
@@ -167,7 +167,7 @@ void main() {
     expect(t.getSize(find.byType(SheenPremiumCard)).width, 232);
     expect(find.textContaining('2 nights', findRichText: true), findsOneWidget);
     expect(t.widget<SheenScoreBadge>(find.byType(SheenScoreBadge)).size, SheenScoreSize.small);
-    await t.tap(find.text('Palm Jumeirah'));
+    await t.tap(find.text('Old Town'));
     expect(n, 1);
   });
 
@@ -182,8 +182,8 @@ void main() {
               scrollDirection: Axis.horizontal,
               children: [
                 SheenPremiumCard(
-                  name: 'Atlantis, The Palm',
-                  total: 'AED 5,521.47',
+                  name: 'Hotel Mirador',
+                  total: 'USD 5,521.47',
                   nightsLabel: '2 nights',
                   score: '4.7',
                   headline: 'Near Lost Chambers Aquarium',
@@ -285,7 +285,7 @@ void main() {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SheenPriceBlock(total: 'AED 1,448', caption: 'Total for 2 nights', perNight: 'AED 724 a night'),
+              SheenPriceBlock(total: 'USD 1,448', caption: 'Total for 2 nights', perNight: 'USD 724 a night'),
               SheenCancellationLine(text: 'Free cancellation until 12 Oct', refundable: true),
               SheenCancellationLine(text: 'Non-refundable', refundable: false),
             ],
@@ -358,7 +358,7 @@ void main() {
               title: 'Currency',
               icon: 'card',
               iconColor: const Color(0xFF0090A8),
-              value: 'AED',
+              value: 'USD',
               onTap: () {},
             ),
             SheenListRow(
@@ -373,7 +373,7 @@ void main() {
       dir: d,
     );
     await t.pumpWidget(group(TextDirection.ltr));
-    expect(find.text('AED'), findsOneWidget);
+    expect(find.text('USD'), findsOneWidget);
     // The value and the chevron sit at the end edge, not after a half-width title.
     final row = t.getRect(find.byType(SheenListRow).at(1));
     expect(

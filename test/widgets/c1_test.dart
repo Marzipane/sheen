@@ -438,12 +438,12 @@ void main() {
         app(
           SheenToolbar(
             leading: SheenIconButton(icon: 'back', semanticLabel: 'Back', onTap: () {}),
-            center: SheenToolbarSummary(title: 'Dubai', subtitle: '20–22 Oct · 2 adults', onTap: () => opened++),
+            center: SheenToolbarSummary(title: 'Lisbon', subtitle: '20–22 Oct · 2 adults', onTap: () => opened++),
             trailing: SheenIconButton(icon: 'sliders', semanticLabel: 'Filters', onTap: () {}),
           ),
         ),
       );
-      await t.tap(find.text('Dubai'));
+      await t.tap(find.text('Lisbon'));
       expect(opened, 1);
       expect(find.text('20–22 Oct · 2 adults'), findsOneWidget);
     });
@@ -455,15 +455,15 @@ void main() {
           Align(
             alignment: Alignment.bottomCenter,
             child: SheenActionBar(
-              price: 'AED 2,770.80',
+              value: 'USD 2,770.80',
               caption: 'Total for 2 nights',
-              action: 'Choose a room',
+              actionLabel: 'Choose a room',
               onAction: () => n++,
             ),
           ),
         ),
       );
-      expect(find.bySemanticsLabel('AED 2,770.80'), findsOneWidget);
+      expect(find.bySemanticsLabel('USD 2,770.80'), findsOneWidget);
       expect(find.text('Total for 2 nights'), findsOneWidget);
       await t.tap(find.text('Choose a room'));
       expect(n, 1);

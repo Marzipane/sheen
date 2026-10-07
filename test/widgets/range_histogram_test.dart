@@ -27,7 +27,7 @@ Widget range(Range r, {TextDirection dir = TextDirection.ltr}) => app(
       onChangeEnd: (_) => r.ends++,
       lowLabel: 'Lowest total',
       highLabel: 'Highest total',
-      format: (v) => 'AED ${v.round()}',
+      format: (v) => 'USD ${v.round()}',
     ),
   ),
   dir: dir,
@@ -86,7 +86,7 @@ void main() {
     final r = Range()..v = const SheenRange(200, 800);
     await t.pumpWidget(range(r));
     final low = find.bySemanticsLabel('Lowest total');
-    expect(t.getSemantics(low).value, 'AED 200');
+    expect(t.getSemantics(low).value, 'USD 200');
     t.semantics.performAction(find.semantics.byLabel('Lowest total'), SemanticsAction.increase);
     await t.pumpAndSettle();
     expect(r.v.start, greaterThan(200));

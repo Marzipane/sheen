@@ -38,7 +38,7 @@ void main() {
     t,
   ) async {
     await t.runAsync(() async {
-      final pin = await renderSheenPickedPlacePin('The Dubai Mall', theme: SheenThemeData.dark(), pixelRatio: 3);
+      final pin = await renderSheenPickedPlacePin('Central Station', theme: SheenThemeData.dark(), pixelRatio: 3);
       final img = await decode(pin.png);
       // 30 pt capsule, 6 pt gap, a 16 pt dot in a 3 pt ring, 6 pt of shadow room above and below, at 3x
       expect(img.height, (30 + 6 + 16 + 6 + 12) * 3);
@@ -53,7 +53,7 @@ void main() {
       expect(at(pin.anchor), SheenThemeData.dark().colors.danger, reason: 'the anchor is the red dot');
       final long = await decode(
         (await renderSheenPickedPlacePin(
-          'Dubai International Airport Terminal 3 Arrivals Hall Concourse B',
+          'Lisbon Humberto Delgado Airport Terminal 1 Arrivals Hall Concourse B',
           theme: SheenThemeData.dark(),
         )).png,
       );

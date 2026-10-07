@@ -2,24 +2,30 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
-/// A soft fade under a floating bar instead of a bar background (C1 SheenScrollEdge, iOS 26+). Place it in a Stack
-/// at the top (under the toolbar) or the bottom (under the tab or action bar).
+/// A soft fade of the page background under a floating bar, where a classic app would draw a bar background (the iOS 26
+/// scroll edge effect). Place it in a `Stack` at the top (under a toolbar) or the bottom (under a tab or action bar).
 ///
-/// The CSS also blurs the backdrop under a feathered mask. A ShaderMask does not feather a BackdropFilter in
-/// Flutter (Impeller draws a hard edge where the blur ends, seen on the iPhone 17 Pro simulator, 3 Oct 2026), so
-/// only the tint gradient is drawn, denser than the CSS tint to stand in for the blur: with the CSS's .55 midpoint, text
-/// scrolled under a toolbar title stayed readable through it (Home, simulator, 3 Oct 2026).
+/// Only a gradient is drawn, no blur: Flutter cannot feather the edge of a backdrop blur (Impeller draws a hard edge
+/// where it ends), so the gradient is a little denser instead, which keeps text scrolled under a title readable.
+///
+/// {@category Layout}
 class SheenScrollEdge extends StatelessWidget {
+  /// A fade at the top of a `Stack`, [height] points tall.
   const SheenScrollEdge.top({super.key, required this.height}) : top = true;
+
+  /// A fade at the bottom of a `Stack`, [height] points tall.
   const SheenScrollEdge.bottom({super.key, required this.height}) : top = false;
 
+  /// The height of the fade.
   final double height;
+
+  /// Whether the fade sits at the top.
   final bool top;
 
   @override
   Widget build(BuildContext context) {
     final bg = context.sheen.colors.background;
-    // CSS tint (plus a 10/8 px blur): top bg .9 → .55 at 55 % → 0; bottom bg 0 → .6 at 45 % → .85. Without the blur:
+    // denser than a blurred edge would need, to stand in for the blur
     final colors = top
         ? [bg.withValues(alpha: .96), bg.withValues(alpha: .86), bg.withValues(alpha: 0)]
         : [bg.withValues(alpha: 0), bg.withValues(alpha: .72), bg.withValues(alpha: .94)];
