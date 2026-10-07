@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Analyze and test (Flutter ${{ matrix.name }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # the lowest Flutter the package supports (and the one the goldens and docs are made with), and the newest
+        include:
+          - name: '3.41.5'
+            version: '3.41.5'
+          - name: stable
+            version: ''
+    steps:
+      - uses: actions/checkout@v7
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ matrix.version }}
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Format
+        if: matrix.name != 'stable'
+        run: dart format --output=none --set-exit-if-changed lib test tool example/lib example/test
+      # on the newest Flutter, new deprecation notes are reported but do not fail the build; pana below is the gate
+      - run: flutter analyze ${{ matrix.name == 'stable' && '--no-fatal-infos' || '' }}
+      - name: Test (goldens run on macOS only)
+        run: flutter test
+      - name: Example
+        working-directory: example
+        run: |
+          flutter pub get
+          flutter analyze ${{ matrix.name == 'stable' && '--no-fatal-infos' || '' }}
+          flutter test
+      - name: API docs build without warnings
+        if: matrix.name != 'stable'
+        run: set -o pipefail; dart doc --output tool/out/api 2>&1 | tee doc.log && ! grep -q "warning:" doc.log
+      - name: llms.txt is up to date
+        if: matrix.name != 'stable'
+        run: dart run tool/gen_llms.dart && git diff --exit-code llms.txt
+
+  goldens:
+    name: Goldens (macOS)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.41.5'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter test test/goldens
+      - name: Keep the differences
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: golden-failures
+          path: test/goldens/failures/
+
+  package:
+    name: pub.dev score and dry run (newest Flutter, as pub.dev scores)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Publish dry run
+        run: flutter pub publish --dry-run
+      - name: pana gives 160 points
+        run: |
+          dart pub global activate pana
+          sudo apt-get install -y webp
+          cp -r . "$RUNNER_TEMP/sheen" && rm -rf "$RUNNER_TEMP/sheen/.dart_tool"
+          dart pub global run pana --no-warning --exit-code-threshold 0 "$RUNNER_TEMP/sheen"

@@ -1,0 +1,29 @@
+# Publishes to pub.dev when a version tag is pushed: git tag v0.1.1 && git push origin v0.1.1
+# The tag must match pubspec.yaml's version. pub.dev → sheen → Admin → Automated publishing must be enabled for
+# Marzipane/sheen with the tag pattern v{{version}}. The very first version is published by hand (dart pub publish).
+name: Publish to pub.dev
+
+on:
+  push:
+    tags: ['v[0-9]+.[0-9]+.[0-9]+*']
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # the OIDC token pub.dev accepts instead of a password
+    steps:
+      - uses: actions/checkout@v7
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.41.5'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: The tag matches the version
+        run: test "v$(grep -m1 '^version:' pubspec.yaml | awk '{print $2}')" = "${GITHUB_REF_NAME}"
+      - run: flutter analyze
+      - run: flutter test
+      # creates the short-lived pub.dev token from GitHub's OIDC token (PUB_TOKEN); after Flutter, so it is fresh
+      - uses: dart-lang/setup-dart@v1
+      - run: flutter pub publish --force

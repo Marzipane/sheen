@@ -153,7 +153,8 @@ takes it as a parameter.
 
 Issues and pull requests are welcome. Run `flutter analyze`, `flutter test` and, on macOS, the goldens in
 `test/goldens/` before sending a change. Icons are SVG files in `tool/icons/`; `dart run tool/gen_icons.dart`
-regenerates `SheenIcons`.
+regenerates `SheenIcons`. After changing public API docs, run `dart doc --output tool/out/api` and then
+`dart run tool/gen_llms.dart` to refresh [llms.txt](llms.txt), the one-page summary for AI coding assistants.
 
 ## License
 
