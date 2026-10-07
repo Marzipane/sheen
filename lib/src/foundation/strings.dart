@@ -129,12 +129,15 @@ class SheenStrings with Diagnosticable {
 /// strings for part of the tree.
 ///
 /// {@category Foundation}
-class SheenStringsScope extends InheritedWidget {
+class SheenStringsScope extends InheritedTheme {
   /// Provides [strings] to [child] and its descendants.
   const SheenStringsScope({super.key, required this.strings, required super.child});
 
   /// The strings for the subtree.
   final SheenStrings strings;
+
+  @override
+  Widget wrap(BuildContext context, Widget child) => SheenStringsScope(strings: strings, child: child);
 
   @override
   bool updateShouldNotify(SheenStringsScope oldWidget) => oldWidget.strings != strings;

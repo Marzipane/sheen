@@ -153,11 +153,12 @@ class SheenThemeData with Diagnosticable {
 
 /// Provides a [SheenThemeData] to the widgets below it.
 ///
-/// [SheenScope] places one for you, picking the light or dark theme. Use a [SheenTheme] directly to give part of a
+/// [SheenScope] places one for you, picking the light or dark theme. It is an `InheritedTheme`, so dialogs and sheets
+/// opened with `InheritedTheme.capture` (as sheen's own do) keep the theme of the screen that opened them. Use a [SheenTheme] directly to give part of a
 /// screen another look, for example a dark card on a light page.
 ///
 /// {@category Foundation}
-class SheenTheme extends InheritedWidget {
+class SheenTheme extends InheritedTheme {
   /// Provides [data] to [child] and its descendants.
   const SheenTheme({super.key, required this.data, required super.child});
 
@@ -168,6 +169,9 @@ class SheenTheme extends InheritedWidget {
   static SheenThemeData of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<SheenTheme>()?.data ??
       SheenThemeData.of(MediaQuery.maybePlatformBrightnessOf(context) ?? Brightness.light);
+
+  @override
+  Widget wrap(BuildContext context, Widget child) => SheenTheme(data: data, child: child);
 
   @override
   bool updateShouldNotify(SheenTheme oldWidget) => oldWidget.data != data;

@@ -1,29 +1,35 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sheen/sheen.dart';
+
 import '../helpers.dart';
 
-// Moved from motion_pieces_test until rolling digits and sheets are ported (Tasks 1.10, 1.11).
+Widget app(Widget child, {TextDirection dir = TextDirection.ltr}) => host(
+  Center(child: child),
+  brightness: Brightness.dark,
+  direction: dir,
+);
+
 void main() {
   group('SheenRollingDigits around a currency', () {
     testWidgets('only the number rolls; the currency stays one word', (t) async {
-      await t.pumpWidget(app(const SheenRollingDigits('AED 2,770.80', style: TextStyle(fontSize: 18))));
-      await t.pumpWidget(app(const SheenRollingDigits('AED 3,055.97', style: TextStyle(fontSize: 18))));
+      await t.pumpWidget(app(const SheenRollingDigits('USD 2,770.80', style: TextStyle(fontSize: 18))));
+      await t.pumpWidget(app(const SheenRollingDigits('USD 3,055.97', style: TextStyle(fontSize: 18))));
       await t.pump(const Duration(milliseconds: 100));
-      expect(find.text('AED '), findsOneWidget);
+      expect(find.text('USD '), findsOneWidget);
       expect(find.text('3'), findsOneWidget);
       expect(find.text('2'), findsOneWidget, reason: 'the old digit leaves while the new one comes');
       await t.pumpAndSettle();
       expect(find.text('2'), findsNothing);
-      expect(find.bySemanticsLabel('AED 3,055.97'), findsOneWidget);
+      expect(find.bySemanticsLabel('USD 3,055.97'), findsOneWidget);
     });
 
     testWidgets('in Arabic the currency sits left of the number, which still reads left to right', (t) async {
       await t.pumpWidget(
-        app(const SheenRollingDigits('2,770.80 د.إ', style: TextStyle(fontSize: 18)), dir: TextDirection.rtl),
+        app(const SheenRollingDigits('2,770.80 ر.س', style: TextStyle(fontSize: 18)), dir: TextDirection.rtl),
       );
-      final cur = t.getCenter(find.text(' د.إ')).dx;
+      final cur = t.getCenter(find.text(' ر.س')).dx;
       final xs = [
         for (final c in ['2', ',', '7', '.']) t.getCenter(find.text(c).first).dx,
       ];
@@ -33,9 +39,9 @@ void main() {
 
     testWidgets('Latin text in a right-to-left screen stays one left-to-right run', (t) async {
       await t.pumpWidget(
-        app(const SheenRollingDigits('AED 2,770.80', style: TextStyle(fontSize: 18)), dir: TextDirection.rtl),
+        app(const SheenRollingDigits('USD 2,770.80', style: TextStyle(fontSize: 18)), dir: TextDirection.rtl),
       );
-      expect(t.getCenter(find.text('AED ')).dx, lessThan(t.getCenter(find.text('2').first).dx));
+      expect(t.getCenter(find.text('USD ')).dx, lessThan(t.getCenter(find.text('2').first).dx));
     });
   });
 
@@ -49,8 +55,8 @@ void main() {
     await t.pumpWidget(
       app(
         Builder(
-          builder: (c) => TextButton(
-            onPressed: () => showSheenCustomSheet<void>(
+          builder: (c) => GestureDetector(
+            onTap: () => showSheenCustomSheet<void>(
               context: c,
               builder: (_, scroll) => ColoredBox(
                 color: const Color(0xFF223344),
@@ -74,4 +80,3 @@ void main() {
     expect(haptics, ['lightImpact']);
   });
 }
-
