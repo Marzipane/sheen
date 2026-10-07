@@ -24,6 +24,7 @@ export 'src/widgets/action_bar.dart';
 export 'src/widgets/alert.dart';
 export 'src/widgets/buttons.dart';
 export 'src/widgets/cards.dart';
+export 'src/widgets/choice.dart';
 export 'src/widgets/code_field.dart';
 export 'src/widgets/controls.dart';
 export 'src/widgets/date_range_calendar.dart';
