@@ -42,27 +42,58 @@ class _SheetsPageState extends State<SheetsPage> {
     });
   }
 
-  Future<void> _filters() => showSheenSheet<void>(
-    context: context,
-    title: 'Filters',
-    subtitle: '234 stays',
-    doneLabel: 'Done',
-    builder: (_, scroll) => ListView(
-      controller: scroll,
-      padding: const EdgeInsets.all(16),
-      children: [
-        SheenListGroup(
+  static const _bins = [2, 5, 9, 14, 22, 30, 26, 21, 17, 12, 9, 7, 5, 4, 3, 2, 2, 1];
+
+  Future<void> _filters() {
+    var sort = 0;
+    var price = const SheenRange(120, 640);
+    final on = {'Pool'};
+    return showSheenSheet<void>(
+      context: context,
+      title: 'Filters',
+      subtitle: '234 stays',
+      doneLabel: 'Done',
+      startLarge: false,
+      builder: (_, scroll) => StatefulBuilder(
+        builder: (context, setSheet) => ListView(
+          controller: scroll,
+          padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
           children: [
-            for (final f in ['Free cancellation', 'Breakfast', 'Pool', 'Sea view'])
-              SheenListRow(
-                title: f,
-                trailing: SheenSwitch(value: f == 'Pool', semanticLabel: f, onChanged: (_) {}),
-              ),
+            SheenSegmentedControl(
+              segments: const [SheenSegment('Price'), SheenSegment('Rating'), SheenSegment('Distance')],
+              index: sort,
+              onChanged: (i) => setSheet(() => sort = i),
+            ),
+            SheenSectionLabel('Price per night, € ${price.start.round()} to € ${price.end.round()}'),
+            SheenRangeHistogram(
+              bins: _bins,
+              min: 0,
+              max: 900,
+              values: price,
+              onChanged: (r) => setSheet(() => price = r),
+              lowLabel: 'Minimum price',
+              highLabel: 'Maximum price',
+              format: (v) => '€ ${v.round()}',
+            ),
+            const SheenSectionLabel('Stay'),
+            SheenListGroup(
+              children: [
+                for (final f in ['Free cancellation', 'Breakfast', 'Pool', 'Sea view'])
+                  SheenListRow(
+                    title: f,
+                    trailing: SheenSwitch(
+                      value: on.contains(f),
+                      semanticLabel: f,
+                      onChanged: (v) => setSheet(() => v ? on.add(f) : on.remove(f)),
+                    ),
+                  ),
+              ],
+            ),
           ],
         ),
-      ],
-    ),
-  );
+      ),
+    );
+  }
 
   Future<bool?> _alert() => showSheenAlert(
     context: context,

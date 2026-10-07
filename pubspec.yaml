@@ -1,6 +1,6 @@
 name: sheen
 description: >-
-  A glass design system for Flutter: frosted glass, spring motion, one-accent theming and 60+ widgets, with booking
+  A glass design system for Flutter: frosted glass, spring motion, one-accent theming and 80+ widgets, with booking
   widgets for travel apps.
 version: 0.1.0
 homepage: https://marzipane.github.io/sheen/
@@ -22,3 +22,25 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^6.0.0
   alchemist: ^0.14.0
+
+screenshots:
+  - description: Glass over a photo - a toolbar, a segmented control, buttons, chips, an action bar and the tab bar.
+    path: doc/screenshots/01-glass.webp
+  - description: The same screen in the dark theme with a pink accent; one colour recolours every control.
+    path: doc/screenshots/02-accent-dark.webp
+  - description: A sheet with a segmented control, a price range over a histogram and switches.
+    path: doc/screenshots/05-sheet.webp
+  - description: Text and password fields with an error, a search field, a one-time code, a stepper and a switch.
+    path: doc/screenshots/03-inputs.webp
+  - description: Chips, a segmented control with counts, a date-range calendar and a range over a histogram.
+    path: doc/screenshots/04-selection.webp
+  - description: A glass pull-down menu in the dark theme.
+    path: doc/screenshots/06-menu.webp
+  - description: Progress bars and rings, loading placeholders, banners, status pills and countdowns.
+    path: doc/screenshots/07-feedback.webp
+  - description: Grouped lists, a photo card, a card swiper and an accordion in the dark theme.
+    path: doc/screenshots/08-content.webp
+  - description: The travel library - a hotel card with price, score and cancellation, and its loading skeleton.
+    path: doc/screenshots/09-travel.webp
+  - description: The colour tokens and type styles of the dark theme.
+    path: doc/screenshots/10-foundation.webp

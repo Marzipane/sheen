@@ -1,6 +1,7 @@
 #!/bin/bash
 # Captures the pub.dev screenshots from the gallery on an iOS simulator (real blur, the system font).
-# Usage: tool/shoot.sh <simulator-udid>      Output: doc/screenshots/<name>.webp (and raw PNGs in doc/screenshots/raw/)
+# Usage: tool/shoot.sh <simulator-udid>   (ONLY="01-glass 05-sheet" retakes just those)
+#        Output: doc/screenshots/<name>.webp (and raw PNGs in doc/screenshots/raw/)
 set -euo pipefail
 SIM=${1:?simulator udid}
 APP=dev.sheen.sheenGallery
@@ -12,6 +13,7 @@ xcrun simctl status_bar "$SIM" override --time 9:41 --batteryState charged --bat
 
 shot() { # name, then KEY=VALUE dart-defines
   local name=$1; shift
+  if [[ -n "${ONLY:-}" && " $ONLY " != *" $name "* ]]; then return; fi
   local defines=()
   for d in "$@"; do defines+=("--dart-define=$d"); done
   (cd "$ROOT/example" && flutter build ios --simulator --debug "${defines[@]}" >/dev/null)

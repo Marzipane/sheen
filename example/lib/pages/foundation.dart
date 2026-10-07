@@ -40,29 +40,43 @@ class FoundationPage extends StatelessWidget {
       children: [
         Demo(
           title: 'Colours',
-          note: 'context.sheen.colors. Every text colour reads at 4.5:1 on the background and on surfaces.',
-          child: Gap(
-            children: [
-              for (final (name, color) in swatches)
-                SizedBox(
-                  width: 96,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: color,
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: c.separator),
-                        ),
+          note:
+              'context.sheen.colors. Text, secondary, tertiary and accent text read at 4.5:1 or better on the '
+              'background and on surfaces.',
+          // four swatches a row on a phone, more on wider windows, always filling the width
+          child: LayoutBuilder(
+            builder: (context, box) {
+              final perRow = (box.maxWidth / 96).floor().clamp(3, 8);
+              final width = (box.maxWidth - 10 * (perRow - 1)) / perRow;
+              return Gap(
+                children: [
+                  for (final (name, color) in swatches)
+                    SizedBox(
+                      width: width,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: color,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: c.separator),
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: t.type.caption.copyWith(color: c.textSecondary),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 4),
-                      Text(name, style: t.type.caption.copyWith(color: c.textSecondary)),
-                    ],
-                  ),
-                ),
-            ],
+                    ),
+                ],
+              );
+            },
           ),
         ),
         Demo(

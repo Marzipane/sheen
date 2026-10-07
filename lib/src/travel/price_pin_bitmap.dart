@@ -67,7 +67,7 @@ Future<Uint8List> renderSheenPricePin(
 }
 
 /// A place picked on a map as a marker bitmap: its name in a red capsule over a red dot with a white ring.
-/// [anchor] is the dot's centre as a fraction of the image, for the marker's anchor.
+/// The record's `anchor` is the dot's centre as a fraction of the image, for the marker's anchor.
 ///
 /// {@category Travel}
 Future<({Uint8List png, Offset anchor})> renderSheenPickedPlacePin(

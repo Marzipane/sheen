@@ -1,0 +1,27 @@
+dartdoc:
+  categories:
+    Foundation:
+      markdown: doc/foundation.md
+    Glass:
+      markdown: doc/glass.md
+    Motion:
+      markdown: doc/motion.md
+    Buttons:
+      markdown: doc/buttons.md
+    Navigation:
+      markdown: doc/navigation.md
+    Inputs:
+      markdown: doc/inputs.md
+    Selection:
+      markdown: doc/selection.md
+    Sheets:
+      markdown: doc/sheets.md
+    Feedback:
+      markdown: doc/feedback.md
+    Content:
+      markdown: doc/content.md
+    Layout:
+      markdown: doc/layout.md
+    Travel:
+      markdown: doc/travel.md
+  categoryOrder: [Foundation, Glass, Motion, Buttons, Navigation, Inputs, Selection, Sheets, Feedback, Content, Layout, Travel]

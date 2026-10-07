@@ -123,6 +123,8 @@ class _GlassShowcaseState extends State<GlassShowcase> {
                 const SizedBox(height: 14),
                 SheenChipRow(
                   padding: EdgeInsets.zero,
+                  // over a photo there is no page colour to fade into
+                  fadeEdges: false,
                   children: [
                     for (final c in ['Breakfast', 'Free cancellation', 'Pool', 'Sea view'])
                       SheenChip(

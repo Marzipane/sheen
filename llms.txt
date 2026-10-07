@@ -1,0 +1,200 @@
+# sheen
+
+> A glass design system for Flutter: frosted glass, spring motion, one-accent theming and 80+ widgets, with booking widgets for travel apps.
+
+Import `package:sheen/sheen.dart`, and `package:sheen/travel.dart` for the booking widgets. Put a `SheenScope` above your screens (in `MaterialApp.builder`, or around any app) and read the theme with `context.sheen`. Every widget builds on `package:flutter/widgets.dart`, so `MaterialApp`, `CupertinoApp` and `WidgetsApp` all work. Widgets that show words take them as parameters; the few defaults come from `SheenStrings`. Icon-only buttons require a `semanticLabel`.
+
+## Docs
+
+- [README](https://pub.dev/packages/sheen): install, quick start, theming and the widget list
+- [Example](https://pub.dev/packages/sheen/example): a small app with a page, a sheet, an alert and a toast
+- [API reference](https://pub.dev/documentation/sheen/latest/): every public name with its documentation
+
+## Foundation
+
+The theme and the tokens every widget reads. Put a `SheenScope` above your screens; read the theme with `context.sheen`.
+
+- [SheenColors](https://pub.dev/documentation/sheen/latest/sheen/SheenColors-class.html): The colours of a sheen theme, one set per brightness.
+- [SheenIcon](https://pub.dev/documentation/sheen/latest/sheen/SheenIcon-class.html): An icon from sheen's set, drawn from SVG paths on a 24 × 24 grid.
+- [SheenIcons](https://pub.dev/documentation/sheen/latest/sheen/SheenIcons-class.html): The names of the built-in icons, for SheenIcon.
+- [SheenOnPhoto](https://pub.dev/documentation/sheen/latest/sheen/SheenOnPhoto-class.html): Text and icons over photos: white with a soft shadow in both themes, because a photo's lower edge is always darkened behind them.
+- [SheenRadius](https://pub.dev/documentation/sheen/latest/sheen/SheenRadius-class.html): Corner radii. Capsules use height / 2; a nested corner uses the outer radius minus the inset.
+- [SheenScope](https://pub.dev/documentation/sheen/latest/sheen/SheenScope-class.html): The root of a sheen app or screen.
+- [SheenSpace](https://pub.dev/documentation/sheen/latest/sheen/SheenSpace-class.html): The 4 pt spacing grid.
+- [SheenStrings](https://pub.dev/documentation/sheen/latest/sheen/SheenStrings-class.html): The few words sheen widgets show or announce when you give them none: button labels such as Cancel and Done, and screen-reader labels such as "Clear" or "Show password".
+- [SheenStringsScope](https://pub.dev/documentation/sheen/latest/sheen/SheenStringsScope-class.html): Provides SheenStrings to the widgets below it. SheenScope places one; use it directly only to change the strings for part of the tree.
+- [SheenTheme](https://pub.dev/documentation/sheen/latest/sheen/SheenTheme-class.html): Provides a SheenThemeData to the widgets below it.
+- [SheenThemeContext](https://pub.dev/documentation/sheen/latest/sheen/SheenThemeContext.html): context.sheen: shorthand for SheenTheme.of.
+- [SheenThemeData](https://pub.dev/documentation/sheen/latest/sheen/SheenThemeData-class.html): The look of every sheen widget below a SheenTheme: brightness, colours, type and glass.
+- [SheenTint](https://pub.dev/documentation/sheen/latest/sheen/SheenTint-class.html): Tile colours behind list-row glyphs, the way iOS Settings marks each kind of row: a white glyph on a colour that names the row's kind. The same in both themes.
+- [SheenTone](https://pub.dev/documentation/sheen/latest/sheen/SheenTone.html): What a message means, which picks its colour: toasts, banners, status pills and status screens take a tone.
+- [SheenTracking](https://pub.dev/documentation/sheen/latest/sheen/SheenTracking-class.html): Apple's tracking for San Francisco by point size: the iOS table of the Human Interface Guidelines (Typography › Tracking values, read 2026-10-03).
+- [SheenType](https://pub.dev/documentation/sheen/latest/sheen/SheenType-class.html): The type scale of a sheen theme.
+
+## Glass
+
+`SheenGlass` draws frosted glass in Flutter: a backdrop blur with saturation, a body gradient, a rim, edge lines, a highlight and a shadow. Regular glass sits on bars and controls, clear glass over photos, prominent glass (the accent) on the one confirming action.
+
+- [SheenGlass](https://pub.dev/documentation/sheen/latest/sheen/SheenGlass-class.html): A frosted-glass surface, drawn in Flutter with no platform views and no shaders.
+- [SheenGlassStyle](https://pub.dev/documentation/sheen/latest/sheen/SheenGlassStyle-class.html): One glass recipe: a body gradient over a tint, a backdrop blur with saturation and brightness, a 1 px gradient rim, inner edge lines, a specular highlight and an outer shadow.
+- [SheenGlassStyles](https://pub.dev/documentation/sheen/latest/sheen/SheenGlassStyles-class.html): The glass recipes of a theme: regular, clear and prominent glass and the selection lens.
+- [SheenGlassVariant](https://pub.dev/documentation/sheen/latest/sheen/SheenGlassVariant.html): The three kinds of glass.
+- [SheenLens](https://pub.dev/documentation/sheen/latest/sheen/SheenLens-class.html): The lens that marks the selected tab or segment inside a glass capsule, drawn with the theme's SheenGlassStyles.lens.
+- [SheenLensStyle](https://pub.dev/documentation/sheen/latest/sheen/SheenLensStyle-class.html): The lens that marks a selected tab or segment.
+
+## Motion
+
+Springs written as Apple writes them (a duration and a bounce): `SheenMotion.press`, `snappy`, `smooth`, `gentle`, `celebrate`. `SheenPressable` gives every tap a 120 ms press; `SheenEntrance` brings content in once; `SheenRollingDigits` rolls changing numbers. With Reduce Motion everything fades instead.
+
+- [SheenEntrance](https://pub.dev/documentation/sheen/latest/sheen/SheenEntrance-class.html): A piece that arrives once, when it is first built (a screen's first content, results, a success view): after delay it fades in, rises rise points into place and grows from scaleFrom, on spring. Only opacity and transform move, so glass keeps its blur. It takes taps, and VoiceOver reads it, from its first frame: an entrance never makes anyone wait.
+- [SheenMotion](https://pub.dev/documentation/sheen/latest/sheen/SheenMotion-class.html): The springs and timings of sheen, written the way Apple writes them: a perceptual duration and a bounce.
+- [SheenMotionScope](https://pub.dev/documentation/sheen/latest/sheen/SheenMotionScope-class.html): Rebuilds everything that asked SheenMotion.reduced when the person turns Reduce Motion on or off while the app runs. SheenScope places one for you.
+- [SheenPhotoHero](https://pub.dev/documentation/sheen/latest/sheen/SheenPhotoHero-class.html): The photo you tapped becomes the next page's photo (like iOS's zoom transition): give the card's photo and the page's photo the same tag. In flight the card's photo shows (it is already loaded), its corners turning from the card's radius into the page's. With Reduce Motion there is no flight: the page changes as its route does.
+- [SheenPressable](https://pub.dev/documentation/sheen/latest/sheen/SheenPressable-class.html): Press feedback for anything tappable: 120 ms down to 0.97, then back on the press spring, so a tap answers within the 100 ms people perceive as instant.
+- [SheenRollingDigits](https://pub.dev/documentation/sheen/latest/sheen/SheenRollingDigits-class.html): Text whose changed digits roll, like iOS numeric text: the new digit rises into place while the old one leaves upward; unchanged characters stay still.
+
+## Buttons
+
+`SheenPrimaryButton` for the one main action, `SheenSecondaryButton` beside it, `SheenFloatingButton` over content, `SheenTextLink` for light actions, `SheenIconButton` and `SheenButtonGroup` on bars. Icon-only buttons require a label for screen readers.
+
+- [SheenButtonGroup](https://pub.dev/documentation/sheen/latest/sheen/SheenButtonGroup-class.html): Related toolbar buttons sharing one glass capsule, such as Share and Save (Apple's guidelines: group related items).
+- [SheenButtonGroupItem](https://pub.dev/documentation/sheen/latest/sheen/SheenButtonGroupItem-class.html): One button of a SheenButtonGroup.
+- [SheenFloatingButton](https://pub.dev/documentation/sheen/latest/sheen/SheenFloatingButton-class.html): A glass capsule that floats over content, such as a Map button over a list.
+- [SheenIconButton](https://pub.dev/documentation/sheen/latest/sheen/SheenIconButton-class.html): A 44-point glass circle with one glyph.
+- [SheenPrimaryButton](https://pub.dev/documentation/sheen/latest/sheen/SheenPrimaryButton-class.html): The one prominent action of a view: a capsule of accent-tinted glass with a SheenColors.onAccent label.
+- [SheenSecondaryButton](https://pub.dev/documentation/sheen/latest/sheen/SheenSecondaryButton-class.html): A second choice next to a primary action: a tonal capsule (SheenColors.surfaceMuted in light, white 8 % in dark), 48 points high, taller at large text sizes.
+- [SheenTextLink](https://pub.dev/documentation/sheen/latest/sheen/SheenTextLink-class.html): Accent-coloured text for a light action, such as "See all 9".
+
+## Navigation
+
+`SheenTabBar` is the floating tab bar of iOS 26, with a lens that follows your finger; `SheenTopTabBar` is its form for wide windows. `SheenToolbar` floats over content; `SheenActionBar` holds a total and its action; `SheenStepsLine` shows where a flow is.
+
+- [SheenActionBar](https://pub.dev/documentation/sheen/latest/sheen/SheenActionBar-class.html): A bottom bar on glass with a figure and one prominent action: a total and Book, a count and Continue.
+- [SheenBarBorder](https://pub.dev/documentation/sheen/latest/sheen/SheenBarBorder-class.html): The full tab bar's glass as one shape: the capsule and, gap after it, the search circle as tall as the shape.
+- [SheenSearchBar](https://pub.dev/documentation/sheen/latest/sheen/SheenSearchBar-class.html): The tab bar in search mode: the tab you came from as a circle and the search field. While the field has text, a button at its end clears it.
+- [SheenStepsLine](https://pub.dev/documentation/sheen/latest/sheen/SheenStepsLine-class.html): The steps of a flow, such as Room, Guests, Payment: a done step shows a check on the accent, the current one its number on the accent, the next ones their numbers on the track colour with muted labels. The joining lines turn accent once the step before is done.
+- [SheenTabAccessory](https://pub.dev/documentation/sheen/latest/sheen/SheenTabAccessory-class.html): The accessory of a minimized SheenTabBar: a thumbnail, a title and subtitle and a trailing value, such as a playing track or an item on hold with its countdown.
+- [SheenTabBar](https://pub.dev/documentation/sheen/latest/sheen/SheenTabBar-class.html): The floating tab bar of iOS 26 and later: the tabs on one glass capsule with the selected tab on a lens, and search as its own circle.
+- [SheenTabItem](https://pub.dev/documentation/sheen/latest/sheen/SheenTabItem-class.html): One tab of a SheenTabBar or SheenTopTabBar: a filled glyph and its label.
+- [SheenToolbar](https://pub.dev/documentation/sheen/latest/sheen/SheenToolbar-class.html): A floating toolbar row: leading, center and trailing, 10 points apart, with no bar behind them (pair it with SheenScrollEdge).
+- [SheenToolbarSummary](https://pub.dev/documentation/sheen/latest/sheen/SheenToolbarSummary-class.html): A tappable glass capsule that sums up a search or a filter ("Lisbon" over "20–22 Oct · 2 adults") and opens it for editing.
+- [SheenToolbarTitle](https://pub.dev/documentation/sheen/latest/sheen/SheenToolbarTitle-class.html): An inline toolbar title (17 points, semibold).
+- [SheenTopTabBar](https://pub.dev/documentation/sheen/latest/sheen/SheenTopTabBar-class.html): The tab bar of a wide window (iPadOS style): the tabs at the top centre, glyph and label side by side on one glass capsule with the selected tab on a lens, and, when onSearch is given, search as its own circle at the end.
+
+## Inputs
+
+`SheenTextField`, `SheenPasswordField`, `SheenSearchField` and `SheenCodeField` (one-time codes), plus `SheenSwitch`, `SheenSlider` and `SheenStepper`. The fields use Flutter's `TextField` and work under any app.
+
+- [SheenCodeField](https://pub.dev/documentation/sheen/latest/sheen/SheenCodeField-class.html): A one-time-code field: one box per digit, the next box ringed in the accent while the field has focus.
+- [SheenPasswordField](https://pub.dev/documentation/sheen/latest/sheen/SheenPasswordField-class.html): A password field: a SheenTextField whose text stays hidden until the person taps the eye button.
+- [SheenSearchField](https://pub.dev/documentation/sheen/latest/sheen/SheenSearchField-class.html): A search field in a glass capsule: the search glyph, the field and, while it has text, a clear button.
+- [SheenSlider](https://pub.dev/documentation/sheen/latest/sheen/SheenSlider-class.html): A slider: a thin track filled with the accent up to a white thumb.
+- [SheenStepper](https://pub.dev/documentation/sheen/latest/sheen/SheenStepper-class.html): Minus, value, plus: 36-point glass circles with a 44-point hit area; reaching min or max disables that side.
+- [SheenSwitch](https://pub.dev/documentation/sheen/latest/sheen/SheenSwitch-class.html): An iOS-style switch, 51 × 31 points, in the accent colour when on; the knob slides on the snappy spring.
+- [SheenTextField](https://pub.dev/documentation/sheen/latest/sheen/SheenTextField-class.html): A labelled text field: the label above, a 50-point field with 14-point corners and a hairline ring; focused, a 2-point accent ring; with an error, a red ring and the message under it.
+
+## Selection
+
+Chips in a `SheenChipRow`, a `SheenSegmentedControl`, a `SheenDateRangePicker` (any first day of the week), a `SheenRangeHistogram`, choice lists and sheets, a `SheenPullDownLink` and a glass menu (`showSheenMenu`).
+
+- [SheenChip](https://pub.dev/documentation/sheen/latest/sheen/SheenChip-class.html): A filter or sort chip: a 36-point capsule. Selected, it is inverted (text-coloured fill); unselected, it is glass. It can lead with a glyph, end with one (trailingIcon) and show a menu chevron (menu).
+- [SheenChipRow](https://pub.dev/documentation/sheen/latest/sheen/SheenChipRow-class.html): A row of chips that scrolls sideways and never wraps, its edges fading into the page only where more chips wait.
+- [SheenChoice](https://pub.dev/documentation/sheen/latest/sheen/SheenChoice-class.html): One choice of a SheenChoiceList: its value, how it reads, and a short tag before it (a currency's code).
+- [SheenChoiceList](https://pub.dev/documentation/sheen/latest/sheen/SheenChoiceList-class.html): A list of choices with the current one ticked, as showSheenChoiceSheet shows it; usable on its own in a page.
+- [SheenDateRangeCalendar](https://pub.dev/documentation/sheen/latest/sheen/SheenDateRangeCalendar-class.html): One month of a date-range picker: past days off, today in the accent, the range ends on prominent glass and the days between them on a band.
+- [SheenDateRangePicker](https://pub.dev/documentation/sheen/latest/sheen/SheenDateRangePicker-class.html): A date-range picker: a month header with previous and next arrows over a SheenDateRangeCalendar, a sideways swipe to change the month, and the usual range logic (pick): the first tap starts a range, a later day ends it, an earlier one starts again.
+- [SheenMenuItem](https://pub.dev/documentation/sheen/latest/sheen/SheenMenuItem-class.html): One item of a showSheenMenu menu.
+- [SheenPullDownLink](https://pub.dev/documentation/sheen/latest/sheen/SheenPullDownLink-class.html): A pull-down link: a short label in the accent colour with a chevron, such as "USD ▾" next to a list of prices, that opens a choice (usually showSheenChoiceSheet). A 44-point target.
+- [SheenRange](https://pub.dev/documentation/sheen/latest/sheen/SheenRange-class.html): A range of values, from start to end, for SheenRangeHistogram.
+- [SheenRangeHistogram](https://pub.dev/documentation/sheen/latest/sheen/SheenRangeHistogram-class.html): A range filter over a histogram, such as a price filter: bars show how the items spread over the values, and two knobs on their baseline pick a range; bars inside it are lit.
+- [SheenSegment](https://pub.dev/documentation/sheen/latest/sheen/SheenSegment-class.html): One segment of a SheenSegmentedControl, with an optional count line under the label (for example "Visa-free" over "126").
+- [SheenSegmentedControl](https://pub.dev/documentation/sheen/latest/sheen/SheenSegmentedControl-class.html): A segmented control on glass: 2 to 4 segments, the selected one on a lens that slides on the snappy spring.
+- [showSheenChoiceSheet](https://pub.dev/documentation/sheen/latest/sheen/showSheenChoiceSheet.html): Opens a sheet with a SheenChoiceList and returns the picked value, or null when the sheet is closed.
+- [showSheenMenu](https://pub.dev/documentation/sheen/latest/sheen/showSheenMenu.html): Opens a glass pull-down menu next to an anchor and returns the chosen item's value, or null when it is dismissed (a tap outside, Escape, the back gesture).
+
+## Sheets
+
+`showSheenSheet` opens a sheet with two heights, a grabber and a header; `showSheenCustomSheet` lets you draw the whole surface. `showSheenDateSheet` picks a date on wheels, `showSheenDocumentSheet` shows long text, and `SheenFormSheet` turns a page into a centred card on tablets.
+
+- [SheenDateOrder](https://pub.dev/documentation/sheen/latest/sheen/SheenDateOrder.html): The order of the wheels in showSheenDateSheet.
+- [SheenDateWheels](https://pub.dev/documentation/sheen/latest/sheen/SheenDateWheels-class.html): Day, month and year wheels, as showSheenDateSheet shows them; usable on their own in a page.
+- [SheenDetentHaptics](https://pub.dev/documentation/sheen/latest/sheen/SheenDetentHaptics-class.html): A light tap when a dragged sheet reaches one of its detents, as iOS sheets give; nothing while it opens.
+- [SheenFormSheet](https://pub.dev/documentation/sheen/latest/sheen/SheenFormSheet-class.html): A form page that becomes a centred card on wide windows.
+- [SheenNested](https://pub.dev/documentation/sheen/latest/sheen/SheenNested-class.html): Marks a subtree on a raised ground, such as a sheet: lists and fields inside it take SheenColors.surfaceMuted instead of SheenColors.surface, so they stay apart from the ground.
+- [SheenSheetBody](https://pub.dev/documentation/sheen/latest/sheen/SheenSheetBody-class.html): The surface of a sheet: the grabber, a header with a close button, the title and Done (or trailing), and the content, marked SheenNested. For showSheenCustomSheet.
+- [SheenSheetRoute](https://pub.dev/documentation/sheen/latest/sheen/SheenSheetRoute-class.html): The route behind showSheenSheet and showSheenCustomSheet, for apps that push routes themselves.
+- [showSheenCustomSheet](https://pub.dev/documentation/sheen/latest/sheen/showSheenCustomSheet.html): Opens a sheet whose whole surface builder draws, usually a SheenSheetBody whose header it controls itself (for example a Done button that waits for a valid choice). The presentation is that of showSheenSheet.
+- [showSheenDateSheet](https://pub.dev/documentation/sheen/latest/sheen/showSheenDateSheet.html): Opens a sheet with day, month and year wheels and returns the date shown when Done is tapped, or null when the sheet is closed.
+- [showSheenDocumentSheet](https://pub.dev/documentation/sheen/latest/sheen/showSheenDocumentSheet.html): Opens a long text, such as terms or a policy, in a large sheet with a close button.
+- [showSheenSheet](https://pub.dev/documentation/sheen/latest/sheen/showSheenSheet.html): Opens a sheet with a header: a grabber, a close button, the title and, when doneLabel is given, a prominent Done button. It has two heights (detents), medium and large (fractions of the screen), snaps between them and closes when dragged down or when the dim behind it is tapped.
+
+## Feedback
+
+Alerts, toasts, banners, status pills and screens, empty states, skeletons, progress bars and rings, spinners, countdowns, badges and a success check. Toasts and progress are announced to screen readers.
+
+- [SheenActionBanner](https://pub.dev/documentation/sheen/latest/sheen/SheenActionBanner-class.html): A banner in the flow of a page that tells about a change and offers one action: "Prices changed · Show".
+- [SheenAlert](https://pub.dev/documentation/sheen/latest/sheen/SheenAlert-class.html): The alert that showSheenAlert shows, for apps that present it themselves.
+- [SheenBadge](https://pub.dev/documentation/sheen/latest/sheen/SheenBadge-class.html): A count or a dot at the top-end corner of child, in red with white figures, as iOS badges are: unread messages, items in a cart.
+- [SheenCountdownPill](https://pub.dev/documentation/sheen/latest/sheen/SheenCountdownPill-class.html): A pill counting down time left, such as a hold, an offer or a one-time code: in the warning colour while time remains, red with one pulse in the last two minutes (warnAt), grey at 0:00.
+- [SheenEmptyState](https://pub.dev/documentation/sheen/latest/sheen/SheenEmptyState-class.html): An empty list or a dead end: a glyph in a glass circle, a title and your message. compact is the small form for sheets and side panes.
+- [SheenProgressBar](https://pub.dev/documentation/sheen/latest/sheen/SheenProgressBar-class.html): A thin progress bar: a track filled with the accent up to value, from the start edge.
+- [SheenProgressCapsule](https://pub.dev/documentation/sheen/latest/sheen/SheenProgressCapsule-class.html): A wait the user can see, such as "Checking live prices": a glass capsule with a spinner and a label, announced to screen readers as a live region.
+- [SheenProgressRing](https://pub.dev/documentation/sheen/latest/sheen/SheenProgressRing-class.html): A circular progress indicator: an arc in the accent over a faint ring, filled to value.
+- [SheenSkeleton](https://pub.dev/documentation/sheen/latest/sheen/SheenSkeleton-class.html): A placeholder block for content that is loading, swept by a soft highlight every 1.2 seconds; still with Reduce Motion. Without a width it fills the width it is given.
+- [SheenSpinner](https://pub.dev/documentation/sheen/latest/sheen/SheenSpinner-class.html): A ring spinner: a faint track with a bright quarter that turns. Like the system spinner it keeps turning with Reduce Motion, since the turning is the message.
+- [SheenStatusNotice](https://pub.dev/documentation/sheen/latest/sheen/SheenStatusNotice-class.html): A notice in a glass row with a glyph, such as "Payments are temporarily unavailable", with an optional action.
+- [SheenStatusPill](https://pub.dev/documentation/sheen/latest/sheen/SheenStatusPill-class.html): A small capsule that names a state, such as "Confirmed" or "Pending", in the colour of its tone.
+- [SheenStatusScreen](https://pub.dev/documentation/sheen/latest/sheen/SheenStatusScreen-class.html): A whole screen that explains a state the app is in: offline, under maintenance, an update needed, a section closed, a booking confirmed.
+- [SheenSuccessCheck](https://pub.dev/documentation/sheen/latest/sheen/SheenSuccessCheck-class.html): A filled check that springs in once with a success haptic, for a moment worth marking: a booking made, a payment done. With Reduce Motion it fades in instead.
+- [SheenSuggestionCard](https://pub.dev/documentation/sheen/latest/sheen/SheenSuggestionCard-class.html): A way out of an empty state ("Try instead"): a title, an optional line under it and a chevron.
+- [SheenToast](https://pub.dev/documentation/sheen/latest/sheen/SheenToast-class.html): A short message at the top of the screen, above every page, sheet and the keyboard: a glass capsule with a glyph in the colour of its SheenTone.
+- [showSheenAlert](https://pub.dev/documentation/sheen/latest/sheen/showSheenAlert.html): Shows a decision alert on glass and returns true for the primary action, false for the secondary and null when dismissed.
+
+## Content
+
+Cards, grouped lists with tinted glyph tiles, accordions, key-value cards, a card swiper, a photo pager, avatars, star ratings and score bars.
+
+- [SheenAccordion](https://pub.dev/documentation/sheen/latest/sheen/SheenAccordion-class.html): A question that opens to its answer: a card with the title and a chevron; a tap reveals child below.
+- [SheenAvatar](https://pub.dev/documentation/sheen/latest/sheen/SheenAvatar-class.html): A person's picture in a circle: the image when it loads, else their initials on a tint chosen by their name (always the same tint for the same name), else a person glyph.
+- [SheenCard](https://pub.dev/documentation/sheen/latest/sheen/SheenCard-class.html): A card: SheenColors.surface with 24-point corners and, in light, a soft two-layer shadow. Inside a sheet (SheenNested) it takes SheenColors.surfaceMuted and no shadow. It clips its child to its corners.
+- [SheenCardSwiper](https://pub.dev/documentation/sheen/latest/sheen/SheenCardSwiper-class.html): One card at a time from a list, changed by a sideways swipe: the next card slides in from the end of the line.
+- [SheenImagePlaceholder](https://pub.dev/documentation/sheen/latest/sheen/SheenImagePlaceholder-class.html): A stand-in for a missing photo: a soft gradient with a glyph and an optional label.
+- [SheenKeyValue](https://pub.dev/documentation/sheen/latest/sheen/SheenKeyValue-class.html): One row of a SheenKeyValueCard.
+- [SheenKeyValueCard](https://pub.dev/documentation/sheen/latest/sheen/SheenKeyValueCard-class.html): A card of label and value rows with hairlines between them, such as a booking's details or a receipt.
+- [SheenListGroup](https://pub.dev/documentation/sheen/latest/sheen/SheenListGroup-class.html): Inset grouped rows, as in iOS Settings: one rounded group with hairline separators between the rows.
+- [SheenListRow](https://pub.dev/documentation/sheen/latest/sheen/SheenListRow-class.html): One row of a SheenListGroup: an optional 30-point glyph tile in iconColor, the title with an optional subtitle under it, an optional value, then trailing (a switch) or, for a tappable row, a chevron that mirrors in right-to-left text. At least 50 points high.
+- [SheenPagerDots](https://pub.dev/documentation/sheen/latest/sheen/SheenPagerDots-class.html): Page dots over a photo: 6-point dots at half white, the current one a 16-point white pill. At most five dots show; with more pages the window follows the current page.
+- [SheenPhotoPager](https://pub.dev/documentation/sheen/latest/sheen/SheenPhotoPager-class.html): Swipeable photos with page dots at the bottom (dots only when there is more than one photo).
+- [SheenSaveButton](https://pub.dev/documentation/sheen/latest/sheen/SheenSaveButton-class.html): A save (heart) button for photos: a clear glass circle with a white heart, filled once saved; size points across with a 44-point hit area. Off a photo (onPhoto false) the heart takes the text colour.
+- [SheenScoreBar](https://pub.dev/documentation/sheen/latest/sheen/SheenScoreBar-class.html): A sub-score: the label and value on one line and a 6-point bar below it, filled to fraction.
+- [SheenStarRating](https://pub.dev/documentation/sheen/latest/sheen/SheenStarRating-class.html): A star class: count filled stars in the rating colour, read as one label.
+
+## Layout
+
+`SheenPage` is a full page with a large title that collapses into the toolbar; `SheenSectionLabel` and `SheenSectionNote` frame groups; `SheenScrollEdge` and `SheenEdgeFade` soften edges; `SheenLayout` gives the readable width and the wide-window breakpoints.
+
+- [SheenEdgeFade](https://pub.dev/documentation/sheen/latest/sheen/SheenEdgeFade-class.html): Fades the start and end edges of a horizontal child into color over width points, to say that it scrolls on. Use it around any sideways list on a plain background; SheenChipRow does.
+- [SheenLayout](https://pub.dev/documentation/sheen/latest/sheen/SheenLayout-class.html): Widths for larger windows (tablets, desktop, the web).
+- [SheenLayoutContext](https://pub.dev/documentation/sheen/latest/sheen/SheenLayoutContext.html): context.contentInset: the side inset of a readable column in this window.
+- [SheenPage](https://pub.dev/documentation/sheen/latest/sheen/SheenPage-class.html): A full-screen page with an iOS-style large title.
+- [SheenScrollEdge](https://pub.dev/documentation/sheen/latest/sheen/SheenScrollEdge-class.html): A soft fade of the page background under a floating bar, where a classic app would draw a bar background (the iOS 26 scroll edge effect). Place it in a Stack at the top (under a toolbar) or the bottom (under a tab or action bar).
+- [SheenSectionLabel](https://pub.dev/documentation/sheen/latest/sheen/SheenSectionLabel-class.html): A small upper-case label over a group of rows, such as "PERSONAL DETAILS"; a header for screen readers.
+- [SheenSectionNote](https://pub.dev/documentation/sheen/latest/sheen/SheenSectionNote-class.html): A note under a group of rows: one or two lines in the secondary text colour.
+
+## Travel
+
+Hotel cards (and their loading skeleton), featured cards, city tiles with the visa rule, price blocks, cancellation lines, score badges and map price pins, as widgets and as bitmaps for native map markers. Prices and words are always yours.
+
+- [SheenCancellationLine](https://pub.dev/documentation/sheen/latest/travel/SheenCancellationLine-class.html): The cancellation terms in one line: a check in the success colour with free-cancellation text, or a crossed circle with non-refundable text.
+- [SheenCityTile](https://pub.dev/documentation/sheen/latest/travel/SheenCityTile-class.html): A destination: a city photo with a darkened foot, the name and distance, and the visa rule with its coloured dot. Without a photo it is a plain card with the same text.
+- [SheenHotelCard](https://pub.dev/documentation/sheen/latest/travel/SheenHotelCard-class.html): A hotel in a list of results: a photo pager with Save; the name and the total; a headline and the price per night; the score, a recommendation share and the board; the cancellation line.
+- [SheenHotelCardSkeleton](https://pub.dev/documentation/sheen/latest/travel/SheenHotelCardSkeleton-class.html): A SheenHotelCard while results load: a photo block, name and price bars and two text lines, shimmering (still with Reduce Motion).
+- [SheenPremiumCard](https://pub.dev/documentation/sheen/latest/travel/SheenPremiumCard-class.html): A card for a carousel of featured stays: a photo with Save, the name, score and headline, and the total with a nights label. 232 points wide by default; heightFor gives the row height for a text size.
+- [SheenPriceBlock](https://pub.dev/documentation/sheen/latest/travel/SheenPriceBlock-class.html): A price with the total first and the price per night second. All strings arrive formatted, in the user's currency.
+- [SheenPricePin](https://pub.dev/documentation/sheen/latest/travel/SheenPricePin-class.html): A price on a map drawn by Flutter: a 30-point glass capsule; selected, a 34-point prominent one. For native map markers, use renderSheenPricePin.
+- [SheenScoreBadge](https://pub.dev/documentation/sheen/latest/travel/SheenScoreBadge-class.html): A guest score on the accent colour in tabular figures, such as "9.1". Its text grows with the user's text size up to 1.3 times, so the badge stays a badge.
+- [SheenScoreSize](https://pub.dev/documentation/sheen/latest/travel/SheenScoreSize.html): The sizes of a SheenScoreBadge.
+- [SheenVisaKind](https://pub.dev/documentation/sheen/latest/travel/SheenVisaKind.html): How a destination's visa rule reads for a passport; it picks the colour of the rule's dot on a SheenCityTile.
+- [renderSheenPickedPlacePin](https://pub.dev/documentation/sheen/latest/travel/renderSheenPickedPlacePin.html): A place picked on a map as a marker bitmap: its name in a red capsule over a red dot with a white ring. The record's anchor is the dot's centre as a fraction of the image, for the marker's anchor.
+- [renderSheenPlacePin](https://pub.dev/documentation/sheen/latest/travel/renderSheenPlacePin.html): A place marker for a native map, as PNG bytes (Google Maps and Apple Maps draw markers from bitmaps, not widgets): a 34-point circle in the accent colour with a white icon glyph, a thin rim and a soft shadow, drawn pixelRatio times the logical size. Give the marker the same ratio and anchor it at the centre.
+- [renderSheenPricePin](https://pub.dev/documentation/sheen/latest/travel/renderSheenPricePin.html): A SheenPricePin drawn as a PNG for a native map's marker (Google Maps draws markers from bitmaps, not widgets): the same capsule, label and sizes, with the glass approximated by its tint and rim, and a soft shadow around it. The image is pixelRatio times the logical size; give the marker the same ratio. Text grows with textScale up to 1.5, as the widget's does.
