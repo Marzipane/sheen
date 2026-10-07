@@ -89,7 +89,7 @@ class SheenPrimaryButton extends StatelessWidget {
               ),
             ),
           ),
-          // Pressed: CSS filter brightness(.82) on the fill.
+          // pressed: the fill darkened to 82 %
           if (pressed)
             const Positioned.fill(
               child: DecoratedBox(

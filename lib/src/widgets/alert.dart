@@ -95,7 +95,7 @@ class SheenAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = context.sheen;
-    // D19: actions stack, each at least 48 pt and growing with the text; the title and message scroll when the user's
+    // actions stack, each at least 48 pt and growing with the text; the title and message scroll when the user's
     // text size makes the alert taller than the screen, so the actions stay reachable.
     Widget action(String label, VoidCallback? onTap, bool primary) {
       final text = Padding(

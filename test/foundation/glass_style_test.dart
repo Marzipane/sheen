@@ -12,7 +12,7 @@ void main() {
     expect(SheenGlassStyles.dark(accent: pink).prominent.shadows.first.color, pink.withValues(alpha: .22));
   });
 
-  test('the default recipes are the approved ones', () {
+  test('the default recipes keep their values', () {
     expect(SheenGlassStyles.dark().regular.blur, 18);
     expect(SheenGlassStyles.light().regular.blur, 14);
     expect(SheenGlassStyles.light().clear.tint, const Color.fromRGBO(0, 0, 0, .2));

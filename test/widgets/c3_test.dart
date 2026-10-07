@@ -312,7 +312,7 @@ void main() {
     expect(guests.flagsCollection.isSelected, Tristate.isTrue);
   });
 
-  testWidgets('SheenStepsLine lights the lines up to the current step, as the boards do', (t) async {
+  testWidgets('SheenStepsLine lights the lines up to the current step', (t) async {
     Color lineColor(WidgetTester t, int i) {
       final lines = t.widgetList<Container>(
         find.descendant(
@@ -423,7 +423,7 @@ void main() {
     expect(n, 1);
   });
 
-  testWidgets('SheenListGroup: s1 on the page ground as cards, s2 inside a sheet, or the colour it is given', (
+  testWidgets('SheenListGroup: the surface on the page, the muted surface inside a sheet, or the colour it is given', (
     t,
   ) async {
     final light = SheenThemeData.of(Brightness.light).colors;

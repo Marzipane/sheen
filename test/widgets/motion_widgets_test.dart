@@ -45,7 +45,7 @@ void main() {
     });
   });
 
-  testWidgets('a sheet dragged to a detent gives a light tap, not while it opens (M04)', (t) async {
+  testWidgets('a sheet dragged to a detent gives a light tap, not while it opens', (t) async {
     final haptics = <String>[];
     t.binding.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform, (call) async {
       if (call.method == 'HapticFeedback.vibrate') haptics.add('${call.arguments}'.split('.').last);

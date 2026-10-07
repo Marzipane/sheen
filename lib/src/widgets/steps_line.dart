@@ -99,7 +99,7 @@ class SheenStepsLine extends StatelessWidget {
           child: Container(
             height: 2,
             margin: const EdgeInsets.symmetric(horizontal: _gap),
-            // the line into the current step is lit too (boards D10, D11)
+            // the line into the current step is lit too
             decoration: BoxDecoration(
               color: i <= current ? t.colors.accentText : t.colors.track,
               borderRadius: BorderRadius.circular(1),

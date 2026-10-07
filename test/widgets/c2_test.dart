@@ -240,7 +240,7 @@ void main() {
     expect((track.decoration as ShapeDecoration).color, SheenThemeData.dark().colors.surfaceMuted);
   });
 
-  testWidgets('SheenTextField: the field is s1 on the page ground and s2 inside a sheet', (t) async {
+  testWidgets('SheenTextField: the field is the surface on the page and the muted surface inside a sheet', (t) async {
     Color ground() =>
         ((t
                     .widget<Container>(

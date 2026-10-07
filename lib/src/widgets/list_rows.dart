@@ -17,13 +17,13 @@ class SheenListGroup extends StatelessWidget {
   /// The rows.
   final List<Widget> children;
 
-  /// The group's ground; by default s1 on the page ground (as cards) and s2 inside a sheet ([SheenNested]).
+  /// The group's ground; by default [SheenColors.surface] on the page (as cards) and [SheenColors.surfaceMuted] inside a sheet ([SheenNested]).
   final Color? color;
 
   @override
   Widget build(BuildContext context) {
     final sep = context.sheen.colors.separator;
-    // SheenCard picks the level's surface (s1 on the page, s2 flat inside a sheet)
+    // SheenCard picks the level's surface (the surface on the page, the muted surface flat inside a sheet)
     return SheenCard(
       color: color,
       radius: 20,

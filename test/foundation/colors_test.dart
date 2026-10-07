@@ -10,7 +10,7 @@ double contrast(Color a, Color b) {
 }
 
 void main() {
-  test('the default palettes keep the approved values', () {
+  test('the default palettes keep their values', () {
     expect(SheenColors.light().accent, const Color(0xFF0A5FE0));
     expect(SheenColors.dark().accent, const Color(0xFF1F6FEB));
     expect(SheenColors.dark().accentText, const Color(0xFF6AA8FF));

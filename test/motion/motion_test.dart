@@ -13,7 +13,7 @@ double settle(SpringDescription s) {
 }
 
 void main() {
-  test('springs settle like the shared design tokens (motion/springs.py)', () {
+  test('springs settle at their documented times', () {
     expect(settle(SheenMotion.press), closeTo(0.337, 0.003));
     expect(settle(SheenMotion.snappy), closeTo(0.385, 0.003));
     expect(settle(SheenMotion.smooth), closeTo(0.607, 0.003));

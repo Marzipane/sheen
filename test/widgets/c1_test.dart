@@ -64,7 +64,7 @@ void main() {
     });
 
     testWidgets(
-      'a wide window: the tabs at the top with their labels, the lens on the selected one, search beside (I01)',
+      'a wide window: the tabs at the top with their labels, the lens on the selected one, search beside',
       (t) async {
         final picked = <String>[];
         await t.pumpWidget(
@@ -122,7 +122,7 @@ void main() {
     });
 
     testWidgets(
-      'the capsule is as tall as search and the lens sits inside it 4 pt all round; lifted, it stays centred (owner 5 Oct)',
+      'the capsule is as tall as search and the lens sits inside it 4 pt all round; lifted, it stays centred',
       (t) async {
         await t.pumpWidget(app(bar(index: 2)));
         await t.pumpAndSettle();
@@ -160,7 +160,7 @@ void main() {
       expect(t.getCenter(find.byType(SheenLens)).dx, closeTo(t.getCenter(find.text('Home')).dx, 2));
     });
 
-    group('press and slide (U01)', () {
+    group('press and slide', () {
       late List<MethodCall> calls;
       setUp(() => calls = []);
       int ticks() => calls.where((c) => c.method == 'HapticFeedback.vibrate').length;
@@ -209,7 +209,7 @@ void main() {
       );
 
       testWidgets(
-        'pressed, the bar\'s glass swells past 62 pt and runs into the search circle (owner 5 Oct, Telegram)',
+        'pressed, the bar\'s glass swells past 62 pt and runs into the search circle',
         (t) async {
           await t.pumpWidget(app(bar()));
           final glass = find.byKey(const ValueKey('tab-bar-glass'));
@@ -227,12 +227,12 @@ void main() {
           expect(
             t.widget<Transform>(find.byKey(const ValueKey('tab-bar-elevation'))).transform.getMaxScaleOnAxis(),
             closeTo(1.09, .01),
-            reason: 'the whole bar rises off the page (owner 5 Oct, the iOS Fitness bar)',
+            reason: 'the whole bar rises off the page',
           );
           expect(
             t.getSize(lifted).height,
             greaterThan(SheenTabBar.height * 1.3),
-            reason: 'the lens well past the bar, as Telegram\'s',
+            reason: 'the lens well past the bar, as in iOS 26',
           );
           await g.up();
           await t.pumpAndSettle();
@@ -596,7 +596,7 @@ void main() {
       );
       await t.tap(find.text('open'));
       await t.pumpAndSettle();
-      // D19: the actions stack, primary above secondary, each 48 pt high.
+      // the actions stack, primary above secondary, each 48 pt high.
       final book = t.getRect(find.ancestor(of: find.text('Book Again'), matching: find.byType(SheenPressable)));
       final back = t.getRect(find.ancestor(of: find.text('Go Back'), matching: find.byType(SheenPressable)));
       expect(book.bottom, lessThanOrEqualTo(back.top));

@@ -34,7 +34,7 @@ void main() {
     });
   });
 
-  testWidgets('W03 the picked place as a PNG: its name over a red dot, anchored on the dot; a long name is cut', (
+  testWidgets('the picked place as a PNG: its name over a red dot, anchored on the dot; a long name is cut', (
     t,
   ) async {
     await t.runAsync(() async {

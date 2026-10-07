@@ -37,7 +37,7 @@ void main() {
     });
   });
 
-  group('styles are the approved CSS values', () {
+  group('the glass recipes keep their values', () {
     test('dark regular is the matte glass', () {
       final g = SheenGlassStyles.dark().regular;
       expect(g.blur, 18);

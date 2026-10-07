@@ -145,11 +145,11 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
   static const double _slop = 6, _reach = 44;
   static const double _zoom = 1.22, _swell = .06;
 
-  /// Lifted: the lens' extra height and width (Telegram's is about 1.35 x the bar), and how far the bar's glass grows
+  /// Lifted: the lens' extra height and width (about 1.35 times the bar), and how far the bar's glass grows
   /// out on each side and closes the gap to the search circle.
   static const double _lensTaller = 30, _lensWider = .28, _barOutX = 1, _barOutY = 1;
 
-  /// Lifted, the whole bar rises off the page (owner 5 Oct, the iOS Fitness bar: about 10 % taller and wider): it grows
+  /// Lifted, the whole bar rises off the page (like the iOS Fitness bar: about 10 % taller and wider): it grows
   /// 9 % about its centre, its glass 1 pt more on each side, and its shadow deepens.
   static const double _elevate = .09;
 
@@ -450,7 +450,7 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
               animation: Listenable.merge([_lens, _stretch, _lift]),
               builder: (context, _) {
                 final lifted = _lift.value > .01;
-                // pressed, the glass swells and runs into the search circle (Telegram); not with reduced motion
+                // pressed, the glass swells and runs into the search circle; not with reduced motion
                 final out = _reduced || _lift.value < .01 ? 0.0 : _lift.value.clamp(0.0, 1.0);
                 // the circle grows with the glass' height, so the gap closes by twice that growth
                 final shape = SheenBarBorder(gap: SheenTabBar.gap - 2 * _barOutY * out, merge: out);
@@ -643,7 +643,7 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
   }
 }
 
-/// A tab's glyph (with its badge) over its label, in [color]; [dip] scales the glyph (M03), [fringe] adds the slight
+/// A tab's glyph (with its badge) over its label, in [color]; [dip] scales the glyph, [fringe] adds the slight
 /// colour fringe a zooming lens gives its glyph.
 Widget _face(BuildContext context, SheenTabItem item, Color color, {Animation<double>? dip, bool fringe = false}) {
   final t = context.sheen;
@@ -717,7 +717,7 @@ class _TabState extends State<_Tab> with SingleTickerProviderStateMixin {
   void didUpdateWidget(_Tab old) {
     super.didUpdateWidget(old);
     if (widget.selected && !old.selected && !widget.reduced) {
-      // The new icon dips to 86 % and springs back (M03).
+      // The new icon dips to 86 % and springs back.
       _dip.animateTo(.86, duration: const Duration(milliseconds: 80), curve: SheenMotion.easeOut).then((_) {
         if (mounted) _dip.animateWith(SpringSimulation(SheenMotion.snappy, _dip.value, 1, 0));
       });

@@ -433,7 +433,7 @@ class SheenCountdownPill extends StatefulWidget {
   /// What a screen reader says before the time, such as "Room held for".
   final String semanticLabel;
 
-  /// Under this the hold is nearly over: the pill turns red and pulses once (M07).
+  /// Under this the hold is nearly over: the pill turns red and pulses once.
   static const Duration warnAt = Duration(minutes: 2);
 
   /// The time as minutes and seconds, m:ss (an hour and a quarter is 75:00).
@@ -447,7 +447,7 @@ class SheenCountdownPill extends StatefulWidget {
 }
 
 class _HoldTimerPillState extends State<SheenCountdownPill> with TickerProviderStateMixin {
-  // one pulse when the hold crosses 2:00; three shakes of 4 pt when it runs out (M09)
+  // one pulse when the hold crosses 2:00; three shakes of 4 pt when it runs out
   late final AnimationController _pulse = AnimationController(vsync: this, duration: SheenMotion.snappySettle);
   late final AnimationController _shake = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
 
