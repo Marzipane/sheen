@@ -151,8 +151,10 @@ takes it as a parameter.
 
 ## Contributing
 
-Issues and pull requests are welcome. Run `flutter analyze`, `flutter test` and, on macOS, the goldens in
-`test/goldens/` before sending a change. Icons are SVG files in `tool/icons/`; `dart run tool/gen_icons.dart`
+Issues and pull requests are welcome. Run `flutter analyze` and `flutter test` before sending a change. After a visual
+change, run `flutter test --update-goldens test/goldens` and look at the images: `goldens/ci/` (text drawn as blocks,
+checked in CI) and, on macOS, `goldens/macos/` (real text; antialiasing differs between macOS versions, so CI does not
+compare them). Icons are SVG files in `tool/icons/`; `dart run tool/gen_icons.dart`
 regenerates `SheenIcons`. After changing public API docs, run `dart doc --output tool/out/api` and then
 `dart run tool/gen_llms.dart` to refresh [llms.txt](llms.txt), the one-page summary for AI coding assistants.
 

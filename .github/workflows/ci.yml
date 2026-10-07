@@ -35,8 +35,15 @@ jobs:
         run: dart format --output=none --set-exit-if-changed lib test tool example/lib example/test
       # on the newest Flutter, new deprecation notes are reported but do not fail the build; pana below is the gate
       - run: flutter analyze ${{ matrix.name == 'stable' && '--no-fatal-infos' || '' }}
-      - name: Test (goldens run on macOS only)
-        run: flutter test
+      # CI goldens (text as blocks) are made with 3.41.5; a newer engine may draw a pixel differently
+      - name: Test
+        run: flutter test ${{ matrix.name == 'stable' && '--exclude-tags golden' || '' }}
+      - name: Keep the golden differences
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: golden-failures-${{ matrix.name }}
+          path: test/goldens/failures/
       - name: Example
         working-directory: example
         run: |
@@ -49,25 +56,6 @@ jobs:
       - name: llms.txt is up to date
         if: matrix.name != 'stable'
         run: dart run tool/gen_llms.dart && git diff --exit-code llms.txt
-
-  goldens:
-    name: Goldens (macOS)
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.41.5'
-          channel: stable
-          cache: true
-      - run: flutter pub get
-      - run: flutter test test/goldens
-      - name: Keep the differences
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          name: golden-failures
-          path: test/goldens/failures/
 
   package:
     name: pub.dev score and dry run (newest Flutter, as pub.dev scores)

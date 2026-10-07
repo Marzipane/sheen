@@ -7,3 +7,12 @@ linter:
   rules:
     prefer_const_constructors: true
     prefer_single_quotes: true
+
+# what newer Flutter tools add on their own (and would leave as an uncommitted change)
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - macos/**
