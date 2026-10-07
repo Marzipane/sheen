@@ -13,6 +13,8 @@ Widget host(
 }) => WidgetsApp(
   color: const Color(0xFF000000),
   debugShowCheckedModeBanner: false,
+  // WidgetsApp, unlike MaterialApp and CupertinoApp, adds no HeroController.
+  navigatorObservers: [HeroController()],
   pageRouteBuilder: <T>(settings, builder) =>
       PageRouteBuilder<T>(settings: settings, pageBuilder: (context, _, _) => builder(context)),
   home: SheenScope(
