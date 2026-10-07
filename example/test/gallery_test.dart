@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sheen/sheen.dart';
 import 'package:sheen_gallery/catalog.dart';
 import 'package:sheen_gallery/main.dart';
 import 'package:sheen_gallery/settings.dart';
