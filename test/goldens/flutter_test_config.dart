@@ -27,7 +27,9 @@ Future<void> testExecutable(FutureOr<void> Function() testMain) async {
     config: AlchemistConfig(
       theme: ThemeData(brightness: Brightness.dark, fontFamily: 'Roboto'),
       platformGoldensConfig: PlatformGoldensConfig(platforms: {HostPlatform.macOS}),
-      ciGoldensConfig: const CiGoldensConfig(),
+      // Skia on x86 Linux and on ARM Macs antialiases a few edge pixels differently (at most 0.02 % seen); real
+      // changes are far larger
+      ciGoldensConfig: const CiGoldensConfig(diffThreshold: 0.0005),
     ),
     run: testMain,
   );
