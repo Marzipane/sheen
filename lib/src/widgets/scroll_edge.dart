@@ -27,9 +27,9 @@ class SheenScrollEdge extends StatelessWidget {
     final bg = context.sheen.colors.background;
     // denser than a blurred edge would need, to stand in for the blur
     final colors = top
-        ? [bg.withValues(alpha: .96), bg.withValues(alpha: .86), bg.withValues(alpha: 0)]
+        ? [bg.withValues(alpha: .97), bg.withValues(alpha: .93), bg.withValues(alpha: 0)]
         : [bg.withValues(alpha: 0), bg.withValues(alpha: .72), bg.withValues(alpha: .94)];
-    final stops = top ? const [0.0, .6, 1.0] : const [0.0, .45, 1.0];
+    final stops = top ? const [0.0, .72, 1.0] : const [0.0, .45, 1.0];
     return Positioned(
       left: 0,
       right: 0,

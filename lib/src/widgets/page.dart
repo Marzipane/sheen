@@ -143,7 +143,7 @@ class _SheenPageState extends State<SheenPage> {
               ...w.children,
             ],
           ),
-          SheenScrollEdge.top(height: pad.top + 64),
+          SheenScrollEdge.top(height: pad.top + 72),
           Positioned(
             top: pad.top + 7,
             left: inset + 52,
