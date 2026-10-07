@@ -189,7 +189,7 @@ class SheenFloatingButton extends StatelessWidget {
     required this.label,
     required this.onPressed,
     this.icon,
-    this.filledIcon = true,
+    this.filledIcon = false,
   });
 
   /// The label.

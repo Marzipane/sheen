@@ -181,7 +181,7 @@ void main() {
             children: [
               SheenPrimaryButton(label: 'Choose a room', subLabel: 'USD 2,770.80', expand: true, onPressed: () {}),
               SheenSecondaryButton(label: 'Pay with card', icon: 'card', onPressed: () {}),
-              SheenFloatingButton(label: 'Map', icon: 'map', onPressed: () {}),
+              SheenFloatingButton(label: 'Map', icon: SheenIcons.mapFill, onPressed: () {}),
             ],
           ),
         ),

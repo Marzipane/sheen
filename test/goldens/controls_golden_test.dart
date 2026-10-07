@@ -16,7 +16,7 @@ void main() {
           const SheenPrimaryButton(label: 'Continue', onPressed: null),
           SheenPrimaryButton(label: 'Pay', subLabel: 'USD 2,770.80', onPressed: () {}),
           SheenSecondaryButton(label: 'Pay with card', icon: 'card', onPressed: () {}),
-          SheenFloatingButton(label: 'Map', icon: 'map', onPressed: () {}),
+          SheenFloatingButton(label: 'Map', icon: SheenIcons.mapFill, onPressed: () {}),
           SheenTextLink(label: 'See all 9', onPressed: () {}),
         ],
       ),

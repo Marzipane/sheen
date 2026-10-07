@@ -17,7 +17,10 @@ import 'package:sheen/sheen.dart';
 ///   end: checkOut,
 ///   weekdayLabels: const ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
 ///   monthLabel: (m) => DateFormat.yMMMM(locale).format(m),
-///   onChanged: (s, e) => setState(() => (checkIn, checkOut) = (s, e)),
+///   onChanged: (s, e) => setState(() {
+///     checkIn = s;
+///     checkOut = e;
+///   }),
 /// )
 /// ```
 ///
