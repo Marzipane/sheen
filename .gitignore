@@ -1,0 +1,11 @@
+.dart_tool/
+.packages
+build/
+pubspec.lock
+.idea/
+*.iml
+.DS_Store
+**/failures/
+doc/api/
+doc/screenshots/raw/
+tool/out/

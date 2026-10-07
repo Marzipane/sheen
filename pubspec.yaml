@@ -1,0 +1,24 @@
+name: sheen
+description: >-
+  A glass design system for Flutter: frosted glass, spring motion, one-accent theming and 60+ widgets, with booking
+  widgets for travel apps.
+version: 0.1.0
+homepage: https://marzipane.github.io/sheen/
+repository: https://github.com/Marzipane/sheen
+issue_tracker: https://github.com/Marzipane/sheen/issues
+topics: [design-system, glassmorphism, ui, widget, theme]
+
+environment:
+  sdk: ^3.9.0
+  flutter: ">=3.41.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_svg: ^2.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  alchemist: ^0.14.0

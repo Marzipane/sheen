@@ -1,0 +1,17 @@
+include: package:flutter_lints/flutter.yaml
+
+formatter:
+  page_width: 120
+
+analyzer:
+  exclude:
+    - example/build/**
+    - build/**
+
+linter:
+  rules:
+    public_member_api_docs: true
+    prefer_const_constructors: true
+    always_declare_return_types: true
+    directives_ordering: true
+    prefer_single_quotes: true

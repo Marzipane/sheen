@@ -1,0 +1,15 @@
+.dart_tool/
+build/
+pubspec.lock
+.idea/
+*.iml
+.DS_Store
+.github/
+test/goldens/
+**/failures/
+doc/api/
+doc/screenshots/raw/
+docs/
+tool/out/
+example/build/
+example/.dart_tool/
