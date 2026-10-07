@@ -2,14 +2,21 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
-/// Room → Guests → Payment (C3 SheenStepsLine). Done = a check on fill; current = its number on fill; next = its number
-/// on s3 with a muted label. Joining lines are 2 pt, accent once the step before is done.
+/// The steps of a flow, such as Room, Guests, Payment: a done step shows a check on the accent, the current one its
+/// number on the accent, the next ones their numbers on the track colour with muted labels. The joining lines turn
+/// accent once the step before is done.
 ///
-/// When the labels do not fit (large Dynamic Type, narrow phones) only the current step keeps its label.
+/// When the labels do not fit (large text, narrow phones) only the current step keeps its label.
+///
+/// {@category Navigation}
 class SheenStepsLine extends StatelessWidget {
+  /// A steps line over [steps].
   const SheenStepsLine({super.key, required this.steps, required this.current});
 
+  /// The step labels.
   final List<String> steps;
+
+  /// The current step, from 0.
   final int current;
 
   static const double _dot = 20, _dotGap = 6, _gap = 8, _minLine = 12;

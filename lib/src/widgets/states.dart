@@ -2,17 +2,22 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
-/// A placeholder block (C3 SheenSkeleton): the boards' gradient, swept every 1.2 s; static when motion is reduced. Without
-/// a [width] it fills the width it is given, like the boards' block spans.
+/// A placeholder block for content that is loading, swept by a soft highlight every 1.2 seconds; still with Reduce
+/// Motion. Without a [width] it fills the width it is given.
+///
+/// {@category Feedback}
 class SheenSkeleton extends StatefulWidget {
+  /// A placeholder block.
   const SheenSkeleton({super.key, this.width, this.height, this.radius = 8});
 
+  /// The width; the available width when null.
   final double? width;
-  final double? height;
-  final double radius;
 
-  /// The boards' dark sweep (`.sk`): #141922 → #1C2230 at 40 % → #141922 at 80 %. Light uses s3 → s2 → s3.
-  static const Color _darkBase = Color(0xFF141922), _darkHigh = Color(0xFF1C2230);
+  /// The height.
+  final double? height;
+
+  /// The corner radius.
+  final double radius;
 
   @override
   State<SheenSkeleton> createState() => _SkeletonState();
@@ -45,8 +50,9 @@ class _SkeletonState extends State<SheenSkeleton> with SingleTickerProviderState
   @override
   Widget build(BuildContext context) {
     final t = context.sheen;
-    final base = t.isDark ? SheenSkeleton._darkBase : t.colors.track;
-    final high = t.isDark ? SheenSkeleton._darkHigh : t.colors.surfaceMuted;
+    // dark sweeps from the muted surface up to the track colour; light from the track down to the muted surface
+    final base = t.isDark ? t.colors.surfaceMuted : t.colors.track;
+    final high = t.isDark ? t.colors.track : t.colors.surfaceMuted;
     return SizedBox(
       width: widget.width ?? double.infinity,
       height: widget.height,
@@ -75,12 +81,26 @@ class _Slide extends GradientTransform {
   Matrix4? transform(Rect bounds, {TextDirection? textDirection}) => Matrix4.translationValues(bounds.width * t, 0, 0);
 }
 
+/// An empty list or a dead end: a glyph in a glass circle, a title and your message. [compact] is the small form for
+/// sheets and side panes.
+/// ```dart
+/// const SheenEmptyState(icon: SheenIcons.search, title: 'No results', message: 'Try fewer filters.')
+/// ```
+/// {@category Feedback}
 class SheenEmptyState extends StatelessWidget {
+  /// An empty state titled [title].
   const SheenEmptyState({super.key, required this.icon, required this.title, this.message, this.compact = false});
 
+  /// The glyph ([SheenIcons]).
   final String icon;
+
+  /// What happened, briefly.
   final String title;
+
+  /// What to do next.
   final String? message;
+
+  /// Uses the small form.
   final bool compact;
 
   @override
@@ -124,12 +144,20 @@ class SheenEmptyState extends StatelessWidget {
   }
 }
 
-/// A way out of an empty state (D20 "Try instead"): title, a count line, a chevron.
+/// A way out of an empty state ("Try instead"): a title, an optional line under it and a chevron.
+///
+/// {@category Feedback}
 class SheenSuggestionCard extends StatelessWidget {
+  /// A suggestion titled [title].
   const SheenSuggestionCard({super.key, required this.title, this.subtitle, required this.onTap});
 
+  /// The suggestion.
   final String title;
+
+  /// A line under it, such as a count.
   final String? subtitle;
+
+  /// Called when the card is tapped.
   final VoidCallback onTap;
 
   @override
@@ -171,12 +199,18 @@ class SheenSuggestionCard extends StatelessWidget {
   }
 }
 
-/// A wait the user can see (C3 SheenProgressCapsule, D18 "Checking live prices"): glass capsule, spinner, label. Announced
-/// as a live region.
+/// A wait the user can see, such as "Checking live prices": a glass capsule with a spinner and a label, announced to
+/// screen readers as a live region.
+///
+/// {@category Feedback}
 class SheenProgressCapsule extends StatelessWidget {
+  /// A capsule showing [label].
   const SheenProgressCapsule({super.key, required this.label, this.compact = false});
 
+  /// What is happening.
   final String label;
+
+  /// Uses the small form.
   final bool compact;
 
   @override

@@ -11,6 +11,8 @@ import 'package:sheen/travel.dart';
 /// same capsule, label and sizes, with the glass approximated by its tint and rim, and a soft shadow around it. The
 /// image is [pixelRatio] times the logical size; give the marker the same ratio. Text grows with [textScale] up to
 /// 1.5, as the widget's does.
+///
+/// {@category Travel}
 Future<Uint8List> renderSheenPricePin(
   String label, {
   required bool selected,
@@ -64,8 +66,10 @@ Future<Uint8List> renderSheenPricePin(
   return png!.buffer.asUint8List();
 }
 
-/// The place picked on the map (W03) as a marker bitmap: its name in a red capsule over a red dot with a white ring.
+/// A place picked on a map as a marker bitmap: its name in a red capsule over a red dot with a white ring.
 /// [anchor] is the dot's centre as a fraction of the image, for the marker's anchor.
+///
+/// {@category Travel}
 Future<({Uint8List png, Offset anchor})> renderSheenPickedPlacePin(
   String label, {
   required SheenThemeData theme,

@@ -2,9 +2,20 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
-/// A floating toolbar row (C1 SheenToolbar): leading, centre and trailing, 10 pt apart. The centre is a
-/// [SheenToolbarSummary] capsule or a [SheenToolbarTitle]; leading and trailing are glass buttons, groups or a hold timer.
+/// A floating toolbar row: [leading], [center] and [trailing], 10 points apart, with no bar behind them (pair it with
+/// [SheenScrollEdge]).
+///
+/// The centre is usually a [SheenToolbarSummary] or a [SheenToolbarTitle]; the sides hold [SheenIconButton]s, a
+/// [SheenButtonGroup] or a [SheenCountdownPill].
+/// ```dart
+/// SheenToolbar(
+///   leading: SheenIconButton(icon: SheenIcons.back, semanticLabel: 'Back', onTap: pop),
+///   center: const SheenToolbarTitle('Settings'),
+/// )
+/// ```
+/// {@category Navigation}
 class SheenToolbar extends StatelessWidget {
+  /// A toolbar row.
   const SheenToolbar({
     super.key,
     this.leading,
@@ -13,9 +24,16 @@ class SheenToolbar extends StatelessWidget {
     this.padding = const EdgeInsets.symmetric(horizontal: 16),
   });
 
+  /// The start-side item.
   final Widget? leading;
+
+  /// The middle item; it takes the remaining width.
   final Widget? center;
+
+  /// The end-side item.
   final Widget? trailing;
+
+  /// Space around the row.
   final EdgeInsetsGeometry padding;
 
   @override
@@ -41,12 +59,21 @@ class SheenToolbar extends StatelessWidget {
   }
 }
 
-/// A tappable glass capsule that sums up the search ("Dubai / 20–22 Oct · 2 adults") and opens it for editing.
+/// A tappable glass capsule that sums up a search or a filter ("Lisbon" over "20–22 Oct · 2 adults") and opens it for
+/// editing.
+///
+/// {@category Navigation}
 class SheenToolbarSummary extends StatelessWidget {
+  /// A summary capsule.
   const SheenToolbarSummary({super.key, required this.title, this.subtitle, this.onTap});
 
+  /// The first line.
   final String title;
+
+  /// The second line.
   final String? subtitle;
+
+  /// Called on a tap.
   final VoidCallback? onTap;
 
   @override
@@ -90,9 +117,14 @@ class SheenToolbarSummary extends StatelessWidget {
   }
 }
 
-/// An inline toolbar title (17/600).
+/// An inline toolbar title (17 points, semibold).
+///
+/// {@category Navigation}
 class SheenToolbarTitle extends StatelessWidget {
+  /// A title showing [text].
   const SheenToolbarTitle(this.text, {super.key});
+
+  /// The title.
   final String text;
 
   @override

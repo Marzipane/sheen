@@ -2,12 +2,20 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
-/// The hotel's star class: [count] filled stars in the star colour, read as one label.
+/// A star class: [count] filled stars in the rating colour, read as one label.
+///
+/// {@category Content}
 class SheenStarRating extends StatelessWidget {
+  /// [count] stars.
   const SheenStarRating({super.key, required this.count, required this.semanticLabel, this.size = 12});
 
+  /// The number of stars.
   final int count;
+
+  /// What a screen reader says, such as "4 stars".
   final String semanticLabel;
+
+  /// The star size.
   final double size;
 
   @override
@@ -29,12 +37,20 @@ class SheenStarRating extends StatelessWidget {
   }
 }
 
-/// A sub-score: label and value on one line, a 6 pt bar below (s3 track, accent value). [fraction] is 0…1.
+/// A sub-score: the label and value on one line and a 6-point bar below it, filled to [fraction].
+///
+/// {@category Content}
 class SheenScoreBar extends StatelessWidget {
+  /// A score bar for [label].
   const SheenScoreBar({super.key, required this.label, required this.value, required this.fraction});
 
+  /// What is scored, such as "Cleanliness".
   final String label;
+
+  /// The score, formatted.
   final String value;
+
+  /// How full the bar is, from 0 to 1.
   final double fraction;
 
   @override

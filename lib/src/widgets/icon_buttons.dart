@@ -2,9 +2,16 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
-/// A 44 pt glass circle with one glyph (C1 SheenIconButton). Regular on bars; clear only over photos; prominent
-/// (fill colour) for the one confirming action, such as Done.
+/// A 44-point glass circle with one glyph.
+///
+/// Use regular glass on bars, clear glass only over photos, and prominent (accent) glass for the one confirming action,
+/// such as Done. [semanticLabel] is required: an icon alone says nothing to a screen reader.
+/// ```dart
+/// SheenIconButton(icon: SheenIcons.share, semanticLabel: 'Share', onTap: share)
+/// ```
+/// {@category Buttons}
 class SheenIconButton extends StatelessWidget {
+  /// A glass circle showing [icon].
   const SheenIconButton({
     super.key,
     required this.icon,
@@ -18,14 +25,31 @@ class SheenIconButton extends StatelessWidget {
     this.color,
   });
 
+  /// The glyph ([SheenIcons]).
   final String icon;
+
+  /// What a screen reader says for the button.
   final String semanticLabel;
+
+  /// Called on a tap; null disables the button.
   final VoidCallback? onTap;
+
+  /// The kind of glass.
   final SheenGlassVariant variant;
+
+  /// The diameter in points.
   final double size;
+
+  /// The glyph size in points.
   final double iconSize;
+
+  /// The glyph's stroke width.
   final double stroke;
+
+  /// Draws the filled glyph.
   final bool filled;
+
+  /// The glyph colour; the theme's text colour (or the label colour on prominent glass) when null.
   final Color? color;
 
   @override
@@ -51,8 +75,11 @@ class SheenIconButton extends StatelessWidget {
   }
 }
 
-/// One item of a [SheenButtonGroup].
+/// One button of a [SheenButtonGroup].
+///
+/// {@category Buttons}
 class SheenButtonGroupItem {
+  /// A group button showing [icon].
   const SheenButtonGroupItem({
     required this.icon,
     required this.semanticLabel,
@@ -60,19 +87,37 @@ class SheenButtonGroupItem {
     this.filled = false,
     this.color,
   });
+
+  /// The glyph ([SheenIcons]).
   final String icon;
+
+  /// What a screen reader says for the button.
   final String semanticLabel;
+
+  /// Called on a tap; null disables the button.
   final VoidCallback? onTap;
+
+  /// Draws the filled glyph.
   final bool filled;
+
+  /// The glyph colour; the theme's text colour when null.
   final Color? color;
 }
 
-/// Related toolbar buttons sharing one glass capsule (HIG: group related items), e.g. Share + Save.
+/// Related toolbar buttons sharing one glass capsule, such as Share and Save (Apple's guidelines: group related items).
+///
+/// {@category Buttons}
 class SheenButtonGroup extends StatelessWidget {
+  /// A capsule holding [items].
   const SheenButtonGroup({super.key, required this.items, this.variant = SheenGlassVariant.regular, this.height = 44});
 
+  /// The buttons, in reading order.
   final List<SheenButtonGroupItem> items;
+
+  /// The kind of glass.
   final SheenGlassVariant variant;
+
+  /// The height in points.
   final double height;
 
   @override

@@ -2,15 +2,32 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
-/// The three score badge sizes of C3: small (premium cards), medium (result cards), large (hotel rating).
-enum SheenScoreSize { small, medium, large }
+/// The sizes of a [SheenScoreBadge].
+///
+/// {@category Travel}
+enum SheenScoreSize {
+  /// 20 points high, for featured cards.
+  small,
 
-/// The guest score on the fill colour, white tabular figures (C3 SheenScoreBadge). The score string comes from the supplier.
-/// Text grows with Dynamic Type up to 1.3× so the badge stays a badge.
+  /// For result cards.
+  medium,
+
+  /// For a hotel's page.
+  large,
+}
+
+/// A guest score on the accent colour in tabular figures, such as "9.1". Its text grows with the user's text size up to
+/// 1.3 times, so the badge stays a badge.
+///
+/// {@category Travel}
 class SheenScoreBadge extends StatelessWidget {
+  /// A badge showing [score].
   const SheenScoreBadge(this.score, {super.key, this.size = SheenScoreSize.medium});
 
+  /// The score, formatted.
   final String score;
+
+  /// The badge size.
   final SheenScoreSize size;
 
   @override

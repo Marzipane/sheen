@@ -2,18 +2,27 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
-/// The card surface (`.card`): s1, radius 24; in light a soft two-layer shadow. Inside a sheet ([SheenNested]) the
-/// nested s2 surface and flat: on the sheet's white a shadow only darkens the grey's edges. Clips its child to the
-/// corners.
+/// A card: [SheenColors.surface] with 24-point corners and, in light, a soft two-layer shadow. Inside a sheet
+/// ([SheenNested]) it takes [SheenColors.surfaceMuted] and no shadow. It clips its child to its corners.
+///
+/// {@category Content}
 class SheenCard extends StatelessWidget {
+  /// A card around [child].
   const SheenCard({super.key, required this.child, this.color, this.radius = 24, this.padding});
 
+  /// The content.
   final Widget child;
+
+  /// The card colour; [SheenColors.surface] (or [SheenColors.surfaceMuted] when nested) when null.
   final Color? color;
+
+  /// The corner radius.
   final double radius;
+
+  /// Space inside the card.
   final EdgeInsetsGeometry? padding;
 
-  /// The card's shadow in light (fields on the page ground wear it too).
+  /// The card's shadow in the light theme (fields on the page ground wear it too).
   static final List<BoxShadow> lightShadow = [
     SheenGlassStyle.cssShadow(0, 1, 2, const Color.fromRGBO(16, 20, 30, .05)),
     SheenGlassStyle.cssShadow(0, 6, 20, const Color.fromRGBO(16, 20, 30, .06)),
@@ -36,9 +45,12 @@ class SheenCard extends StatelessWidget {
   }
 }
 
-/// Save on a photo: a clear glass circle with a white heart, filled once saved. Visual [size], 44 pt hit area. Over
-/// the no-photo placeholder ([onPhoto] false) the heart takes the ink colour, which stays legible in light.
+/// A save (heart) button for photos: a clear glass circle with a white heart, filled once saved; [size] points across
+/// with a 44-point hit area. Off a photo ([onPhoto] false) the heart takes the text colour.
+///
+/// {@category Content}
 class SheenSaveButton extends StatelessWidget {
+  /// A save button, filled when [saved].
   const SheenSaveButton({
     super.key,
     required this.saved,
@@ -48,10 +60,19 @@ class SheenSaveButton extends StatelessWidget {
     this.onPhoto = true,
   });
 
+  /// Whether the item is saved.
   final bool saved;
+
+  /// Called on a tap.
   final VoidCallback onTap;
+
+  /// What a screen reader says, such as "Save".
   final String semanticLabel;
+
+  /// The visible diameter.
   final double size;
+
+  /// Whether the button sits on a photo (white heart) or on a plain surface.
   final bool onPhoto;
 
   @override
@@ -78,12 +99,18 @@ class SheenSaveButton extends StatelessWidget {
   );
 }
 
-/// Page dots over a photo: 6 pt dots at white .5, the current one a 16 pt white pill. At most five dots show; past
-/// five the window follows the current page.
+/// Page dots over a photo: 6-point dots at half white, the current one a 16-point white pill. At most five dots show;
+/// with more pages the window follows the current page.
+///
+/// {@category Content}
 class SheenPagerDots extends StatelessWidget {
+  /// Dots for [count] pages with [index] current.
   const SheenPagerDots({super.key, required this.count, required this.index});
 
+  /// The number of pages.
   final int count;
+
+  /// The current page.
   final int index;
 
   static const int _max = 5;
@@ -116,11 +143,17 @@ class SheenPagerDots extends StatelessWidget {
   }
 }
 
-/// Swipeable hotel photos with page dots at the bottom (dots only when there is more than one photo).
+/// Swipeable photos with page dots at the bottom (dots only when there is more than one photo).
+///
+/// {@category Content}
 class SheenPhotoPager extends StatefulWidget {
+  /// A pager over [count] photos.
   const SheenPhotoPager({super.key, required this.count, required this.photoBuilder});
 
+  /// The number of photos.
   final int count;
+
+  /// Builds the photo at an index.
   final IndexedWidgetBuilder photoBuilder;
 
   @override
@@ -154,15 +187,21 @@ class _PhotoPagerState extends State<SheenPhotoPager> {
   }
 }
 
-/// The photo stand-in when the supplier sends none (a quarter of search replies): bed glyph and the app's label.
+/// A stand-in for a missing photo: a soft gradient with a glyph and an optional label.
+///
+/// {@category Content}
 class SheenImagePlaceholder extends StatelessWidget {
-  const SheenImagePlaceholder({super.key, required this.label, this.iconSize = 34});
+  /// A placeholder with [icon] and an optional [label].
+  const SheenImagePlaceholder({super.key, this.label, this.icon = SheenIcons.image, this.iconSize = 34});
 
+  /// A short text under the glyph, such as "No photo".
   final String? label;
-  final double iconSize;
 
-  /// The boards' `.ph` (135°, #1A2030 → #0E121A); light uses s2 → s3.
-  static const List<Color> _dark = [Color(0xFF1A2030), Color(0xFF0E121A)];
+  /// The glyph ([SheenIcons]).
+  final String icon;
+
+  /// The glyph size in points.
+  final double iconSize;
 
   @override
   Widget build(BuildContext context) {
@@ -172,14 +211,14 @@ class SheenImagePlaceholder extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: t.isDark ? _dark : [t.colors.surfaceMuted, t.colors.track],
+          colors: t.isDark ? [t.colors.track, t.colors.surface] : [t.colors.surfaceMuted, t.colors.track],
         ),
       ),
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SheenIcon(SheenIcons.bed, size: iconSize, filled: true, color: t.colors.textTertiary),
+            SheenIcon(icon, size: iconSize, color: t.colors.textTertiary),
             if (label != null) ...[
               const SizedBox(height: 6),
               Text(label!, style: t.type.footnote.copyWith(color: t.colors.textTertiary)),
@@ -190,7 +229,3 @@ class SheenImagePlaceholder extends StatelessWidget {
     );
   }
 }
-
-/// A search result (C3 SheenHotelCard, D05/D06): photo pager with Save; name and total; headline and per night; score,
-/// "% recommend" and board; the cancellation line. Every field but name and total is optional and simply left out
-/// when the supplier does not send it. The whole card is one button; Save is its own.

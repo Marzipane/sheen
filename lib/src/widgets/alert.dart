@@ -2,9 +2,21 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
-/// Shows a decision alert on glass (C1 SheenAlert), e.g. the hold expired. Returns true for the primary action,
-/// false for the secondary, null when dismissed. It scales from 1.1 to 1 as iOS alerts do (M09); fades only with
-/// reduced motion.
+/// Shows a decision alert on glass and returns true for the primary action, false for the secondary and null when
+/// dismissed.
+///
+/// It scales from 1.1 to 1 as iOS alerts do, and only fades with Reduce Motion. It keeps the theme of the screen that
+/// opens it.
+/// ```dart
+/// final again = await showSheenAlert(
+///   context: context,
+///   title: 'Time is up',
+///   message: 'The offer has expired. Start again?',
+///   primaryLabel: 'Start again',
+///   secondaryLabel: 'Not now',
+/// );
+/// ```
+/// {@category Feedback}
 Future<bool?> showSheenAlert({
   required BuildContext context,
   required String title,
@@ -20,7 +32,7 @@ Future<bool?> showSheenAlert({
     context: context,
     barrierDismissible: barrierDismissible,
     barrierLabel: secondaryLabel ?? primaryLabel,
-    barrierColor: Color.fromRGBO(0, 0, 0, .4),
+    barrierColor: const Color.fromRGBO(0, 0, 0, .4),
     transitionDuration: reduced ? SheenMotion.reducedFade : SheenMotion.smoothSettle,
     pageBuilder: (c, a, b) => themes.wrap(
       SheenAlert(
@@ -47,7 +59,11 @@ Future<bool?> showSheenAlert({
   );
 }
 
+/// The alert that [showSheenAlert] shows, for apps that present it themselves.
+///
+/// {@category Feedback}
 class SheenAlert extends StatelessWidget {
+  /// An alert titled [title].
   const SheenAlert({
     super.key,
     required this.title,
@@ -58,11 +74,22 @@ class SheenAlert extends StatelessWidget {
     this.onSecondary,
   });
 
+  /// The title.
   final String title;
+
+  /// The message.
   final String message;
+
+  /// The primary button's label.
   final String primaryLabel;
+
+  /// Called by the primary button.
   final VoidCallback onPrimary;
+
+  /// The secondary button's label; null shows only the primary button.
   final String? secondaryLabel;
+
+  /// Called by the secondary button.
   final VoidCallback? onSecondary;
 
   @override
@@ -93,7 +120,7 @@ class SheenAlert extends StatelessWidget {
               : DecoratedBox(
                   decoration: ShapeDecoration(
                     shape: const StadiumBorder(),
-                    color: t.isDark ? Color.fromRGBO(255, 255, 255, .08) : t.colors.surfaceMuted,
+                    color: t.isDark ? const Color.fromRGBO(255, 255, 255, .08) : t.colors.surfaceMuted,
                   ),
                   child: Center(heightFactor: 1, child: text),
                 ),
@@ -161,12 +188,20 @@ class SheenAlert extends StatelessWidget {
   }
 }
 
-/// A notice for a server switch (maintenance, hotels, payments, AI chat): glass row, info glyph, the server's text.
+/// A notice in a glass row with a glyph, such as "Payments are temporarily unavailable", with an optional action.
+///
+/// {@category Feedback}
 class SheenStatusNotice extends StatelessWidget {
-  const SheenStatusNotice({super.key, required this.message, this.icon = 'info', this.action});
+  /// A notice showing [message].
+  const SheenStatusNotice({super.key, required this.message, this.icon = SheenIcons.info, this.action});
 
+  /// The notice.
   final String message;
+
+  /// The glyph ([SheenIcons]).
   final String icon;
+
+  /// An action at the end, such as a [SheenTextLink].
   final Widget? action;
 
   @override

@@ -3,10 +3,26 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
-/// The price filter of Sort & filter (D17): how the stays spread over the prices as bars, and a range with two knobs
-/// on their baseline. Bars inside the range are lit. The low end is on the leading side, so it mirrors in right to
-/// left. Each knob is an adjustable slider for screen readers, its value read through [format].
+/// A range filter over a histogram, such as a price filter: bars show how the items spread over the values, and two
+/// knobs on their baseline pick a range; bars inside it are lit.
+///
+/// The low end is on the leading side, so it mirrors in right-to-left text. Each knob is an adjustable slider for
+/// screen readers, its value read through [format].
+/// ```dart
+/// SheenRangeHistogram(
+///   bins: counts,
+///   min: 0,
+///   max: 1000,
+///   values: range,
+///   onChanged: (r) => setState(() => range = r),
+///   lowLabel: 'Minimum price',
+///   highLabel: 'Maximum price',
+///   format: (v) => '€ ${v.round()}',
+/// )
+/// ```
+/// {@category Selection}
 class SheenRangeHistogram extends StatefulWidget {
+  /// A histogram with a range over [min]–[max].
   const SheenRangeHistogram({
     super.key,
     required this.bins,
@@ -20,19 +36,40 @@ class SheenRangeHistogram extends StatefulWidget {
     this.onChangeEnd,
   });
 
-  /// Stays per equal slice of [min]–[max].
+  /// Items per equal slice of [min]–[max], low to high.
   final List<int> bins;
+
+  /// The lowest value.
   final double min;
+
+  /// The highest value.
   final double max;
+
+  /// The chosen range.
   final SheenRange values;
+
+  /// Called as a knob moves.
   final ValueChanged<SheenRange> onChanged;
+
+  /// Called when a knob is let go.
   final ValueChanged<SheenRange>? onChangeEnd;
+
+  /// The low knob's label for screen readers.
   final String lowLabel;
+
+  /// The high knob's label for screen readers.
   final String highLabel;
+
+  /// Formats a value for screen readers.
   final String Function(double value) format;
 
+  /// The height of the bars.
   static const double barsHeight = 64;
+
+  /// The knob diameter.
   static const double knob = 28;
+
+  /// The widget height.
   static const double height = barsHeight + knob / 2;
 
   @override

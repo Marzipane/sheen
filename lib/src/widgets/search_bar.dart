@@ -4,10 +4,12 @@ import 'package:sheen/sheen.dart';
 
 import '../foundation/material_bridge.dart';
 
-/// The tab bar in search mode (C1 SheenTabBar, search active; D03): the tab you came from as a circle and the search
-/// field that dropped to the bottom. While the field has text its trailing button clears it. No dictation button: the
-/// app has no dictation of its own (the keyboard's microphone covers it).
+/// The tab bar in search mode: the tab you came from as a circle and the search field. While the field has text, a
+/// button at its end clears it.
+///
+/// {@category Navigation}
 class SheenSearchBar extends StatefulWidget {
+  /// A search bar.
   const SheenSearchBar({
     super.key,
     required this.leadingIcon,
@@ -22,14 +24,29 @@ class SheenSearchBar extends StatefulWidget {
 
   /// The filled glyph of the tab search was opened from.
   final String leadingIcon;
+
+  /// The circle's label for screen readers.
   final String leadingLabel;
+
+  /// Called by the circle (back to the tab).
   final VoidCallback onLeading;
+
+  /// Holds the search text.
   final TextEditingController controller;
+
+  /// The hint shown while the field is empty.
   final String placeholder;
+
+  /// The clear button's label for screen readers.
   final String clearLabel;
+
+  /// The field's focus node.
   final FocusNode? focusNode;
+
+  /// Called when the keyboard's search button is pressed.
   final ValueChanged<String>? onSubmitted;
 
+  /// The bar height.
   static const double height = 52;
 
   @override

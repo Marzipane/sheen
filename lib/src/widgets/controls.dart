@@ -6,9 +6,14 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
-/// A filter or sort chip (C2 FilterChip): 36 high capsule, 14/600. On = inverted (ink fill), off = glass. Optional
-/// leading glyph and a menu chevron. Chip rows scroll sideways and never wrap.
+/// A filter or sort chip: a 36-point capsule. Selected, it is inverted (text-coloured fill); unselected, it is glass.
+/// It can lead with a glyph, end with one ([trailingIcon]) and show a menu chevron ([menu]).
+///
+/// Put chips in a [SheenChipRow] (or any horizontal scroll view): chip rows scroll sideways and never wrap.
+///
+/// {@category Selection}
 class SheenChip extends StatelessWidget {
+  /// A chip labelled [label].
   const SheenChip({
     super.key,
     required this.label,
@@ -19,10 +24,19 @@ class SheenChip extends StatelessWidget {
     this.trailingIcon,
   });
 
+  /// The label.
   final String label;
+
+  /// Whether the chip is on.
   final bool selected;
+
+  /// Called on a tap.
   final VoidCallback? onTap;
+
+  /// A glyph before the label ([SheenIcons]).
   final String? icon;
+
+  /// Ends with a chevron, for a chip that opens a menu.
   final bool menu;
 
   /// A glyph after the label (e.g. a filled star for "3 ★").
@@ -74,20 +88,41 @@ class SheenChip extends StatelessWidget {
 
 /// One segment of a [SheenSegmentedControl], with an optional count line (Explore: "Visa-free / 126").
 @immutable
+/// One segment of a [SheenSegmentedControl], with an optional count line under the label (for example "Visa-free" over
+/// "126").
+///
+/// {@category Selection}
 class SheenSegment {
+  /// A segment labelled [label].
   const SheenSegment(this.label, {this.count});
+
+  /// The label.
   final String label;
+
+  /// A second line, such as a count.
   final String? count;
 }
 
-/// A segmented control on glass (C2): 2 to 4 segments, the selected one on a lens that slides on the snappy spring.
+/// A segmented control on glass: 2 to 4 segments, the selected one on a lens that slides on the snappy spring.
+/// ```dart
+/// SheenSegmentedControl(
+///   segments: const [SheenSegment('Day'), SheenSegment('Week'), SheenSegment('Month')],
+///   index: range,
+///   onChanged: (i) => setState(() => range = i),
+/// )
+/// ```
+/// {@category Selection}
 class SheenSegmentedControl extends StatefulWidget {
+  /// A control showing [segments].
   const SheenSegmentedControl({super.key, required this.segments, required this.index, required this.onChanged});
 
+  /// The segments, 2 to 4.
   final List<SheenSegment> segments;
 
   /// The chosen segment; -1 for none yet (a choice the user has to make, such as a guest's title).
   final int index;
+
+  /// Called with the tapped segment.
   final ValueChanged<int> onChanged;
 
   @override
@@ -229,8 +264,11 @@ class _SegmentedControlState extends State<SheenSegmentedControl> with SingleTic
   }
 }
 
-/// Minus · value · plus (C2 Stepper): glass circles of 36 with a 44 pt hit area; a bound disables its side.
+/// Minus, value, plus: 36-point glass circles with a 44-point hit area; reaching [min] or [max] disables that side.
+///
+/// {@category Inputs}
 class SheenStepper extends StatelessWidget {
+  /// A stepper showing [value].
   const SheenStepper({
     super.key,
     required this.value,
@@ -241,11 +279,22 @@ class SheenStepper extends StatelessWidget {
     this.max = 99,
   });
 
+  /// The value.
   final int value;
+
+  /// The smallest value.
   final int min;
+
+  /// The largest value.
   final int max;
+
+  /// Called with the new value.
   final ValueChanged<int> onChanged;
+
+  /// The minus button's label for screen readers.
   final String decreaseLabel;
+
+  /// The plus button's label for screen readers.
   final String increaseLabel;
 
   @override
@@ -273,7 +322,7 @@ class SheenStepper extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        button('minus', decreaseLabel, value > min, value - 1),
+        button(SheenIcons.minus, decreaseLabel, value > min, value - 1),
         const SizedBox(width: 6),
         ConstrainedBox(
           constraints: const BoxConstraints(minWidth: 18),
@@ -284,21 +333,36 @@ class SheenStepper extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 6),
-        button('plus', increaseLabel, value < max, value + 1),
+        button(SheenIcons.plus, increaseLabel, value < max, value + 1),
       ],
     );
   }
 }
 
-/// An iOS-style switch (C2 Switch): 51 × 31, green when on, the knob slides on the snappy spring.
+/// An iOS-style switch, 51 × 31 points, in the accent colour when on; the knob slides on the snappy spring.
+///
+/// {@category Inputs}
 class SheenSwitch extends StatelessWidget {
-  const SheenSwitch({super.key, required this.value, required this.onChanged, required this.semanticLabel});
+  /// A switch showing [value].
+  const SheenSwitch({
+    super.key,
+    required this.value,
+    required this.onChanged,
+    required this.semanticLabel,
+    this.activeColor,
+  });
 
+  /// Whether the switch is on.
   final bool value;
+
+  /// Called with the new value; null disables the switch.
   final ValueChanged<bool>? onChanged;
+
+  /// What a screen reader says for the switch.
   final String semanticLabel;
 
-  static const Color onColor = Color(0xFF30A46C);
+  /// The track colour when on; [SheenColors.accent] when null.
+  final Color? activeColor;
 
   @override
   Widget build(BuildContext context) {
@@ -325,7 +389,10 @@ class SheenSwitch extends StatelessWidget {
             duration: d,
             width: 51,
             height: 31,
-            decoration: ShapeDecoration(shape: const StadiumBorder(), color: value ? onColor : t.colors.track),
+            decoration: ShapeDecoration(
+              shape: const StadiumBorder(),
+              color: value ? activeColor ?? t.colors.accent : t.colors.track,
+            ),
             child: AnimatedAlign(
               duration: d,
               curve: curve,
@@ -350,18 +417,26 @@ class SheenSwitch extends StatelessWidget {
   }
 }
 
-/// Counts down the server's hold (C2 SheenCountdownPill): amber while held, red in the last two minutes, grey at 0:00.
+/// A pill counting down time left, such as a hold, an offer or a one-time code: in the warning colour while time
+/// remains, red with one pulse in the last two minutes ([warnAt]), grey at 0:00.
+///
+/// Pass the remaining time; the pill does not tick by itself, so drive [remaining] from a timer or a stream.
+///
+/// {@category Feedback}
 class SheenCountdownPill extends StatefulWidget {
+  /// A pill showing [remaining].
   const SheenCountdownPill({super.key, required this.remaining, required this.semanticLabel});
 
+  /// The time left.
   final Duration remaining;
 
-  /// The translated "room held" label read before the time.
+  /// What a screen reader says before the time, such as "Room held for".
   final String semanticLabel;
 
   /// Under this the hold is nearly over: the pill turns red and pulses once (M07).
   static const Duration warnAt = Duration(minutes: 2);
 
+  /// The time as minutes and seconds, m:ss (an hour and a quarter is 75:00).
   static String format(Duration d) {
     final s = d.isNegative ? 0 : d.inSeconds;
     return '${s ~/ 60}:${(s % 60).toString().padLeft(2, '0')}';

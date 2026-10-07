@@ -2,10 +2,19 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
-/// Inset grouped rows (C3 SheenListGroup, D15): s2, radius 20, hairline separators between rows.
+/// Inset grouped rows, as in iOS Settings: one rounded group with hairline separators between the rows.
+/// ```dart
+/// SheenListGroup(children: [
+///   SheenListRow(title: 'Notifications', icon: SheenIcons.bell, iconColor: SheenTint.red, onTap: openNotifications),
+///   SheenListRow(title: 'Language', value: 'English', onTap: openLanguage),
+/// ])
+/// ```
+/// {@category Content}
 class SheenListGroup extends StatelessWidget {
+  /// A group of [children].
   const SheenListGroup({super.key, required this.children, this.color});
 
+  /// The rows.
   final List<Widget> children;
 
   /// The group's ground; by default s1 on the page ground (as cards) and s2 inside a sheet ([SheenNested]).
@@ -33,10 +42,13 @@ class SheenListGroup extends StatelessWidget {
   }
 }
 
-/// One row (C3 SheenListRow): optional 30 pt icon tile in a passed-in colour, title (with an optional [subtitle] line under
-/// it), optional value in ink2, then the [trailing] widget (a switch) or, for a tappable row, a chevron that mirrors in
-/// right to left. 50 pt minimum.
+/// One row of a [SheenListGroup]: an optional 30-point glyph tile in [iconColor], the title with an optional [subtitle]
+/// under it, an optional [value], then [trailing] (a switch) or, for a tappable row, a chevron that mirrors in
+/// right-to-left text. At least 50 points high.
+///
+/// {@category Content}
 class SheenListRow extends StatelessWidget {
+  /// A row titled [title].
   const SheenListRow({
     super.key,
     required this.title,
@@ -49,13 +61,28 @@ class SheenListRow extends StatelessWidget {
     this.semanticLabel,
   });
 
+  /// The title.
   final String title;
+
+  /// A second line under the title.
   final String? subtitle;
+
+  /// A glyph on a coloured tile at the start ([SheenIcons]).
   final String? icon;
+
+  /// The tile colour; [SheenTint] has the usual ones.
   final Color? iconColor;
+
+  /// A value before the chevron, such as the current setting.
   final String? value;
+
+  /// A widget at the end, such as a [SheenSwitch]; replaces the chevron.
   final Widget? trailing;
+
+  /// Called when the row is tapped; null makes the row static.
   final VoidCallback? onTap;
+
+  /// What a screen reader says; the title, subtitle and value when null.
   final String? semanticLabel;
 
   @override
@@ -125,7 +152,7 @@ class SheenListRow extends StatelessWidget {
     return SheenPressable(
       onTap: onTap,
       pressedScale: 1,
-      semanticLabel: semanticLabel ?? [title, if (subtitle != null) subtitle!, if (value != null) value!].join(', '),
+      semanticLabel: semanticLabel ?? [title, ?subtitle, ?value].join(', '),
       builder: (context, pressed) => ExcludeSemantics(child: row(pressed)),
     );
   }

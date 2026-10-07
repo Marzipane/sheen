@@ -5,10 +5,25 @@ import 'package:sheen/sheen.dart';
 
 import '../foundation/material_bridge.dart';
 
-/// A labelled text field (C2 TextField): label above, 50 high, radius 14, hairline ring; focused = 2 pt accent ring;
-/// error = red ring and the app's own message under it. A password hides its text ([obscureText]) and can carry a
-/// trailing button (show/hide); a picker field ([readOnly]) opens its picker through [onTap] and takes no typing.
+/// A labelled text field: the label above, a 50-point field with 14-point corners and a hairline ring; focused, a
+/// 2-point accent ring; with an [error], a red ring and the message under it.
+///
+/// A password hides its text ([obscureText]) and can carry a show/hide button in [trailing]; a picker field
+/// ([readOnly]) opens its picker through [onTap] and takes no typing.
+/// ```dart
+/// SheenTextField(
+///   label: 'Email',
+///   controller: email,
+///   keyboardType: TextInputType.emailAddress,
+///   autofillHints: const [AutofillHints.email],
+///   error: emailError,
+/// )
+/// ```
+/// It is built on Flutter's `TextField` and works under `MaterialApp`, `CupertinoApp` and `WidgetsApp`.
+///
+/// {@category Inputs}
 class SheenTextField extends StatefulWidget {
+  /// A text field labelled [label].
   const SheenTextField({
     super.key,
     required this.label,
@@ -33,33 +48,65 @@ class SheenTextField extends StatefulWidget {
     this.labelTrailing,
   });
 
+  /// The label above the field.
   final String label;
+
+  /// The hint shown while the field is empty.
   final String? placeholder;
+
+  /// Holds the text; the field makes its own when null.
   final TextEditingController? controller;
+
+  /// An error message; it turns the ring red and shows under the field.
   final String? error;
 
   /// At the end of the label's line: a quiet note (Optional) or a small action (Clear).
   final Widget? labelTrailing;
+
+  /// Called on every change.
   final ValueChanged<String>? onChanged;
+
+  /// The keyboard to show.
   final TextInputType? keyboardType;
+
+  /// The keyboard's action button.
   final TextInputAction? textInputAction;
+
+  /// What the system may autofill (see `AutofillHints`).
   final Iterable<String>? autofillHints;
+
+  /// How the keyboard capitalises.
   final TextCapitalization textCapitalization;
+
+  /// The field's focus node; the field makes its own when null.
   final FocusNode? focusNode;
+
+  /// Whether the field takes input.
   final bool enabled;
+
+  /// Formatters applied to typed text.
   final List<TextInputFormatter>? inputFormatters;
 
-  /// Field ground; by default s1 on the page ground and s2 inside a sheet ([SheenNested]).
+  /// The field colour; [SheenColors.surface] on the page and [SheenColors.surfaceMuted] inside a sheet ([SheenNested])
+  /// when null.
   final Color? fill;
 
+  /// Hides the text, for passwords.
   final bool obscureText;
 
   /// A button at the end of the field (show/hide password, clear).
   final Widget? trailing;
 
+  /// Takes no typing; use [onTap] to open a picker.
   final bool readOnly;
+
+  /// Called when the field is tapped.
   final VoidCallback? onTap;
+
+  /// Called when the keyboard's action button is pressed.
   final ValueChanged<String>? onSubmitted;
+
+  /// Whether the keyboard corrects spelling (always off for passwords).
   final bool autocorrect;
 
   @override

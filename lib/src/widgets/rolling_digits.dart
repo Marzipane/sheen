@@ -2,16 +2,25 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
-/// Text whose changed digits roll like iOS numeric text (M07): the new one rises a little into place while the old
-/// one leaves upward; unchanged characters stay still. Digits are matched from the end, so 10:00 → 9:59 rolls the
-/// last digits and drops the first. Only the number rolls: the words around it (a currency) stay whole, so they keep
-/// their shaping. With Reduce Motion the text changes in place. Read as one label.
+/// Text whose changed digits roll, like iOS numeric text: the new digit rises into place while the old one leaves
+/// upward; unchanged characters stay still.
+///
+/// Digits are matched from the end, so 10:00 to 9:59 rolls the last digits and drops the first. Only the number rolls:
+/// the words around it (a currency) stay whole and keep their shaping. With Reduce Motion the text changes in place.
+/// Read as one label.
+///
+/// {@category Motion}
 class SheenRollingDigits extends StatelessWidget {
+  /// Rolling text showing [text].
   const SheenRollingDigits(this.text, {super.key, required this.style});
 
+  /// The text.
   final String text;
+
+  /// The text style (use tabular figures, such as [SheenType.price]).
   final TextStyle style;
 
+  /// How long a roll takes.
   static const Duration duration = Duration(milliseconds: 260);
 
   /// How far a character travels, as a share of its height.
@@ -74,8 +83,7 @@ class _Slot extends StatelessWidget {
         duration: reduced ? Duration.zero : SheenRollingDigits.duration,
         switchInCurve: SheenMotion.easeOut,
         switchOutCurve: SheenMotion.easeIn,
-        layoutBuilder: (cur, previous) =>
-            Stack(alignment: Alignment.center, children: [...previous, if (cur != null) cur]),
+        layoutBuilder: (cur, previous) => Stack(alignment: Alignment.center, children: [...previous, ?cur]),
         transitionBuilder: (child, a) {
           // the incoming character comes up from below; the outgoing one (played backwards) leaves upward
           final incoming = child.key == current;

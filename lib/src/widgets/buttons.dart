@@ -2,9 +2,16 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
-/// The one prominent action of a view: glass tinted with the fill colour, white label (C2 SheenPrimaryButton).
-/// States: default, pressed (darker), loading (spinner before the label, taps ignored), disabled (40 %).
+/// The one prominent action of a view: a capsule of accent-tinted glass with a [SheenColors.onAccent] label.
+///
+/// It darkens while pressed. While [loading] it shows a spinner before the label and ignores taps; with [onPressed]
+/// null it is disabled (40 % opacity).
+/// ```dart
+/// SheenPrimaryButton(label: 'Continue', expand: true, onPressed: next)
+/// ```
+/// {@category Buttons}
 class SheenPrimaryButton extends StatelessWidget {
+  /// A primary button labelled [label].
   const SheenPrimaryButton({
     super.key,
     required this.label,
@@ -16,12 +23,25 @@ class SheenPrimaryButton extends StatelessWidget {
     this.icon,
   });
 
+  /// The label.
   final String label;
+
+  /// A smaller second line under the label, such as a price.
   final String? subLabel;
+
+  /// Called on a tap; null disables the button.
   final VoidCallback? onPressed;
+
+  /// Shows a spinner and ignores taps, for an action in progress.
   final bool loading;
+
+  /// The height in points.
   final double height;
+
+  /// Fills the available width.
   final bool expand;
+
+  /// An icon before the label ([SheenIcons]).
   final String? icon;
 
   @override
@@ -71,9 +91,9 @@ class SheenPrimaryButton extends StatelessWidget {
           ),
           // Pressed: CSS filter brightness(.82) on the fill.
           if (pressed)
-            Positioned.fill(
+            const Positioned.fill(
               child: DecoratedBox(
-                decoration: ShapeDecoration(shape: const StadiumBorder(), color: Color.fromRGBO(0, 0, 0, .18)),
+                decoration: ShapeDecoration(shape: StadiumBorder(), color: Color.fromRGBO(0, 0, 0, .18)),
               ),
             ),
         ],
@@ -92,9 +112,12 @@ class SheenPrimaryButton extends StatelessWidget {
   }
 }
 
-/// A second choice next to a primary action: tonal (white 8 % on dark, the s2 surface on light), 48 high (more with a
-/// large text size).
+/// A second choice next to a primary action: a tonal capsule ([SheenColors.surfaceMuted] in light, white 8 % in dark),
+/// 48 points high, taller at large text sizes.
+///
+/// {@category Buttons}
 class SheenSecondaryButton extends StatelessWidget {
+  /// A secondary button labelled [label].
   const SheenSecondaryButton({
     super.key,
     required this.label,
@@ -104,10 +127,19 @@ class SheenSecondaryButton extends StatelessWidget {
     this.filledIcon = false,
   });
 
+  /// The label.
   final String label;
+
+  /// An icon before the label ([SheenIcons]).
   final String? icon;
+
+  /// Draws [icon] as its filled glyph.
   final bool filledIcon;
+
+  /// Called on a tap; null disables the button.
   final VoidCallback? onPressed;
+
+  /// Fills the available width.
   final bool expand;
 
   @override
@@ -122,7 +154,7 @@ class SheenSecondaryButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
         decoration: ShapeDecoration(
           shape: const StadiumBorder(),
-          color: t.isDark ? Color.fromRGBO(255, 255, 255, .08) : t.colors.surfaceMuted,
+          color: t.isDark ? const Color.fromRGBO(255, 255, 255, .08) : t.colors.surfaceMuted,
         ),
         child: Row(
           mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
@@ -147,8 +179,11 @@ class SheenSecondaryButton extends StatelessWidget {
   }
 }
 
-/// A glass capsule floating over content (the Map button over results).
+/// A glass capsule that floats over content, such as a Map button over a list.
+///
+/// {@category Buttons}
 class SheenFloatingButton extends StatelessWidget {
+  /// A floating glass button labelled [label].
   const SheenFloatingButton({
     super.key,
     required this.label,
@@ -157,9 +192,16 @@ class SheenFloatingButton extends StatelessWidget {
     this.filledIcon = true,
   });
 
+  /// The label.
   final String label;
+
+  /// An icon before the label ([SheenIcons]).
   final String? icon;
+
+  /// Draws [icon] as its filled glyph.
   final bool filledIcon;
+
+  /// Called on a tap; null disables the button.
   final VoidCallback? onPressed;
 
   @override
@@ -191,12 +233,20 @@ class SheenFloatingButton extends StatelessWidget {
   }
 }
 
-/// Accent text for a light action ("See all 9").
+/// Accent-coloured text for a light action, such as "See all 9".
+///
+/// {@category Buttons}
 class SheenTextLink extends StatelessWidget {
+  /// A text link labelled [label].
   const SheenTextLink({super.key, required this.label, required this.onPressed, this.size = 16});
 
+  /// The label.
   final String label;
+
+  /// Called on a tap; null disables the link.
   final VoidCallback? onPressed;
+
+  /// The font size in points.
   final double size;
 
   @override

@@ -9,35 +9,61 @@ import 'package:sheen/sheen.dart';
 
 /// One tab of the [SheenTabBar]: a filled glyph from the design kit and its label (a translated string).
 @immutable
+/// One tab of a [SheenTabBar] or [SheenTopTabBar]: a filled glyph and its label.
+///
+/// {@category Navigation}
 class SheenTabItem {
+  /// A tab with [icon] and [label].
   const SheenTabItem({required this.icon, required this.label, this.badge});
+
+  /// The glyph ([SheenIcons]); drawn filled.
   final String icon;
+
+  /// The label under the glyph.
   final String label;
 
   /// A short count or mark shown on the glyph; null for none.
   final String? badge;
 }
 
-/// The iOS 27 floating tab bar (C1 SheenTabBar): four tabs on one glass capsule, the selected tab on a lens, and
-/// search as its own circle.
+/// The floating tab bar of iOS 26 and later: the tabs on one glass capsule with the selected tab on a lens, and search
+/// as its own circle.
 ///
-/// The lens slides on the snappy spring and stretches 12 % along its travel, and the new icon dips to 86 % (M03).
-/// [minimized] shrinks it to the current tab, an optional [accessory] (a held room) and search, on the smooth
-/// spring (M02). With reduced motion the lens jumps and the bars crossfade.
+/// The lens slides on the snappy spring and stretches along its travel; the new tab's glyph dips. [minimized] shrinks
+/// the bar to the current tab, an optional [accessory] and search, on the smooth spring.
 ///
-/// Press and slide (U01, as the iOS 26 bar and Telegram): a finger on the capsule lifts the lens at once, well past
-/// the capsule, and it zooms what is under it 1.22 x; the bar's glass swells and runs into the search circle through a
-/// liquid neck (owner 5 Oct, Telegram). The lens follows the finger with a selection tick at each tab and on to the
-/// search circle; letting go opens what is under it (away from the bar: nothing changes). A plain tap selects as
-/// before. With reduced motion the lens only swells 6 %, nothing zooms and the glass keeps its shape.
+/// Press and slide, as in iOS 26: a finger on the capsule lifts the lens past the capsule and magnifies what is under
+/// it; the bar's glass swells and joins the search circle through a liquid neck. The lens follows the finger with a
+/// selection tick at each tab; letting go opens what is under it (away from the bar nothing changes). A plain tap
+/// selects as usual.
+///
+/// With Reduce Motion the lens jumps, the bars cross-fade and a pressed lens only swells 6 %. The bar keeps its labels
+/// at the system text size, as iOS does.
+/// ```dart
+/// SheenTabBar(
+///   items: const [
+///     SheenTabItem(icon: SheenIcons.home, label: 'Home'),
+///     SheenTabItem(icon: SheenIcons.map, label: 'Map'),
+///     SheenTabItem(icon: SheenIcons.heart, label: 'Saved'),
+///     SheenTabItem(icon: SheenIcons.user, label: 'Profile'),
+///   ],
+///   index: tab,
+///   onSelect: (i) => setState(() => tab = i),
+///   onSearch: openSearch,
+/// )
+/// ```
+/// Tab glyphs are drawn filled, so use names that have a filled glyph (`SheenIcons.*Fill` lists them) or your own.
+///
+/// {@category Navigation}
 class SheenTabBar extends StatefulWidget {
+  /// A tab bar showing [items].
   const SheenTabBar({
     super.key,
     required this.items,
     required this.index,
     required this.onSelect,
     required this.onSearch,
-    required this.searchLabel,
+    this.searchLabel,
     this.searchActive = false,
     this.minimized = false,
     this.accessory,
@@ -45,26 +71,46 @@ class SheenTabBar extends StatefulWidget {
     this.onRestore,
   });
 
+  /// The tabs (four fit best).
   final List<SheenTabItem> items;
+
+  /// The selected tab.
   final int index;
+
+  /// Called with the chosen tab.
   final ValueChanged<int> onSelect;
+
+  /// Called when search is chosen.
   final VoidCallback onSearch;
-  final String searchLabel;
+
+  /// The search circle's label for screen readers; [SheenStrings.search] when null.
+  final String? searchLabel;
 
   /// Search is the active destination: the search circle carries the lens, no tab does.
   final bool searchActive;
+
+  /// Shrinks the bar to the current tab, the [accessory] and search, for example while a list scrolls down.
   final bool minimized;
+
+  /// Shown beside the minimized bar, usually a [SheenTabAccessory].
   final Widget? accessory;
+
+  /// Called when the accessory is tapped.
   final VoidCallback? onAccessory;
 
   /// Tap on the current-tab circle of the minimized bar; defaults to selecting the current tab.
   final VoidCallback? onRestore;
 
+  /// The bar height in points.
   static const double height = 62;
 
   /// The widest the bar and its search circle grow in a wide window (iPad): four tabs do not stretch across it.
   static const double maxWidth = 560;
+
+  /// The minimized bar height in points.
   static const double minimizedHeight = 52;
+
+  /// The space between the capsule and the search circle.
   static const double gap = 10;
 
   @override
@@ -347,7 +393,7 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
     final on = widget.searchActive;
     return SheenPressable(
       onTap: widget.onSearch,
-      semanticLabel: widget.searchLabel,
+      semanticLabel: widget.searchLabel ?? SheenStrings.of(context).search,
       selected: on,
       minSize: 0,
       child: SheenGlass(
@@ -372,7 +418,7 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
     final on = widget.searchActive;
     return SheenPressable(
       onTap: widget.onSearch,
-      semanticLabel: widget.searchLabel,
+      semanticLabel: widget.searchLabel ?? SheenStrings.of(context).search,
       selected: on,
       minSize: 0,
       child: SizedBox.square(
@@ -697,14 +743,24 @@ class _TabState extends State<_Tab> with SingleTickerProviderStateMixin {
   }
 }
 
-/// The bottom accessory of the minimized tab bar: a thumbnail, a title and subtitle, and a trailing value — today
-/// the held room with its countdown (D02).
+/// The accessory of a minimized [SheenTabBar]: a thumbnail, a title and subtitle and a trailing value, such as a
+/// playing track or an item on hold with its countdown.
+///
+/// {@category Navigation}
 class SheenTabAccessory extends StatelessWidget {
+  /// An accessory titled [title].
   const SheenTabAccessory({super.key, required this.title, this.subtitle, this.leading, this.trailing});
 
+  /// The first line.
   final String title;
+
+  /// The second line.
   final String? subtitle;
+
+  /// A thumbnail at the start.
   final Widget? leading;
+
+  /// A value at the end, such as a countdown.
   final Widget? trailing;
 
   @override
@@ -768,13 +824,20 @@ class _BarGeometry {
   double get searchCentre => total - SheenTabBar.height / 2;
 }
 
-/// The full tab bar's glass as one shape: the capsule and, [gap] after it, the search circle as tall as the shape. With
-/// [merge] above 0 a liquid neck joins them, its waist growing with [merge] (the iOS 26 bar and Telegram while a
-/// finger presses it); at 0 they are the two separate shapes of the bar at rest. Right to left, the circle is on the left.
+/// The full tab bar's glass as one shape: the capsule and, [gap] after it, the search circle as tall as the shape.
+///
+/// With [merge] above 0 a liquid neck joins them, its waist growing with [merge] (the iOS 26 bar while a finger presses
+/// it); at 0 they are two separate shapes. In right-to-left text the circle is on the left.
+///
+/// {@category Navigation}
 class SheenBarBorder extends ShapeBorder {
+  /// The bar shape with [gap] before the circle and a neck of [merge].
   const SheenBarBorder({this.gap = SheenTabBar.gap, this.merge = 0});
 
+  /// The space between the capsule and the circle.
   final double gap;
+
+  /// How far the neck has grown, from 0 (none) to 1.
   final double merge;
 
   @override

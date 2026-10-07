@@ -302,7 +302,7 @@ class SheenSheetBody extends StatelessWidget {
           rim: const [Color(0x00FFFFFF), Color(0x00FFFFFF)],
           rimStops: const [0, 1],
           rimAngle: 180,
-          innerTop: t.isDark ? Color.fromRGBO(255, 255, 255, .12) : Color.fromRGBO(0, 0, 0, .06),
+          innerTop: t.isDark ? const Color.fromRGBO(255, 255, 255, .12) : const Color.fromRGBO(0, 0, 0, .06),
           innerTopWidth: 1,
         ),
         child: ClipPath(

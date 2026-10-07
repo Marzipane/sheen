@@ -3,7 +3,30 @@ import 'package:flutter/widgets.dart';
 import 'package:sheen/sheen.dart';
 import 'package:sheen/travel.dart';
 
+/// A hotel in a list of results: a photo pager with Save; the name and the total; a headline and the price per night;
+/// the score, a recommendation share and the board; the cancellation line.
+///
+/// Every text but [name] and [total] is optional and simply left out when you do not have it. The whole card is one
+/// button; Save is its own. Prices and labels are the caller's, formatted and translated.
+/// ```dart
+/// SheenHotelCard(
+///   name: 'Hotel Aurora',
+///   total: '€ 1,448',
+///   perNight: '€ 724 a night',
+///   headline: 'Old Town · 0.4 km to the centre',
+///   score: '9.1',
+///   cancellation: 'Free cancellation until 12 Oct',
+///   refundable: true,
+///   photoCount: photos.length,
+///   photoBuilder: (context, i) => Image.network(photos[i], fit: BoxFit.cover),
+///   noPhotoLabel: 'No photo',
+///   saveLabel: 'Save',
+///   onTap: open,
+/// )
+/// ```
+/// {@category Travel}
 class SheenHotelCard extends StatelessWidget {
+  /// A result card for the hotel [name].
   const SheenHotelCard({
     super.key,
     required this.name,
@@ -24,29 +47,55 @@ class SheenHotelCard extends StatelessWidget {
     this.onSave,
   });
 
+  /// The hotel name.
   final String name;
+
+  /// The total price, formatted.
   final String total;
+
+  /// The price per night, formatted with its words ("€ 724 a night").
   final String? perNight;
+
+  /// A line about the place, such as the area and a distance.
   final String? headline;
+
+  /// The guest score, shown on a [SheenScoreBadge].
   final String? score;
+
+  /// A recommendation share, such as "92 % recommend".
   final String? recommend;
+
+  /// The meal plan, such as "Breakfast included".
   final String? board;
 
-  /// "Free cancellation until 12 Oct" or "Non-refundable", from the app's strings.
+  /// The cancellation terms, such as "Free cancellation until 12 Oct" or "Non-refundable".
   final String? cancellation;
+
+  /// Colours [cancellation] as good news.
   final bool refundable;
 
+  /// The number of photos; 0 shows the placeholder.
   final int photoCount;
+
+  /// Builds the photo at an index.
   final IndexedWidgetBuilder photoBuilder;
+
+  /// The placeholder's label when there is no photo.
   final String noPhotoLabel;
 
+  /// Whether the hotel is saved.
   final bool saved;
+
+  /// The Save button's label for screen readers.
   final String saveLabel;
 
-  /// Null hides Save (e.g. signed out).
+  /// Called by Save; null hides Save (for example when signed out).
   final VoidCallback? onSave;
+
+  /// Called when the card is tapped.
   final VoidCallback onTap;
 
+  /// The height of the photo area.
   static const double photoHeight = 196;
 
   @override
@@ -78,7 +127,7 @@ class SheenHotelCard extends StatelessWidget {
                 children: [
                   ExcludeSemantics(
                     child: photoCount == 0
-                        ? SheenImagePlaceholder(label: noPhotoLabel)
+                        ? SheenImagePlaceholder(label: noPhotoLabel, icon: SheenIcons.bedFill)
                         : SheenPhotoPager(count: photoCount, photoBuilder: photoBuilder),
                   ),
                   if (onSave != null)
@@ -216,9 +265,12 @@ class SheenHotelCard extends StatelessWidget {
   }
 }
 
-/// A card in the premium-stays carousel (C3 SheenPremiumCard, D01/D02): photo with Save, name, score and headline, total
-/// with the nights label. 232 wide by default.
+/// A card for a carousel of featured stays: a photo with Save, the name, score and headline, and the total with a
+/// nights label. 232 points wide by default; [heightFor] gives the row height for a text size.
+///
+/// {@category Travel}
 class SheenPremiumCard extends StatelessWidget {
+  /// A featured card for the hotel [name].
   const SheenPremiumCard({
     super.key,
     required this.name,
@@ -235,17 +287,40 @@ class SheenPremiumCard extends StatelessWidget {
     this.width = 232,
   });
 
+  /// The hotel name.
   final String name;
+
+  /// The total price, formatted.
   final String total;
+
+  /// The words after the total, such as "for 2 nights".
   final String nightsLabel;
+
+  /// The photo; the placeholder when null.
   final Widget? photo;
+
+  /// The placeholder's label.
   final String? noPhotoLabel;
+
+  /// The guest score.
   final String? score;
+
+  /// A line about the place.
   final String? headline;
+
+  /// Whether the hotel is saved.
   final bool saved;
+
+  /// The Save button's label for screen readers.
   final String saveLabel;
+
+  /// Called by Save; null hides Save.
   final VoidCallback? onSave;
+
+  /// Called when the card is tapped.
   final VoidCallback onTap;
+
+  /// The card width.
   final double width;
 
   /// The height a carousel row needs for these cards at the user's text size: the 154 pt photo, the 10 pt gap and
@@ -277,7 +352,10 @@ class SheenPremiumCard extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    ExcludeSemantics(child: photo ?? SheenImagePlaceholder(label: noPhotoLabel, iconSize: 30)),
+                    ExcludeSemantics(
+                      child:
+                          photo ?? SheenImagePlaceholder(label: noPhotoLabel, icon: SheenIcons.bedFill, iconSize: 30),
+                    ),
                     if (onSave != null)
                       PositionedDirectional(
                         end: 4,
@@ -356,12 +434,29 @@ class SheenPremiumCard extends StatelessWidget {
   }
 }
 
-/// How a destination's visa rule reads for the chosen passport.
-enum SheenVisaKind { free, onArrival, eta, required }
+/// How a destination's visa rule reads for a passport; it picks the colour of the rule's dot on a [SheenCityTile].
+///
+/// {@category Travel}
+enum SheenVisaKind {
+  /// No visa needed.
+  free,
 
-/// A destination (C3 SheenCityTile, D02/D03/D13): city photo with a dark foot, name and distance, the visa rule with its
-/// coloured dot. Without a photo it is a plain card with the same text.
+  /// A visa is issued on arrival.
+  onArrival,
+
+  /// An electronic travel authorisation is needed before the trip.
+  eta,
+
+  /// A visa is needed before the trip.
+  required,
+}
+
+/// A destination: a city photo with a darkened foot, the name and distance, and the visa rule with its coloured dot.
+/// Without a photo it is a plain card with the same text.
+///
+/// {@category Travel}
 class SheenCityTile extends StatelessWidget {
+  /// A tile for the city [name].
   const SheenCityTile({
     super.key,
     required this.name,
@@ -374,13 +469,28 @@ class SheenCityTile extends StatelessWidget {
     this.height = 150,
   });
 
+  /// The city name.
   final String name;
+
+  /// A distance or flight time, formatted.
   final String? distance;
+
+  /// The visa rule in words, such as "Visa-free · 30 days".
   final String? rule;
+
+  /// The kind of rule; it colours the dot before [rule].
   final SheenVisaKind? kind;
+
+  /// The city photo; a plain card when null.
   final Widget? photo;
+
+  /// Called when the tile is tapped.
   final VoidCallback onTap;
+
+  /// The tile width.
   final double? width;
+
+  /// The tile height.
   final double? height;
 
   static Color _dot(SheenColors c, SheenVisaKind k) => switch (k) {

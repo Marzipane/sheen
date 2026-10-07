@@ -6,12 +6,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:sheen/sheen.dart';
 
-/// The place of one hotel on a native map's marker (D08 "Around the hotel"): a 34 pt circle in the fill colour with a
-/// white [icon] glyph, a thin rim and a soft shadow around it, as a PNG [pixelRatio] times the logical size. Give the
-/// marker the same ratio and anchor it at the centre.
+/// A place marker for a native map, as PNG bytes (Google Maps and Apple Maps draw markers from bitmaps, not widgets): a
+/// 34-point circle in the accent colour with a white [icon] glyph, a thin rim and a soft shadow, drawn [pixelRatio]
+/// times the logical size. Give the marker the same ratio and anchor it at the centre.
+///
+/// {@category Travel}
 Future<Uint8List> renderSheenPlacePin({
   required SheenThemeData theme,
-  String icon = 'bed',
+  String icon = SheenIcons.bedFill,
   double pixelRatio = 3,
 }) async {
   const d = 34.0, margin = 6.0, glyph = 18.0;

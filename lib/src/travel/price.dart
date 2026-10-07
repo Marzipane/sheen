@@ -2,17 +2,20 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
-/// Total for the stay first, per night second (C3 SheenPriceBlock). All strings arrive formatted, in the user's currency.
+/// A price with the total first and the price per night second. All strings arrive formatted, in the user's currency.
+///
+/// {@category Travel}
 class SheenPriceBlock extends StatelessWidget {
+  /// A price block for [total].
   const SheenPriceBlock({super.key, required this.total, required this.caption, this.perNight});
 
-  /// "AED 1,448.00": 20/700 tabular.
+  /// The total, formatted ("€ 1,448").
   final String total;
 
-  /// "Total for 2 nights": 12 ink2 under the total.
+  /// A line under the total, such as "Total for 2 nights".
   final String caption;
 
-  /// "AED 724.00 a night": 13 ink2 at the end edge; left out when the supplier sends no nightly rate.
+  /// The price per night at the end edge, such as "€ 724 a night".
   final String? perNight;
 
   @override
@@ -47,12 +50,18 @@ class SheenPriceBlock extends StatelessWidget {
   }
 }
 
-/// The cancellation rule in one line (C3 SheenCancellationLine): a green check with the "free until" text, or an x-circle in
-/// ink2 with the non-refundable text. The text is the app's own string with the supplier's date.
+/// The cancellation terms in one line: a check in the success colour with free-cancellation text, or a crossed circle
+/// with non-refundable text.
+///
+/// {@category Travel}
 class SheenCancellationLine extends StatelessWidget {
+  /// A line showing [text].
   const SheenCancellationLine({super.key, required this.text, required this.refundable});
 
+  /// The terms, such as "Free cancellation until 12 Oct".
   final String text;
+
+  /// Whether the booking can be cancelled for free.
   final bool refundable;
 
   @override

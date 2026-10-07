@@ -2,8 +2,12 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
-/// The result card while live prices load (D18): photo block, name and price bars, two text lines.
+/// A [SheenHotelCard] while results load: a photo block, name and price bars and two text lines, shimmering (still with
+/// Reduce Motion).
+///
+/// {@category Travel}
 class SheenHotelCardSkeleton extends StatelessWidget {
+  /// A loading placeholder for a hotel card.
   const SheenHotelCardSkeleton({super.key});
 
   @override
@@ -42,11 +46,12 @@ class SheenHotelCardSkeleton extends StatelessWidget {
   );
 }
 
-/// An empty list or a dead end (C3 SheenEmptyState): glass icon circle, title, the app's own message. [compact] is the
-/// small form used inside sheets and on the map.
-
-/// A price on the map (C3 SheenPricePin): regular glass 30 high, 13/700; selected is prominent, 34 high, 14/700.
+/// A price on a map drawn by Flutter: a 30-point glass capsule; selected, a 34-point prominent one. For native map
+/// markers, use [renderSheenPricePin].
+///
+/// {@category Travel}
 class SheenPricePin extends StatelessWidget {
+  /// A pin showing [label].
   const SheenPricePin({
     super.key,
     required this.label,
@@ -55,11 +60,16 @@ class SheenPricePin extends StatelessWidget {
     this.semanticLabel,
   });
 
+  /// The price, formatted.
   final String label;
+
+  /// Whether this pin is the selected one.
   final bool selected;
+
+  /// Called when the pin is tapped.
   final VoidCallback onTap;
 
-  /// Defaults to [label]; screens pass the hotel name with the price.
+  /// What a screen reader says; [label] when null (pass the place name with the price).
   final String? semanticLabel;
 
   @override
