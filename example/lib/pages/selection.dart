@@ -34,6 +34,28 @@ class _SelectionPageState extends State<SelectionPage> {
   String _currency = 'EUR';
   String? _menu;
 
+  /// `--dart-define=OPEN=menu` opens the menu at launch, for screenshots.
+  static const String _open = String.fromEnvironment('OPEN');
+
+  @override
+  void initState() {
+    super.initState();
+    if (_open == 'menu') WidgetsBinding.instance.addPostFrameCallback((_) => _showMenu());
+  }
+
+  Future<void> _showMenu() async {
+    final v = await showSheenMenu<String>(
+      context,
+      anchorKey: _moreKey,
+      items: const [
+        SheenMenuItem(value: 'Shared', label: 'Share', icon: SheenIcons.share),
+        SheenMenuItem(value: 'Copied', label: 'Copy link', icon: SheenIcons.link),
+        SheenMenuItem(value: 'Deleted', label: 'Delete', icon: SheenIcons.trash, destructive: true),
+      ],
+    );
+    if (v != null) setState(() => _menu = v);
+  }
+
   static const _bins = [2, 5, 9, 14, 22, 30, 26, 21, 17, 12, 9, 7, 5, 4, 3, 2, 2, 1];
 
   @override
@@ -42,6 +64,7 @@ class _SelectionPageState extends State<SelectionPage> {
     final today = DateTime.now();
     return SheenPage(
       title: 'Selection',
+      trailing: SheenIconButton(key: _moreKey, icon: SheenIcons.more, semanticLabel: 'More', onTap: _showMenu),
       children: [
         Demo(
           title: 'Chips',
@@ -101,7 +124,7 @@ class _SelectionPageState extends State<SelectionPage> {
           ),
         ),
         Demo(
-          title: 'Pull-down link and menu',
+          title: 'Pull-down link',
           child: Row(
             children: [
               Text('Prices in', style: t.type.footnote.copyWith(color: t.colors.textSecondary)),
@@ -124,24 +147,6 @@ class _SelectionPageState extends State<SelectionPage> {
               ),
               const Spacer(),
               if (_menu != null) Text(_menu!, style: t.type.footnote.copyWith(color: t.colors.textSecondary)),
-              const SizedBox(width: 8),
-              SheenIconButton(
-                key: _moreKey,
-                icon: SheenIcons.more,
-                semanticLabel: 'More',
-                onTap: () async {
-                  final v = await showSheenMenu<String>(
-                    context,
-                    anchorKey: _moreKey,
-                    items: const [
-                      SheenMenuItem(value: 'Shared', label: 'Share', icon: SheenIcons.share),
-                      SheenMenuItem(value: 'Copied', label: 'Copy link', icon: SheenIcons.link),
-                      SheenMenuItem(value: 'Deleted', label: 'Delete', icon: SheenIcons.trash, destructive: true),
-                    ],
-                  );
-                  if (v != null) setState(() => _menu = v);
-                },
-              ),
             ],
           ),
         ),

@@ -14,6 +14,64 @@ class _SheetsPageState extends State<SheetsPage> {
   String _sort = 'price';
   DateTime? _birthday;
 
+  /// `--dart-define=OPEN=filters` (or alert, date, toast) opens that demo at launch, for screenshots.
+  static const String _open = String.fromEnvironment('OPEN');
+
+  @override
+  void initState() {
+    super.initState();
+    if (_open.isEmpty) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      switch (_open) {
+        case 'filters':
+          _filters();
+        case 'alert':
+          _alert();
+        case 'date':
+          showSheenDateSheet(
+            context: context,
+            title: 'Date of birth',
+            first: DateTime(1920),
+            last: DateTime.now(),
+            initial: DateTime(1990, 5, 17),
+          );
+        case 'toast':
+          SheenToast.show(context, 'Saved to your list', tone: SheenTone.success, duration: const Duration(minutes: 1));
+      }
+    });
+  }
+
+  Future<void> _filters() => showSheenSheet<void>(
+    context: context,
+    title: 'Filters',
+    subtitle: '234 stays',
+    doneLabel: 'Done',
+    builder: (_, scroll) => ListView(
+      controller: scroll,
+      padding: const EdgeInsets.all(16),
+      children: [
+        SheenListGroup(
+          children: [
+            for (final f in ['Free cancellation', 'Breakfast', 'Pool', 'Sea view'])
+              SheenListRow(
+                title: f,
+                trailing: SheenSwitch(value: f == 'Pool', semanticLabel: f, onChanged: (_) {}),
+              ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  Future<bool?> _alert() => showSheenAlert(
+    context: context,
+    title: 'Time is up',
+    message: 'The offer has expired. Start again?',
+    primaryLabel: 'Start again',
+    secondaryLabel: 'Not now',
+  );
+
   @override
   Widget build(BuildContext context) => SheenPage(
     title: 'Sheets and dialogs',
@@ -40,30 +98,7 @@ class _SheetsPageState extends State<SheetsPage> {
                 if (v != null) setState(() => _sort = v);
               },
             ),
-            OpenButton(
-              'A sheet with Done',
-              onPressed: () => showSheenSheet<void>(
-                context: context,
-                title: 'Filters',
-                subtitle: '234 stays',
-                doneLabel: 'Done',
-                builder: (_, scroll) => ListView(
-                  controller: scroll,
-                  padding: const EdgeInsets.all(16),
-                  children: [
-                    SheenListGroup(
-                      children: [
-                        for (final f in ['Free cancellation', 'Breakfast', 'Pool', 'Sea view'])
-                          SheenListRow(
-                            title: f,
-                            trailing: SheenSwitch(value: f == 'Pool', semanticLabel: f, onChanged: (_) {}),
-                          ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            OpenButton('A sheet with Done', onPressed: _filters),
             OpenButton(
               _birthday == null ? 'Date of birth' : '${_birthday!.day}.${_birthday!.month}.${_birthday!.year}',
               icon: SheenIcons.calendar,
@@ -95,20 +130,7 @@ class _SheetsPageState extends State<SheetsPage> {
       ),
       Demo(
         title: 'Alert',
-        child: Gap(
-          children: [
-            OpenButton(
-              'Time is up',
-              onPressed: () => showSheenAlert(
-                context: context,
-                title: 'Time is up',
-                message: 'The offer has expired. Start again?',
-                primaryLabel: 'Start again',
-                secondaryLabel: 'Not now',
-              ),
-            ),
-          ],
-        ),
+        child: Gap(children: [OpenButton('Time is up', onPressed: _alert)]),
       ),
       Demo(
         title: 'Toasts',
