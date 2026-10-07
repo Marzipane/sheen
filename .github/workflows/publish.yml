@@ -22,8 +22,18 @@ jobs:
       - run: flutter pub get
       - name: The tag matches the version
         run: test "v$(grep -m1 '^version:' pubspec.yaml | awk '{print $2}')" = "${GITHUB_REF_NAME}"
-      - run: flutter analyze
-      - run: flutter test
+      # a tag for a version published by hand (such as the first one) passes without publishing again
+      - name: Is this version on pub.dev already?
+        id: pub
+        run: |
+          on=$(curl -sf https://pub.dev/api/packages/sheen | python3 -c "import json,sys;d=json.load(sys.stdin);print('true' if any(v['version']==sys.argv[1] for v in d.get('versions',[])) else 'false')" "${GITHUB_REF_NAME#v}" || echo false)
+          echo "published=$on" >> "$GITHUB_OUTPUT"
+      - if: steps.pub.outputs.published != 'true'
+        run: flutter analyze
+      - if: steps.pub.outputs.published != 'true'
+        run: flutter test
       # creates the short-lived pub.dev token from GitHub's OIDC token (PUB_TOKEN); after Flutter, so it is fresh
-      - uses: dart-lang/setup-dart@v1
-      - run: flutter pub publish --force
+      - if: steps.pub.outputs.published != 'true'
+        uses: dart-lang/setup-dart@v1
+      - if: steps.pub.outputs.published != 'true'
+        run: flutter pub publish --force
