@@ -6,4 +6,5 @@
 library;
 
 export 'src/foundation/colors.dart';
+export 'src/foundation/glass_style.dart';
 export 'src/foundation/type.dart';
