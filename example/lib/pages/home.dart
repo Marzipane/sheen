@@ -40,7 +40,7 @@ class HomePage extends StatelessWidget {
                         child: SheenGlass(
                           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                           child: Text(
-                            'Frosted glass, springs and 60+ widgets',
+                            'Frosted glass, springs and 80+ widgets',
                             style: context.sheen.type.subhead.copyWith(fontWeight: FontWeight.w600),
                           ),
                         ),
