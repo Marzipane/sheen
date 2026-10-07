@@ -21,6 +21,25 @@ class SheenPriceBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = context.sheen;
+    final totalText = Text(total, style: t.type.sized(t.type.price, 20).copyWith(color: t.colors.text, height: 1.25));
+    final captionText = Text(caption, style: t.type.caption.copyWith(color: t.colors.textSecondary));
+    final nightText = perNight == null
+        ? null
+        : Text(
+            perNight!,
+            style: t.type.footnote.copyWith(
+              color: t.colors.textSecondary,
+              fontFeatures: const [FontFeature.tabularFigures()],
+            ),
+          );
+    // at large text sizes the nightly price goes under the total rather than beside it
+    if (MediaQuery.textScalerOf(context).scale(10) > 13) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [totalText, captionText, ?nightText],
+      );
+    }
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -28,23 +47,10 @@ class SheenPriceBlock extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(total, style: t.type.sized(t.type.price, 20).copyWith(color: t.colors.text, height: 1.25)),
-              Text(caption, style: t.type.caption.copyWith(color: t.colors.textSecondary)),
-            ],
+            children: [totalText, captionText],
           ),
         ),
-        if (perNight != null)
-          Padding(
-            padding: const EdgeInsetsDirectional.only(start: 12, top: 5),
-            child: Text(
-              perNight!,
-              style: t.type.footnote.copyWith(
-                color: t.colors.textSecondary,
-                fontFeatures: const [FontFeature.tabularFigures()],
-              ),
-            ),
-          ),
+        if (nightText != null) Padding(padding: const EdgeInsetsDirectional.only(start: 12, top: 5), child: nightText),
       ],
     );
   }
@@ -83,6 +89,63 @@ class SheenCancellationLine extends StatelessWidget {
           child: Text(text, style: t.type.footnote.copyWith(color: c)),
         ),
       ],
+    );
+  }
+}
+
+/// A price on a map drawn by Flutter: a 30-point glass capsule; selected, a 34-point prominent one. For native map
+/// markers, use [renderSheenPricePin].
+///
+/// {@category Travel}
+class SheenPricePin extends StatelessWidget {
+  /// A pin showing [label].
+  const SheenPricePin({
+    super.key,
+    required this.label,
+    required this.selected,
+    required this.onTap,
+    this.semanticLabel,
+  });
+
+  /// The price, formatted.
+  final String label;
+
+  /// Whether this pin is the selected one.
+  final bool selected;
+
+  /// Called when the pin is tapped.
+  final VoidCallback onTap;
+
+  /// What a screen reader says; [label] when null (pass the place name with the price).
+  final String? semanticLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.sheen;
+    return SheenPressable(
+      onTap: onTap,
+      selected: selected,
+      semanticLabel: semanticLabel ?? label,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minHeight: selected ? 34 : 30),
+        child: SheenGlass(
+          variant: selected ? SheenGlassVariant.prominent : SheenGlassVariant.regular,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: selected ? 13 : 11),
+            child: Center(
+              widthFactor: 1,
+              heightFactor: 1,
+              child: Text(
+                label,
+                textScaler: MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.5),
+                style: t.type
+                    .sized(t.type.price, selected ? 14 : 13)
+                    .copyWith(height: 1.1, color: selected ? t.colors.onAccent : t.colors.text),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

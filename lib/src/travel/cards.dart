@@ -506,36 +506,43 @@ class SheenCityTile extends StatelessWidget {
     // Over a photo the foot is always dark, so the text is white and the dots use the dark palette in both themes.
     final colors = onPhoto ? SheenColors.dark() : t.colors;
     final ink = onPhoto ? const Color(0xFFFFFFFF) : t.colors.text;
+    final nameText = Text(
+      name,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: t.type.headline.copyWith(fontWeight: FontWeight.w700, color: ink),
+    );
+    final distanceText = distance == null
+        ? null
+        : Text(
+            distance!,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: t.type
+                .sized(t.type.caption, 11)
+                .copyWith(
+                  color: ink.withValues(alpha: onPhoto ? .85 : 1),
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
+          );
+    // at large text sizes the distance takes its own line rather than squeezing the name
+    final stacked = MediaQuery.textScalerOf(context).scale(10) > 13;
     final text = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
-          children: [
-            Expanded(
-              child: Text(
-                name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: t.type.headline.copyWith(fontWeight: FontWeight.w700, color: ink),
-              ),
-            ),
-            if (distance != null) ...[
-              const SizedBox(width: 6),
-              Text(
-                distance!,
-                style: t.type
-                    .sized(t.type.caption, 11)
-                    .copyWith(
-                      color: ink.withValues(alpha: onPhoto ? .85 : 1),
-                      fontFeatures: const [FontFeature.tabularFigures()],
-                    ),
-              ),
+        if (stacked) ...[
+          nameText,
+          ?distanceText,
+        ] else
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Expanded(child: nameText),
+              if (distanceText != null) ...[const SizedBox(width: 6), distanceText],
             ],
-          ],
-        ),
+          ),
         if (rule != null) ...[
           const SizedBox(height: 1),
           Row(
@@ -603,4 +610,48 @@ class SheenCityTile extends StatelessWidget {
       ),
     );
   }
+}
+
+/// A [SheenHotelCard] while results load: a photo block, name and price bars and two text lines, shimmering (still with
+/// Reduce Motion).
+///
+/// {@category Travel}
+class SheenHotelCardSkeleton extends StatelessWidget {
+  /// A loading placeholder for a hotel card.
+  const SheenHotelCardSkeleton({super.key});
+
+  @override
+  Widget build(BuildContext context) => const ExcludeSemantics(
+    child: SheenCard(
+      child: SizedBox(
+        height: 320,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SheenSkeleton(height: 196, radius: 0),
+            Padding(
+              padding: EdgeInsets.fromLTRB(16, 14, 16, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(child: SheenSkeleton(width: 170, height: 18)),
+                      SizedBox(width: 12),
+                      Flexible(child: SheenSkeleton(width: 110, height: 18)),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  SheenSkeleton(width: 130, height: 13),
+                  SizedBox(height: 12),
+                  SheenSkeleton(width: 210, height: 13),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }
