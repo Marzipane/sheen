@@ -141,7 +141,7 @@ Alerts, toasts, banners, status pills and screens, empty states, skeletons, prog
 - [SheenProgressCapsule](https://pub.dev/documentation/sheen/latest/sheen/SheenProgressCapsule-class.html): A wait the user can see, such as "Checking live prices": a glass capsule with a spinner and a label, announced to screen readers as a live region.
 - [SheenProgressRing](https://pub.dev/documentation/sheen/latest/sheen/SheenProgressRing-class.html): A circular progress indicator: an arc in the accent over a faint ring, filled to value.
 - [SheenSkeleton](https://pub.dev/documentation/sheen/latest/sheen/SheenSkeleton-class.html): A placeholder block for content that is loading, swept by a soft highlight every 1.2 seconds; still with Reduce Motion. Without a width it fills the width it is given.
-- [SheenSpinner](https://pub.dev/documentation/sheen/latest/sheen/SheenSpinner-class.html): See NoSuchThing. A ring spinner: a faint track with a bright quarter that turns. Like the system spinner it keeps turning with Reduce Motion, since the turning is the message.
+- [SheenSpinner](https://pub.dev/documentation/sheen/latest/sheen/SheenSpinner-class.html): A ring spinner: a faint track with a bright quarter that turns. Like the system spinner it keeps turning with Reduce Motion, since the turning is the message.
 - [SheenStatusNotice](https://pub.dev/documentation/sheen/latest/sheen/SheenStatusNotice-class.html): A notice in a glass row with a glyph, such as "Payments are temporarily unavailable", with an optional action.
 - [SheenStatusPill](https://pub.dev/documentation/sheen/latest/sheen/SheenStatusPill-class.html): A small capsule that names a state, such as "Confirmed" or "Pending", in the colour of its tone.
 - [SheenStatusScreen](https://pub.dev/documentation/sheen/latest/sheen/SheenStatusScreen-class.html): A whole screen that explains a state the app is in: offline, under maintenance, an update needed, a section closed, a booking confirmed.
@@ -173,6 +173,7 @@ Cards, grouped lists with tinted glyph tiles, accordions, key-value cards, a car
 
 `SheenPage` is a full page with a large title that collapses into the toolbar; `SheenSectionLabel` and `SheenSectionNote` frame groups; `SheenScrollEdge` and `SheenEdgeFade` soften edges; `SheenLayout` gives the readable width and the wide-window breakpoints.
 
+- [SheenBottomBarSpace](https://pub.dev/documentation/sheen/latest/sheen/SheenBottomBarSpace-class.html): How much of the bottom of a scroll view a floating bar covers, such as SheenPage's bottom bar. sheen's text fields below it scroll themselves clear of the bar when they take focus and the keyboard comes up.
 - [SheenEdgeFade](https://pub.dev/documentation/sheen/latest/sheen/SheenEdgeFade-class.html): Fades the start and end edges of a horizontal child into color over width points, to say that it scrolls on. Use it around any sideways list on a plain background; SheenChipRow does.
 - [SheenLayout](https://pub.dev/documentation/sheen/latest/sheen/SheenLayout-class.html): Widths for larger windows (tablets, desktop, the web).
 - [SheenLayoutContext](https://pub.dev/documentation/sheen/latest/sheen/SheenLayoutContext.html): context.contentInset: the side inset of a readable column in this window.
