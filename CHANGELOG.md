@@ -1,3 +1,9 @@
+## 0.1.3
+
+- **Scores for screen readers:** `SheenHotelCard` and `SheenPremiumCard` take a `scoreLabel`, the way a screen reader
+  says the score, such as "Guest score 4.4 out of 5". The badge still shows the number alone. Without a `scoreLabel`
+  the card reads the score as before.
+
 ## 0.1.2
 
 - **Fields over a bottom bar:** a `SheenTextField` or `SheenPasswordField` that takes focus low on a `SheenPage` with a

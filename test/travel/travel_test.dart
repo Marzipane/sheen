@@ -83,6 +83,52 @@ void main() {
     }
   }
 
+  testWidgets("a screen reader hears the score as the card's scoreLabel says it; the badge still shows the number", (
+    t,
+  ) async {
+    await t.pumpWidget(
+      host(
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                width: 358,
+                child: SheenHotelCard(
+                  name: 'Aurora',
+                  total: 'USD 1,448.00',
+                  score: '4.4',
+                  scoreLabel: 'Guest score 4.4 out of 5',
+                  recommend: 'Very good · 92% recommend',
+                  photoCount: 0,
+                  photoBuilder: photo,
+                  noPhotoLabel: 'No photo',
+                  saveLabel: 'Save',
+                  onTap: () {},
+                ),
+              ),
+              SheenPremiumCard(
+                name: 'Casa',
+                total: 'USD 770.80',
+                nightsLabel: '2 nights',
+                score: '4.8',
+                scoreLabel: 'Guest score 4.8 out of 5',
+                saveLabel: 'Save',
+                onTap: () {},
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    expect(
+      find.bySemanticsLabel(RegExp(r'Aurora, USD 1,448\.00, Guest score 4\.4 out of 5, Very good')),
+      findsOneWidget,
+    );
+    expect(find.bySemanticsLabel(RegExp(r'Casa, Guest score 4\.8 out of 5, USD 770\.80')), findsOneWidget);
+    expect(find.text('4.4'), findsOneWidget);
+    expect(find.text('4.8'), findsOneWidget);
+  });
+
   test('premium cards say how tall a carousel row must be for the text size', () {
     expect(
       SheenPremiumCard.heightFor(const TextScaler.linear(2)),

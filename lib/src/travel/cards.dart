@@ -39,6 +39,7 @@ class SheenHotelCard extends StatelessWidget {
     this.perNight,
     this.headline,
     this.score,
+    this.scoreLabel,
     this.recommend,
     this.board,
     this.cancellation,
@@ -61,6 +62,9 @@ class SheenHotelCard extends StatelessWidget {
 
   /// The guest score, shown on a [SheenScoreBadge].
   final String? score;
+
+  /// How a screen reader says [score], such as "Guest score 4.4 out of 5"; [score] itself when null.
+  final String? scoreLabel;
 
   /// A recommendation share, such as "92 % recommend".
   final String? recommend;
@@ -107,7 +111,7 @@ class SheenHotelCard extends StatelessWidget {
       total,
       perNight,
       headline,
-      score,
+      scoreLabel ?? score,
       recommend,
       board,
       cancellation,
@@ -281,6 +285,7 @@ class SheenPremiumCard extends StatelessWidget {
     this.photo,
     this.noPhotoLabel,
     this.score,
+    this.scoreLabel,
     this.headline,
     this.saved = false,
     this.onSave,
@@ -304,6 +309,9 @@ class SheenPremiumCard extends StatelessWidget {
 
   /// The guest score.
   final String? score;
+
+  /// How a screen reader says [score], such as "Guest score 4.4 out of 5"; [score] itself when null.
+  final String? scoreLabel;
 
   /// A line about the place.
   final String? headline;
@@ -335,7 +343,7 @@ class SheenPremiumCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = context.sheen;
-    final summary = [name, score, headline, '$total $nightsLabel'].whereType<String>().join(', ');
+    final summary = [name, scoreLabel ?? score, headline, '$total $nightsLabel'].whereType<String>().join(', ');
     return SheenPressable(
       onTap: onTap,
       semanticLabel: summary,
