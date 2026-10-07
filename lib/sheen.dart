@@ -8,6 +8,8 @@ library;
 export 'src/foundation/colors.dart';
 export 'src/foundation/glass_style.dart';
 export 'src/foundation/motion.dart';
+export 'src/foundation/scope.dart';
 export 'src/foundation/space.dart';
+export 'src/foundation/strings.dart';
 export 'src/foundation/theme.dart';
 export 'src/foundation/type.dart';
