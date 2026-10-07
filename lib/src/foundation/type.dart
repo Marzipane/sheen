@@ -38,8 +38,8 @@ abstract final class SheenTracking {
 /// The family is the platform's system font (SF Pro on iOS, Roboto or Noto on Android) unless you set one with
 /// [withFamily]. Sizes are logical points and scale with the user's text size through the ambient `TextScaler`.
 ///
-/// Every style pins its letter spacing and line height, so a host theme (for example Material's default text style)
-/// cannot leak into them. [standard] carries Apple's tracking ([SheenTracking]) plus the design's own letter spacing;
+/// Every style pins its letter spacing, line height and leading distribution (even, as Material 3), so a host theme (for
+/// example Material's default text style) cannot leak into them. [standard] carries Apple's tracking ([SheenTracking]) plus the design's own letter spacing;
 /// [material] carries only the design's own. For a size other than the token's, use [sized], which keeps the
 /// tracking right for the new size.
 ///
@@ -105,15 +105,64 @@ class SheenType with Diagnosticable {
 
   /// The scale for iOS and macOS: San Francisco tracking plus the design's own letter spacing.
   static const SheenType standard = SheenType(
-    largeTitle: TextStyle(fontSize: 34, fontWeight: FontWeight.w700, letterSpacing: -0.272, height: 1.1),
-    title: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, letterSpacing: -0.484, height: 1.2),
-    headline: TextStyle(fontSize: 17, fontWeight: FontWeight.w600, letterSpacing: -0.442, height: 1.25),
-    body: TextStyle(fontSize: 17, fontWeight: FontWeight.w400, letterSpacing: -0.442, height: 1.3),
-    subhead: TextStyle(fontSize: 15, fontWeight: FontWeight.w400, letterSpacing: -0.24, height: 1.3),
-    footnote: TextStyle(fontSize: 13, fontWeight: FontWeight.w400, letterSpacing: -0.078, height: 1.3),
-    caption: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0, height: 1.25),
-    tabLabel: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, letterSpacing: 0.22, height: 1.2),
+    largeTitle: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
+      fontSize: 34,
+      fontWeight: FontWeight.w700,
+      letterSpacing: -0.272,
+      height: 1.1,
+    ),
+    title: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
+      fontSize: 22,
+      fontWeight: FontWeight.w700,
+      letterSpacing: -0.484,
+      height: 1.2,
+    ),
+    headline: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
+      fontSize: 17,
+      fontWeight: FontWeight.w600,
+      letterSpacing: -0.442,
+      height: 1.25,
+    ),
+    body: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
+      fontSize: 17,
+      fontWeight: FontWeight.w400,
+      letterSpacing: -0.442,
+      height: 1.3,
+    ),
+    subhead: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
+      fontSize: 15,
+      fontWeight: FontWeight.w400,
+      letterSpacing: -0.24,
+      height: 1.3,
+    ),
+    footnote: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
+      fontSize: 13,
+      fontWeight: FontWeight.w400,
+      letterSpacing: -0.078,
+      height: 1.3,
+    ),
+    caption: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0,
+      height: 1.25,
+    ),
+    tabLabel: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
+      fontSize: 10,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0.22,
+      height: 1.2,
+    ),
     price: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
       fontSize: 17,
       fontWeight: FontWeight.w700,
       letterSpacing: -0.442,
@@ -121,6 +170,7 @@ class SheenType with Diagnosticable {
       fontFeatures: _tabular,
     ),
     timer: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
       fontSize: 16,
       fontWeight: FontWeight.w700,
       letterSpacing: -0.32,
@@ -133,16 +183,78 @@ class SheenType with Diagnosticable {
   /// The scale for Android, the web and desktop: Roboto and Noto set their own spacing, so only the design's own
   /// letter spacing remains.
   static const SheenType material = SheenType(
-    largeTitle: TextStyle(fontSize: 34, fontWeight: FontWeight.w700, letterSpacing: -0.68, height: 1.1),
-    title: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, letterSpacing: -0.22, height: 1.2),
-    headline: TextStyle(fontSize: 17, fontWeight: FontWeight.w600, letterSpacing: 0, height: 1.25),
-    body: TextStyle(fontSize: 17, fontWeight: FontWeight.w400, letterSpacing: 0, height: 1.3),
-    subhead: TextStyle(fontSize: 15, fontWeight: FontWeight.w400, letterSpacing: 0, height: 1.3),
-    footnote: TextStyle(fontSize: 13, fontWeight: FontWeight.w400, letterSpacing: 0, height: 1.3),
-    caption: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0, height: 1.25),
-    tabLabel: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, letterSpacing: 0.1, height: 1.2),
-    price: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, letterSpacing: 0, height: 1.2, fontFeatures: _tabular),
-    timer: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, letterSpacing: 0, height: 1.2, fontFeatures: _tabular),
+    largeTitle: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
+      fontSize: 34,
+      fontWeight: FontWeight.w700,
+      letterSpacing: -0.68,
+      height: 1.1,
+    ),
+    title: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
+      fontSize: 22,
+      fontWeight: FontWeight.w700,
+      letterSpacing: -0.22,
+      height: 1.2,
+    ),
+    headline: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
+      fontSize: 17,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0,
+      height: 1.25,
+    ),
+    body: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
+      fontSize: 17,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0,
+      height: 1.3,
+    ),
+    subhead: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
+      fontSize: 15,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0,
+      height: 1.3,
+    ),
+    footnote: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
+      fontSize: 13,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0,
+      height: 1.3,
+    ),
+    caption: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0,
+      height: 1.25,
+    ),
+    tabLabel: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
+      fontSize: 10,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0.1,
+      height: 1.2,
+    ),
+    price: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
+      fontSize: 17,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0,
+      height: 1.2,
+      fontFeatures: _tabular,
+    ),
+    timer: TextStyle(
+      leadingDistribution: TextLeadingDistribution.even,
+      fontSize: 16,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0,
+      height: 1.2,
+      fontFeatures: _tabular,
+    ),
     sfTracking: false,
   );
 

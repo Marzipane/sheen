@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
+import '../foundation/material_bridge.dart';
 import '../glass/painters.dart';
 
 /// Opens a sheet with a header: a grabber, a close button, the [title] and, when [doneLabel] is given, a prominent
@@ -172,7 +173,9 @@ class SheenSheetRoute<T> extends PopupRoute<T> {
         ),
       ),
     );
-    return themes?.wrap(sheet) ?? sheet;
+    // the app's own Material widgets in the sheet (a TextField, a Slider) need a Material above them, as Flutter's
+    // bottom sheet gives; it sits outside the opener's themes, so their text style still wins over Material's
+    return SheenMaterialBridge(child: themes?.wrap(sheet) ?? sheet);
   }
 
   @override

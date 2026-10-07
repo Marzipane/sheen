@@ -1,5 +1,6 @@
 import 'dart:ui' show Tristate;
 
+import 'package:flutter/material.dart' as m;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sheen/sheen.dart';
@@ -85,6 +86,46 @@ void main() {
       expect(await result, DateTime(2026, 10, 7));
     });
   });
+
+  testWidgets(
+    'a sheet may hold the app\'s own Material widgets: it gives them a Material, as Flutter\'s bottom sheet does, '
+    'and its text keeps sheen\'s style',
+    (t) async {
+      late BuildContext inside;
+      await t.pumpWidget(
+        opener(
+          (c) => showSheenCustomSheet<void>(
+            context: c,
+            builder: (sheet, scroll) => SheenSheetBody(
+              title: 'Guest',
+              onCancel: () => Navigator.of(sheet).pop(),
+              child: ListView(
+                controller: scroll,
+                children: [
+                  const m.TextField(key: ValueKey('name')),
+                  m.Slider(value: .5, onChanged: (_) {}),
+                  Builder(
+                    builder: (b) {
+                      inside = b;
+                      return const Text('note');
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+      await t.tap(find.text('open'));
+      await t.pumpAndSettle();
+      expect(t.takeException(), isNull);
+      await t.enterText(find.byKey(const ValueKey('name')), 'Lina');
+      await t.pump();
+      expect(find.text('Lina'), findsOneWidget);
+      final style = DefaultTextStyle.of(inside).style;
+      expect((style.fontSize, style.color), (inside.sheen.type.body.fontSize, inside.sheen.colors.text));
+    },
+  );
 
   testWidgets('a document sheet shows its long text and closes', (t) async {
     await t.pumpWidget(opener((c) => showSheenDocumentSheet(c, title: 'Terms', text: 'You agree to everything.')));

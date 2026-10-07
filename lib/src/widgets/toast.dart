@@ -108,37 +108,41 @@ class _SheenToastViewState extends State<_SheenToastView> with SingleTickerProvi
       left: 16,
       right: 16,
       top: top,
-      child: Center(
-        child: FadeTransition(
-          opacity: curve,
-          child: SlideTransition(
-            position: Tween(begin: reduced ? Offset.zero : const Offset(0, -.4), end: Offset.zero).animate(curve),
-            child: Semantics(
-              container: true,
-              button: true,
-              label: widget.message,
-              excludeSemantics: true,
-              child: GestureDetector(
-                onTap: widget.onTap,
-                child: ConstrainedBox(
-                  key: const ValueKey('sheen-toast'),
-                  constraints: const BoxConstraints(maxWidth: 520),
-                  child: SheenGlass(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SheenIcon(glyph, size: 16, color: widget.tone.color(t.colors), stroke: 2.6),
-                        const SizedBox(width: 10),
-                        Flexible(
-                          child: Text(
-                            widget.message,
-                            maxLines: 4,
-                            overflow: TextOverflow.ellipsis,
-                            style: t.type.subhead.copyWith(fontWeight: FontWeight.w600, color: t.colors.text),
+      // its own text style: the overlay may sit outside any SheenScope, where the app's error style would show
+      child: DefaultTextStyle(
+        style: t.type.body.copyWith(color: t.colors.text),
+        child: Center(
+          child: FadeTransition(
+            opacity: curve,
+            child: SlideTransition(
+              position: Tween(begin: reduced ? Offset.zero : const Offset(0, -.4), end: Offset.zero).animate(curve),
+              child: Semantics(
+                container: true,
+                button: true,
+                label: widget.message,
+                excludeSemantics: true,
+                child: GestureDetector(
+                  onTap: widget.onTap,
+                  child: ConstrainedBox(
+                    key: const ValueKey('sheen-toast'),
+                    constraints: const BoxConstraints(maxWidth: 520),
+                    child: SheenGlass(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SheenIcon(glyph, size: 16, color: widget.tone.color(t.colors), stroke: 2.6),
+                          const SizedBox(width: 10),
+                          Flexible(
+                            child: Text(
+                              widget.message,
+                              maxLines: 4,
+                              overflow: TextOverflow.ellipsis,
+                              style: t.type.subhead.copyWith(fontWeight: FontWeight.w600, color: t.colors.text),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

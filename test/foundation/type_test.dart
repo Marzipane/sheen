@@ -24,6 +24,17 @@ void main() {
     }
   });
 
+  test(
+    'every style spreads its leading evenly, as Material 3 does, so where the text sits does not depend on the host',
+    () {
+      for (final t in [SheenType.standard, SheenType.material, SheenType.standard.withFamily('Inter')]) {
+        for (final s in t.styles) {
+          expect(s.leadingDistribution, TextLeadingDistribution.even, reason: '$s');
+        }
+      }
+    },
+  );
+
   test('Apple tracking follows the HIG table and interpolates between rows', () {
     expect(SheenTracking.at(17), closeTo(-.442, 1e-9));
     expect(SheenTracking.at(12), 0);

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart' as m;
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -94,5 +96,20 @@ void main() {
     await t.pumpAndSettle();
     expect(haptics, ['successNotification']);
     expect(find.byWidgetPredicate((w) => w is SheenIcon && w.name == SheenIcons.checkCircleFill), findsOneWidget);
+  });
+
+  testWidgets('a toast shown from outside a SheenScope draws plain text, not the app\'s error style', (t) async {
+    await t.pumpWidget(
+      m.MaterialApp(
+        home: Builder(
+          builder: (c) => GestureDetector(onTap: () => SheenToast.show(c, 'Saved'), child: const Text('show')),
+        ),
+      ),
+    );
+    await t.tap(find.text('show'));
+    await t.pump(const Duration(milliseconds: 300));
+    final style = t.renderObject<RenderParagraph>(find.text('Saved')).text.style;
+    expect(style?.decoration ?? TextDecoration.none, TextDecoration.none);
+    SheenToast.hide();
   });
 }

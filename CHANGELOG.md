@@ -1,3 +1,16 @@
+## 0.1.1
+
+Fixes found while moving the first app onto sheen.
+
+- **Sheets** give their content a transparent `Material`, as Flutter's bottom sheet does. An app's own Material widgets
+  in a sheet (a `TextField`, a `Slider`) no longer fail with "No Material widget found". The text style from above the
+  sheet stays, so sheen's type still wins over Material's.
+- **Toasts** set their own text style. A toast shown from a context outside a `SheenScope` (an overlay above the app's
+  pages) no longer draws its text in Flutter's error style, the yellow underline.
+- **Type** pins the leading distribution (even, as Material 3) in every style, as it already pinned letter spacing and
+  line height. Text now sits in the same place under a Material ancestor and without one; before, text in a sheet
+  sat about 1 pt lower than the same text on a page. Goldens are updated for this sub-pixel shift.
+
 ## 0.1.0
 
 First release.
