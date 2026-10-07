@@ -63,54 +63,53 @@ void main() {
       expect(searched, 1);
     });
 
-    testWidgets(
-      'a wide window: the tabs at the top with their labels, the lens on the selected one, search beside',
-      (t) async {
-        final picked = <String>[];
-        await t.pumpWidget(
-          app(
-            Center(
-              child: SheenTopTabBar(
-                items: tabs,
-                index: 2,
-                onSelect: (i) => picked.add('tab $i'),
-                onSearch: () => picked.add('search'),
-                searchLabel: 'Search',
-              ),
+    testWidgets('a wide window: the tabs at the top with their labels, the lens on the selected one, search beside', (
+      t,
+    ) async {
+      final picked = <String>[];
+      await t.pumpWidget(
+        app(
+          Center(
+            child: SheenTopTabBar(
+              items: tabs,
+              index: 2,
+              onSelect: (i) => picked.add('tab $i'),
+              onSearch: () => picked.add('search'),
+              searchLabel: 'Search',
             ),
           ),
-        );
-        await t.pumpAndSettle();
-        for (final tab in tabs) {
-          expect(find.text(tab.label).hitTestable(), findsOneWidget);
-        }
-        expect(find.byType(SheenLens), findsOneWidget);
-        expect(t.getCenter(find.byType(SheenLens)).dx, closeTo(t.getCenter(find.text('Explore')).dx, 16));
-        expect(t.getCenter(find.bySemanticsLabel('Search')).dx, greaterThan(t.getCenter(find.text('Profile')).dx));
-        await t.tap(find.text('Home'));
-        await t.tap(find.bySemanticsLabel('Search'));
-        expect(picked, ['tab 0', 'search']);
+        ),
+      );
+      await t.pumpAndSettle();
+      for (final tab in tabs) {
+        expect(find.text(tab.label).hitTestable(), findsOneWidget);
+      }
+      expect(find.byType(SheenLens), findsOneWidget);
+      expect(t.getCenter(find.byType(SheenLens)).dx, closeTo(t.getCenter(find.text('Explore')).dx, 16));
+      expect(t.getCenter(find.bySemanticsLabel('Search')).dx, greaterThan(t.getCenter(find.text('Profile')).dx));
+      await t.tap(find.text('Home'));
+      await t.tap(find.bySemanticsLabel('Search'));
+      expect(picked, ['tab 0', 'search']);
 
-        // search is where the user is: its circle has the lens, no tab does
-        await t.pumpWidget(
-          app(
-            Center(
-              child: SheenTopTabBar(
-                items: tabs,
-                index: 2,
-                onSelect: (_) {},
-                onSearch: () {},
-                searchLabel: 'Search',
-                searchActive: true,
-              ),
+      // search is where the user is: its circle has the lens, no tab does
+      await t.pumpWidget(
+        app(
+          Center(
+            child: SheenTopTabBar(
+              items: tabs,
+              index: 2,
+              onSelect: (_) {},
+              onSearch: () {},
+              searchLabel: 'Search',
+              searchActive: true,
             ),
           ),
-        );
-        await t.pumpAndSettle();
-        expect(find.byType(SheenLens), findsOneWidget);
-        expect(t.getCenter(find.byType(SheenLens)).dx, closeTo(t.getCenter(find.bySemanticsLabel('Search')).dx, 2));
-      },
-    );
+        ),
+      );
+      await t.pumpAndSettle();
+      expect(find.byType(SheenLens), findsOneWidget);
+      expect(t.getCenter(find.byType(SheenLens)).dx, closeTo(t.getCenter(find.bySemanticsLabel('Search')).dx, 2));
+    });
 
     testWidgets('the lens travels to the selected tab', (t) async {
       await t.pumpWidget(app(bar(index: 0)));
@@ -208,42 +207,38 @@ void main() {
         },
       );
 
-      testWidgets(
-        'pressed, the bar\'s glass swells past 62 pt and runs into the search circle',
-        (t) async {
-          await t.pumpWidget(app(bar()));
-          final glass = find.byKey(const ValueKey('tab-bar-glass'));
-          SheenBarBorder border() =>
-              t.widget<SheenGlass>(find.descendant(of: glass, matching: find.byType(SheenGlass))).shape
-                  as SheenBarBorder;
-          expect(t.getSize(glass).height, SheenTabBar.height);
-          expect(border().merge, 0, reason: 'at rest: the capsule and the circle apart');
-          final g = await t.startGesture(t.getCenter(find.text('Explore')));
-          await t.pump();
-          await t.pump(const Duration(milliseconds: 300));
-          // about 10 % taller on screen, as the iOS bar (the glass 2 pt, then the whole bar 9 %)
-          expect(t.getRect(glass).height, closeTo((SheenTabBar.height + 2) * 1.09, 1));
-          expect(border().merge, greaterThan(.9));
-          expect(
-            t.widget<Transform>(find.byKey(const ValueKey('tab-bar-elevation'))).transform.getMaxScaleOnAxis(),
-            closeTo(1.09, .01),
-            reason: 'the whole bar rises off the page',
-          );
-          expect(
-            t.getSize(lifted).height,
-            greaterThan(SheenTabBar.height * 1.3),
-            reason: 'the lens well past the bar, as in iOS 26',
-          );
-          await g.up();
-          await t.pumpAndSettle();
-          expect(t.getSize(glass).height, SheenTabBar.height);
-          expect(border().merge, 0);
-          expect(
-            t.widget<Transform>(find.byKey(const ValueKey('tab-bar-elevation'))).transform.getMaxScaleOnAxis(),
-            closeTo(1, .001),
-          );
-        },
-      );
+      testWidgets('pressed, the bar\'s glass swells past 62 pt and runs into the search circle', (t) async {
+        await t.pumpWidget(app(bar()));
+        final glass = find.byKey(const ValueKey('tab-bar-glass'));
+        SheenBarBorder border() =>
+            t.widget<SheenGlass>(find.descendant(of: glass, matching: find.byType(SheenGlass))).shape as SheenBarBorder;
+        expect(t.getSize(glass).height, SheenTabBar.height);
+        expect(border().merge, 0, reason: 'at rest: the capsule and the circle apart');
+        final g = await t.startGesture(t.getCenter(find.text('Explore')));
+        await t.pump();
+        await t.pump(const Duration(milliseconds: 300));
+        // about 10 % taller on screen, as the iOS bar (the glass 2 pt, then the whole bar 9 %)
+        expect(t.getRect(glass).height, closeTo((SheenTabBar.height + 2) * 1.09, 1));
+        expect(border().merge, greaterThan(.9));
+        expect(
+          t.widget<Transform>(find.byKey(const ValueKey('tab-bar-elevation'))).transform.getMaxScaleOnAxis(),
+          closeTo(1.09, .01),
+          reason: 'the whole bar rises off the page',
+        );
+        expect(
+          t.getSize(lifted).height,
+          greaterThan(SheenTabBar.height * 1.3),
+          reason: 'the lens well past the bar, as in iOS 26',
+        );
+        await g.up();
+        await t.pumpAndSettle();
+        expect(t.getSize(glass).height, SheenTabBar.height);
+        expect(border().merge, 0);
+        expect(
+          t.widget<Transform>(find.byKey(const ValueKey('tab-bar-elevation'))).transform.getMaxScaleOnAxis(),
+          closeTo(1, .001),
+        );
+      });
 
       testWidgets('the lens slides on to the search circle; letting go there opens search, not a tab', (t) async {
         listen(t);

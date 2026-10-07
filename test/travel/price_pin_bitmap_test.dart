@@ -34,9 +34,7 @@ void main() {
     });
   });
 
-  testWidgets('the picked place as a PNG: its name over a red dot, anchored on the dot; a long name is cut', (
-    t,
-  ) async {
+  testWidgets('the picked place as a PNG: its name over a red dot, anchored on the dot; a long name is cut', (t) async {
     await t.runAsync(() async {
       final pin = await renderSheenPickedPlacePin('Central Station', theme: SheenThemeData.dark(), pixelRatio: 3);
       final img = await decode(pin.png);
