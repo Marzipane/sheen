@@ -4,3 +4,5 @@
 /// widgets. Every widget is built on `package:flutter/widgets.dart`, so it works under `MaterialApp`, `CupertinoApp`
 /// or a plain `WidgetsApp`.
 library;
+
+export 'src/foundation/colors.dart';
