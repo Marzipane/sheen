@@ -1,3 +1,10 @@
+## 0.1.2
+
+- **Fields over a bottom bar:** a `SheenTextField` or `SheenPasswordField` that takes focus low on a `SheenPage` with a
+  bottom bar now scrolls clear of the bar when the keyboard comes up; before, it stopped under the bar. The new
+  `SheenBottomBarSpace` says how much of a scroll view a floating bar covers. `SheenPage` provides one for its own bar;
+  wrap your scroll view in one when you float a bar over it yourself.
+
 ## 0.1.1
 
 Fixes found while moving the first app onto sheen.

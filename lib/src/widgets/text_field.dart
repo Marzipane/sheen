@@ -190,6 +190,8 @@ class _SheenTextFieldState extends State<SheenTextField> {
               Expanded(
                 child: SheenMaterialBridge(
                   child: TextField(
+                    // Flutter's 20 points around a focused field, plus any bar floating over the bottom
+                    scrollPadding: EdgeInsets.fromLTRB(20, 20, 20, 20 + SheenBottomBarSpace.of(context)),
                     keyboardAppearance: t.brightness,
                     controller: widget.controller,
                     focusNode: _focus,

@@ -64,6 +64,38 @@ void main() {
     expect(t.getRect(find.byType(SheenPrimaryButton)).bottom, lessThanOrEqualTo(screen.height - 16));
   });
 
+  testWidgets('a field low on a page with a bottom bar scrolls clear of the bar when the keyboard comes', (t) async {
+    t.view.physicalSize = const Size(1206, 2622);
+    t.view.devicePixelRatio = 3;
+    addTearDown(t.view.reset);
+    final email = TextEditingController();
+    addTearDown(email.dispose);
+    await t.pumpWidget(
+      host(
+        // as an app's Scaffold does: the page above the keyboard
+        Builder(
+          builder: (c) => Padding(
+            padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(c).bottom),
+            child: SheenPage(
+              title: 'Guests',
+              bottom: SheenPrimaryButton(label: 'Continue', expand: true, onPressed: () {}),
+              children: [
+                const SizedBox(height: 560),
+                SheenTextField(label: 'Email', controller: email),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    await t.tap(find.byType(EditableText));
+    t.view.viewInsets = const FakeViewPadding(bottom: 336 * 3);
+    await t.pumpAndSettle();
+    final field = t.getRect(find.byType(EditableText));
+    final bar = t.getRect(find.byType(SheenPrimaryButton));
+    expect(field.bottom, lessThanOrEqualTo(bar.top), reason: 'the focused field is not under the bar');
+  });
+
   testWidgets('a section label is an upper-case header; a note follows a group', (t) async {
     final handle = t.ensureSemantics();
     await t.pumpWidget(

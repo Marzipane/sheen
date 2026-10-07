@@ -119,29 +119,33 @@ class _SheenPageState extends State<SheenPage> {
       color: t.colors.background,
       child: Stack(
         children: [
-          ListView(
-            controller: _controller,
-            padding: EdgeInsets.fromLTRB(inset, pad.top + 64, inset, pad.bottom + (w.bottom == null ? 32 : 112)),
-            children: [
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 4, 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Semantics(
-                      header: true,
-                      child: Text(w.title, style: t.type.largeTitle.copyWith(color: t.colors.text)),
-                    ),
-                    if (w.subtitle != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 4),
-                        child: Text(w.subtitle!, style: t.type.subhead.copyWith(color: t.colors.textSecondary)),
+          // the bottom bar floats over the list: a focused field scrolls clear of it
+          SheenBottomBarSpace(
+            height: w.bottom == null ? 0 : SheenBottomBarSpace.bar,
+            child: ListView(
+              controller: _controller,
+              padding: EdgeInsets.fromLTRB(inset, pad.top + 64, inset, pad.bottom + (w.bottom == null ? 32 : 112)),
+              children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 4, 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Semantics(
+                        header: true,
+                        child: Text(w.title, style: t.type.largeTitle.copyWith(color: t.colors.text)),
                       ),
-                  ],
+                      if (w.subtitle != null)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Text(w.subtitle!, style: t.type.subhead.copyWith(color: t.colors.textSecondary)),
+                        ),
+                    ],
+                  ),
                 ),
-              ),
-              ...w.children,
-            ],
+                ...w.children,
+              ],
+            ),
           ),
           SheenScrollEdge.top(height: pad.top + 72),
           Positioned(
@@ -187,6 +191,30 @@ class _SheenPageState extends State<SheenPage> {
       ),
     );
   }
+}
+
+/// How much of the bottom of a scroll view a floating bar covers, such as [SheenPage]'s bottom bar. sheen's text fields
+/// below it scroll themselves clear of the bar when they take focus and the keyboard comes up.
+///
+/// [SheenPage] provides one for its own bottom bar. Wrap your scroll view in one when you float a bar over it yourself.
+///
+/// {@category Layout}
+class SheenBottomBarSpace extends InheritedWidget {
+  /// Says that a bar [height] points tall floats over the bottom of [child].
+  const SheenBottomBarSpace({super.key, required this.height, required super.child});
+
+  /// The height a [SheenPage] bottom bar takes with its margin: a primary button and the space under it.
+  static const double bar = 100;
+
+  /// The covered height, from the bottom of the scroll view.
+  final double height;
+
+  /// The covered height for widgets below [context]; 0 when there is no bar.
+  static double of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<SheenBottomBarSpace>()?.height ?? 0;
+
+  @override
+  bool updateShouldNotify(SheenBottomBarSpace oldWidget) => oldWidget.height != height;
 }
 
 /// A small upper-case label over a group of rows, such as "PERSONAL DETAILS"; a header for screen readers.
