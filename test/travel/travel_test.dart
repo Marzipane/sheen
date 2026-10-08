@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sheen/travel.dart';
@@ -127,6 +128,42 @@ void main() {
     expect(find.bySemanticsLabel(RegExp(r'Casa, Guest score 4\.8 out of 5, USD 770\.80')), findsOneWidget);
     expect(find.text('4.4'), findsOneWidget);
     expect(find.text('4.8'), findsOneWidget);
+  });
+
+  testWidgets('the score line is never cut for the board: the board moves under it when both do not fit', (t) async {
+    const words = 'Wonderful · 87% recommend', board = 'Room only';
+    Widget card(double width) => host(
+      SizedBox(
+        width: width,
+        child: SheenHotelCard(
+          name: 'Aurora',
+          total: 'AED 1,448.00',
+          score: '4.7',
+          recommend: words,
+          board: board,
+          photoCount: 0,
+          photoBuilder: photo,
+          noPhotoLabel: 'No photo',
+          saveLabel: 'Save',
+          onTap: () {},
+        ),
+      ),
+    );
+    bool cut(String text) => t.renderObject<RenderParagraph>(find.text(text)).didExceedMaxLines;
+
+    // with room for both, the board stays on the score's line, at its end
+    await t.pumpWidget(card(780));
+    expect(t.getCenter(find.text(board)).dy, closeTo(t.getCenter(find.text('4.7')).dy, 1));
+    expect(t.getTopRight(find.text(board)).dx, closeTo(t.getTopRight(find.byType(SheenHotelCard)).dx - 16, 1));
+
+    // room for the score and its words, not for the board beside them
+    final cardLeft = t.getTopLeft(find.byType(SheenHotelCard)).dx;
+    final badgeLeft = t.getTopLeft(find.byType(SheenScoreBadge)).dx;
+    final padding = badgeLeft - cardLeft;
+    await t.pumpWidget(card(padding + t.getTopRight(find.text(words)).dx - badgeLeft + 4 + padding));
+    expect(cut(words), isFalse);
+    expect(cut(board), isFalse);
+    expect(t.getTopLeft(find.text(board)).dy, greaterThan(t.getBottomLeft(find.text(words)).dy));
   });
 
   test('premium cards say how tall a carousel row must be for the text size', () {

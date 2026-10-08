@@ -214,39 +214,37 @@ class SheenHotelCard extends StatelessWidget {
                         ],
                         if (score != null || recommend != null || board != null) ...[
                           const SizedBox(height: 7),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    if (score != null) SheenScoreBadge(score!),
-                                    if (score != null && recommend != null) const SizedBox(width: 8),
-                                    if (recommend != null)
-                                      Flexible(
-                                        child: Text(
-                                          recommend!,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: small,
+                          // The score and its words come first: when the board does not fit beside them it moves
+                          // under them, rather than both being cut to half the width each.
+                          SizedBox(
+                            width: double.infinity,
+                            child: Wrap(
+                              alignment: WrapAlignment.spaceBetween,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 12,
+                              runSpacing: 6,
+                              children: [
+                                if (score != null || recommend != null)
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      if (score != null) SheenScoreBadge(score!),
+                                      if (score != null && recommend != null) const SizedBox(width: 8),
+                                      if (recommend != null)
+                                        Flexible(
+                                          child: Text(
+                                            recommend!,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: small,
+                                          ),
                                         ),
-                                      ),
-                                  ],
-                                ),
-                              ),
-                              if (board != null) ...[
-                                const SizedBox(width: 12),
-                                Flexible(
-                                  child: Text(
-                                    board!,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.end,
-                                    style: small,
+                                    ],
                                   ),
-                                ),
+                                if (board != null)
+                                  Text(board!, maxLines: 1, overflow: TextOverflow.ellipsis, style: small),
                               ],
-                            ],
+                            ),
                           ),
                         ],
                         if (cancellation != null) ...[

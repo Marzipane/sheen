@@ -1,3 +1,9 @@
+## 0.1.4
+
+- **Score line on narrow cards:** on a `SheenHotelCard` the board ("Room only") moves under the score and its words when
+  both do not fit on one line. Before, the two halved the line, so on phones about 400 points wide the words were cut
+  ("Wonderful · 87% rec…"). With room for both, the board stays at the end of the score's line as before.
+
 ## 0.1.3
 
 - **Scores for screen readers:** `SheenHotelCard` and `SheenPremiumCard` take a `scoreLabel`, the way a screen reader
