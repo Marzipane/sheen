@@ -46,7 +46,23 @@ class SheenHotelCard extends StatelessWidget {
     this.refundable = false,
     this.saved = false,
     this.onSave,
+    this.wasTotal,
+    this.wasLabel,
+    this.deal,
+    this.dealNote,
   });
+
+  /// The total before a deal, struck through before [total]; null when there is no deal.
+  final String? wasTotal;
+
+  /// How a screen reader says [wasTotal], such as "was AED 1,422"; [wasTotal] itself when null.
+  final String? wasLabel;
+
+  /// The deal's badge on the photo, such as "−15%".
+  final String? deal;
+
+  /// A line about the deal under the rest, such as "Ends Sun 18 Oct".
+  final String? dealNote;
 
   /// The hotel name.
   final String name;
@@ -108,13 +124,16 @@ class SheenHotelCard extends StatelessWidget {
     final small = t.type.footnote.copyWith(color: t.colors.textSecondary);
     final summary = [
       name,
+      deal,
       total,
+      wasLabel ?? wasTotal,
       perNight,
       headline,
       scoreLabel ?? score,
       recommend,
       board,
       cancellation,
+      dealNote,
     ].whereType<String>().join(', ');
     return SheenPressable(
       onTap: onTap,
@@ -134,6 +153,8 @@ class SheenHotelCard extends StatelessWidget {
                         ? SheenImagePlaceholder(label: noPhotoLabel, icon: SheenIcons.bedFill)
                         : SheenPhotoPager(count: photoCount, photoBuilder: photoBuilder),
                   ),
+                  if (deal != null)
+                    PositionedDirectional(start: 10, top: 10, child: ExcludeSemantics(child: SheenDealBadge(deal!))),
                   if (onSave != null)
                     PositionedDirectional(
                       end: 7,
@@ -176,9 +197,17 @@ class SheenHotelCard extends StatelessWidget {
                               child: FittedBox(
                                 fit: BoxFit.scaleDown,
                                 alignment: AlignmentDirectional.centerEnd,
-                                child: Text(
-                                  total,
-                                  style: t.type.sized(t.type.price, 18).copyWith(color: t.colors.text),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                                  textBaseline: TextBaseline.alphabetic,
+                                  children: [
+                                    if (wasTotal != null) ...[
+                                      SheenWasPrice(wasTotal!, size: 13),
+                                      const SizedBox(width: 6),
+                                    ],
+                                    Text(total, style: t.type.sized(t.type.price, 18).copyWith(color: t.colors.text)),
+                                  ],
                                 ),
                               ),
                             ),
@@ -254,6 +283,15 @@ class SheenHotelCard extends StatelessWidget {
                             child: SheenCancellationLine(text: cancellation!, refundable: refundable),
                           ),
                         ],
+                        if (dealNote != null) ...[
+                          const SizedBox(height: 6),
+                          Text(
+                            dealNote!,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: t.type.footnote.copyWith(color: t.colors.warning, fontWeight: FontWeight.w700),
+                          ),
+                        ],
                       ],
                     );
                   },
@@ -288,7 +326,23 @@ class SheenPremiumCard extends StatelessWidget {
     this.saved = false,
     this.onSave,
     this.width = 232,
+    this.wasTotal,
+    this.wasLabel,
+    this.deal,
+    this.dealNote,
   });
+
+  /// The total before a deal, struck through after [total]; null when there is no deal.
+  final String? wasTotal;
+
+  /// How a screen reader says [wasTotal], such as "was AED 1,422"; [wasTotal] itself when null.
+  final String? wasLabel;
+
+  /// The deal's badge on the photo, such as "−15%".
+  final String? deal;
+
+  /// A line about the deal under the price, such as "Ends Sun 18 Oct"; [heightFor] needs `note: true` then.
+  final String? dealNote;
 
   /// The hotel name.
   final String name;
@@ -330,18 +384,27 @@ class SheenPremiumCard extends StatelessWidget {
   final double width;
 
   /// The height a carousel row needs for these cards at the user's text size: the 154 pt photo, the 10 pt gap and
-  /// the three text lines at their scaled line heights (the score badge keeps its 20 pt minimum).
-  static double heightFor(TextScaler scaler) {
+  /// the three text lines at their scaled line heights (the score badge keeps its 20 pt minimum); with [note], the
+  /// deal's line too.
+  static double heightFor(TextScaler scaler, {bool note = false}) {
     double line(double size, double height) => scaler.scale(size) * height;
     final scoreRow = line(13, 1.3) > 20 ? line(13, 1.3) : 20.0;
     final priceRow = line(15, 1.2) > line(12, 1.25) ? line(15, 1.2) : line(12, 1.25);
-    return (154 + 10 + line(16, 1.25) + 3 + scoreRow + 3 + priceRow).ceilToDouble();
+    return (154 + 10 + line(16, 1.25) + 3 + scoreRow + 3 + priceRow + (note ? 3 + line(12, 1.3) : 0)).ceilToDouble();
   }
 
   @override
   Widget build(BuildContext context) {
     final t = context.sheen;
-    final summary = [name, scoreLabel ?? score, headline, '$total $nightsLabel'].whereType<String>().join(', ');
+    final summary = [
+      name,
+      deal,
+      scoreLabel ?? score,
+      headline,
+      '$total $nightsLabel',
+      wasLabel ?? wasTotal,
+      dealNote,
+    ].whereType<String>().join(', ');
     return SheenPressable(
       onTap: onTap,
       semanticLabel: summary,
@@ -362,6 +425,8 @@ class SheenPremiumCard extends StatelessWidget {
                       child:
                           photo ?? SheenImagePlaceholder(label: noPhotoLabel, icon: SheenIcons.bedFill, iconSize: 30),
                     ),
+                    if (deal != null)
+                      PositionedDirectional(start: 8, top: 8, child: ExcludeSemantics(child: SheenDealBadge(deal!))),
                     if (onSave != null)
                       PositionedDirectional(
                         end: 4,
@@ -420,6 +485,10 @@ class SheenPremiumCard extends StatelessWidget {
                         children: [
                           TextSpan(text: total),
                           const TextSpan(text: ' '),
+                          if (wasTotal != null) ...[
+                            TextSpan(text: wasTotal, style: SheenWasPrice.wasStyle(t, 12)),
+                            const TextSpan(text: ' '),
+                          ],
                           TextSpan(
                             text: nightsLabel,
                             style: t.type.caption.copyWith(fontWeight: FontWeight.w500, color: t.colors.textSecondary),
@@ -429,6 +498,19 @@ class SheenPremiumCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
+                    if (dealNote != null) ...[
+                      const SizedBox(height: 3),
+                      Text(
+                        dealNote!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: t.type.caption.copyWith(
+                          color: t.colors.warning,
+                          fontWeight: FontWeight.w700,
+                          height: 1.3,
+                        ),
+                      ),
+                    ],
                   ],
                 ),
               ),

@@ -1,3 +1,12 @@
+## 0.2.0
+
+- **Deals:** `SheenDealBadge` is a red capsule for a deal's words, such as "−15%". The fill is deeper in dark themes, so
+  the white words keep their contrast. `SheenWasPrice` is the price before a deal, struck through.
+- `SheenHotelCard` and `SheenPremiumCard` take `deal` (the badge on the photo), `wasTotal` (struck next to the total),
+  `wasLabel` (how a screen reader says it, such as "was AED 1,422") and `dealNote` (a line such as "Ends Sun 18 Oct").
+  `SheenPremiumCard.heightFor` takes `note: true` for a row whose cards have that line. `SheenPriceBlock` takes
+  `wasTotal`. Without them, every card looks and reads as before.
+
 ## 0.1.4
 
 - **Score line on narrow cards:** on a `SheenHotelCard` the board ("Room only") moves under the score and its words when

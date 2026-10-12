@@ -1,13 +1,17 @@
 import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
+import 'package:sheen/travel.dart';
 
 /// A price with the total first and the price per night second. All strings arrive formatted, in the user's currency.
 ///
 /// {@category Travel}
 class SheenPriceBlock extends StatelessWidget {
   /// A price block for [total].
-  const SheenPriceBlock({super.key, required this.total, required this.caption, this.perNight});
+  const SheenPriceBlock({super.key, required this.total, required this.caption, this.perNight, this.wasTotal});
+
+  /// The total before a deal, struck through after [total]; null when there is no deal.
+  final String? wasTotal;
 
   /// The total, formatted ("€ 1,448").
   final String total;
@@ -21,7 +25,17 @@ class SheenPriceBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = context.sheen;
-    final totalText = Text(total, style: t.type.sized(t.type.price, 20).copyWith(color: t.colors.text, height: 1.25));
+    final totalOnly = Text(total, style: t.type.sized(t.type.price, 20).copyWith(color: t.colors.text, height: 1.25));
+    final Widget totalText = wasTotal == null
+        ? totalOnly
+        : Wrap(
+            crossAxisAlignment: WrapCrossAlignment.end,
+            spacing: 8,
+            children: [
+              totalOnly,
+              Padding(padding: const EdgeInsets.only(bottom: 2), child: SheenWasPrice(wasTotal!, size: 14)),
+            ],
+          );
     final captionText = Text(caption, style: t.type.caption.copyWith(color: t.colors.textSecondary));
     final nightText = perNight == null
         ? null

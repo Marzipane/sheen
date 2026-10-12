@@ -25,6 +25,38 @@ final cases = <String, Widget>{
     onSave: () {},
     onTap: () {},
   ),
+  'hotel card on a deal': SheenHotelCard(
+    name: 'Hotel Aurora del Mar and Residences',
+    total: 'USD 10,580.80',
+    wasTotal: 'USD 12,448.00',
+    deal: '−15%',
+    dealNote: 'Stays Sun–Thu until 31 Oct · Ends Sun 18 Oct',
+    perNight: 'USD 5,290.40 a night',
+    score: '9.1',
+    photoCount: 1,
+    photoBuilder: photo,
+    noPhotoLabel: 'No photo',
+    saveLabel: 'Save',
+    onSave: () {},
+    onTap: () {},
+  ),
+  'premium card on a deal': SheenPremiumCard(
+    name: 'Casa do Rio',
+    total: 'USD 2,355.18',
+    wasTotal: 'USD 2,770.80',
+    deal: '−15%',
+    dealNote: 'Ends Sun 18 Oct',
+    nightsLabel: '2 nights',
+    saveLabel: 'Save',
+    onTap: () {},
+  ),
+  'price block on a deal': const SheenPriceBlock(
+    total: 'USD 1,230.80',
+    wasTotal: 'USD 1,448.00',
+    caption: 'Total for 2 nights',
+    perNight: 'USD 615.40 a night',
+  ),
+  'deal badges': const Row(children: [SheenDealBadge('−15%'), SheenDealBadge('−8%', small: true)]),
   'hotel card skeleton': const SheenHotelCardSkeleton(),
   'premium card': SheenPremiumCard(
     name: 'Casa do Rio',
@@ -164,6 +196,68 @@ void main() {
     expect(cut(words), isFalse);
     expect(cut(board), isFalse);
     expect(t.getTopLeft(find.text(board)).dy, greaterThan(t.getBottomLeft(find.text(words)).dy));
+  });
+
+  testWidgets('a deal: the badge on the photo, the old total struck through, and a screen reader hears both in order', (
+    t,
+  ) async {
+    await t.pumpWidget(
+      host(
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                width: 358,
+                child: SheenHotelCard(
+                  name: 'Aurora',
+                  total: 'AED 1,208.84',
+                  wasTotal: 'AED 1,422.17',
+                  wasLabel: 'was AED 1,422.17',
+                  deal: '−15%',
+                  dealNote: 'Ends Sun 18 Oct',
+                  photoCount: 0,
+                  photoBuilder: photo,
+                  noPhotoLabel: 'No photo',
+                  saveLabel: 'Save',
+                  onTap: () {},
+                ),
+              ),
+              SheenPremiumCard(
+                name: 'Casa',
+                total: 'AED 900.00',
+                wasTotal: 'AED 1,000.00',
+                deal: '−10%',
+                dealNote: 'Ends Wed 21 Oct',
+                nightsLabel: '2 nights',
+                saveLabel: 'Save',
+                onTap: () {},
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    expect(
+      find.bySemanticsLabel(RegExp(r'^Aurora, −15%, AED 1,208\.84, was AED 1,422\.17, Ends Sun 18 Oct$')),
+      findsOneWidget,
+    );
+    expect(
+      find.bySemanticsLabel(RegExp(r'^Casa, −10%, AED 900\.00 2 nights, AED 1,000\.00, Ends Wed 21 Oct$')),
+      findsOneWidget,
+    );
+    final was = t.widget<Text>(find.text('AED 1,422.17'));
+    expect(was.style!.decoration, TextDecoration.lineThrough);
+    expect(find.text('−15%'), findsOneWidget);
+    expect(find.text('Ends Sun 18 Oct'), findsOneWidget);
+    // the struck price comes before the price with the deal, on the same line
+    expect(t.getTopLeft(find.text('AED 1,422.17')).dx, lessThan(t.getTopLeft(find.text('AED 1,208.84')).dx));
+  });
+
+  test('a premium row with deal lines is taller', () {
+    expect(
+      SheenPremiumCard.heightFor(TextScaler.noScaling, note: true),
+      greaterThan(SheenPremiumCard.heightFor(TextScaler.noScaling)),
+    );
   });
 
   test('premium cards say how tall a carousel row must be for the text size', () {
