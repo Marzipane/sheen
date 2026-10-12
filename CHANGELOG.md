@@ -1,3 +1,8 @@
+## 0.2.5
+
+- **pub.dev:** ten screenshots, the most pub.dev shows (0.2.4 listed eleven and lost the screenshots check). The
+  foundation screenshot stays in `doc/foundation.md`.
+
 ## 0.2.4
 
 - **Docs:** deals in the gallery (Travel → On a deal), a new screenshot on pub.dev and in the README, a deals section
