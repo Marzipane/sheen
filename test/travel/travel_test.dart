@@ -253,6 +253,43 @@ void main() {
     expect(t.getTopLeft(find.text('AED 1,422.17')).dx, lessThan(t.getTopLeft(find.text('AED 1,208.84')).dx));
   });
 
+  for (final scale in [1.0, 1.3, 2.0]) {
+    testWidgets(
+      'a premium card on a deal fits a row of heightFor(note: true) at ${(scale * 100).round()} % text, and the price line '
+      'keeps the nights label whole',
+      (t) async {
+        await t.pumpWidget(
+          host(
+            Builder(
+              builder: (c) => SizedBox(
+                height: SheenPremiumCard.heightFor(MediaQuery.textScalerOf(c), note: true),
+                child: SheenPremiumCard(
+                  name: 'Palace Downtown',
+                  total: 'AED 1,186.01',
+                  wasTotal: 'AED 1,210.21',
+                  deal: '−2%',
+                  dealNote: 'Ends 12 Oct',
+                  nightsLabel: '1 night',
+                  score: '4.7',
+                  headline: 'Near KidZania',
+                  saveLabel: 'Save',
+                  onTap: () {},
+                ),
+              ),
+            ),
+            textScale: scale,
+          ),
+        );
+        expect(t.takeException(), isNull);
+        // the struck total is on the deal's line, not in the price line with the nights label
+        final priceLine = t.renderObject<RenderParagraph>(find.textContaining('1 night', findRichText: true).first);
+        expect(priceLine.text.toPlainText(), isNot(contains('1,210.21')));
+        final dealLine = t.renderObject<RenderParagraph>(find.textContaining('Ends 12 Oct', findRichText: true).first);
+        expect(dealLine.text.toPlainText(), startsWith('AED 1,210.21'));
+      },
+    );
+  }
+
   test('a premium row with deal lines is taller', () {
     expect(
       SheenPremiumCard.heightFor(TextScaler.noScaling, note: true),

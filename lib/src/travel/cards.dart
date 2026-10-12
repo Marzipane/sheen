@@ -332,7 +332,8 @@ class SheenPremiumCard extends StatelessWidget {
     this.dealNote,
   });
 
-  /// The total before a deal, struck through after [total]; null when there is no deal.
+  /// The total before a deal, struck through at the start of the deal's line under the price; null when there is no
+  /// deal. [heightFor] needs `note: true` when it is set.
   final String? wasTotal;
 
   /// How a screen reader says [wasTotal], such as "was AED 1,422"; [wasTotal] itself when null.
@@ -341,7 +342,8 @@ class SheenPremiumCard extends StatelessWidget {
   /// The deal's badge on the photo, such as "−15%".
   final String? deal;
 
-  /// A line about the deal under the price, such as "Ends Sun 18 Oct"; [heightFor] needs `note: true` then.
+  /// The deal's words after [wasTotal] on the line under the price, such as "Ends Sun 18 Oct"; [heightFor] needs
+  /// `note: true` when it is set.
   final String? dealNote;
 
   /// The hotel name.
@@ -485,10 +487,6 @@ class SheenPremiumCard extends StatelessWidget {
                         children: [
                           TextSpan(text: total),
                           const TextSpan(text: ' '),
-                          if (wasTotal != null) ...[
-                            TextSpan(text: wasTotal, style: SheenWasPrice.wasStyle(t, 12)),
-                            const TextSpan(text: ' '),
-                          ],
                           TextSpan(
                             text: nightsLabel,
                             style: t.type.caption.copyWith(fontWeight: FontWeight.w500, color: t.colors.textSecondary),
@@ -498,17 +496,21 @@ class SheenPremiumCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    if (dealNote != null) ...[
+                    // the deal's line: the price without it, struck, and the note; the price line above stays whole
+                    if (wasTotal != null || dealNote != null) ...[
                       const SizedBox(height: 3),
-                      Text(
-                        dealNote!,
+                      Text.rich(
+                        TextSpan(
+                          style: t.type.caption.copyWith(color: t.colors.warning, fontWeight: FontWeight.w700, height: 1.3),
+                          children: [
+                            if (wasTotal != null)
+                              TextSpan(text: wasTotal, style: SheenWasPrice.wasStyle(t, 12).copyWith(height: 1.3)),
+                            if (wasTotal != null && dealNote != null) const TextSpan(text: '  '),
+                            if (dealNote != null) TextSpan(text: dealNote),
+                          ],
+                        ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: t.type.caption.copyWith(
-                          color: t.colors.warning,
-                          fontWeight: FontWeight.w700,
-                          height: 1.3,
-                        ),
                       ),
                     ],
                   ],

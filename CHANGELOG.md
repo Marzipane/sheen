@@ -1,3 +1,9 @@
+## 0.2.1
+
+- **Premium card on a deal:** the struck total moves from the price line to the deal's line under it, before the note
+  ("~~AED 1,210.21~~  Ends 12 Oct"). The price line keeps its nights label whole; before, the struck total pushed it
+  out ("1 ni…"). Give the row `heightFor(scaler, note: true)` when a card has `wasTotal` or `dealNote`.
+
 ## 0.2.0
 
 - **Deals:** `SheenDealBadge` is a red capsule for a deal's words, such as "−15%". The fill is deeper in dark themes, so
