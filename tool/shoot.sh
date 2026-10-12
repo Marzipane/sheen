@@ -36,4 +36,5 @@ shot 07-feedback PAGE=feedback
 shot 08-content PAGE=content DARK=1
 shot 09-travel PAGE=travel
 shot 10-foundation PAGE=foundation DARK=1
+shot 11-deals PAGE=travel OPEN=deals
 xcrun simctl status_bar "$SIM" clear

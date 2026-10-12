@@ -13,14 +13,82 @@ class TravelPage extends StatefulWidget {
 }
 
 class _TravelPageState extends State<TravelPage> {
+  /// `--dart-define=OPEN=deals` puts the deals first (the pub.dev screenshot).
+  static const String _open = String.fromEnvironment('OPEN');
+
   bool _saved = false;
+  bool _dealSaved = false;
   int _pin = 1;
+
+  /// A stay on a deal: the badge on the photo, the price before the deal struck through, and when it ends.
+  Widget _deals(BuildContext context) => Demo(
+    title: 'On a deal',
+    note: 'Show the struck price only for the same stay without the deal.',
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SheenHotelCard(
+          name: 'Palace Downtown',
+          total: 'AED 1,186.01',
+          wasTotal: 'AED 1,210.21',
+          wasLabel: 'was AED 1,210.21',
+          deal: '−15%',
+          dealNote: 'Ends Sun 18 Oct',
+          headline: '4.0 km from the centre',
+          score: '9.4',
+          recommend: '98% recommend',
+          board: 'Room only',
+          photoCount: 3,
+          photoBuilder: (_, i) => GeneratedPhoto(seed: i + 6),
+          noPhotoLabel: 'No photo',
+          saveLabel: 'Save',
+          saved: _dealSaved,
+          onSave: () => setState(() => _dealSaved = !_dealSaved),
+          onTap: () {},
+        ),
+        const SizedBox(height: 16),
+        SizedBox(
+          height: SheenPremiumCard.heightFor(MediaQuery.textScalerOf(context), note: true),
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              for (final (i, (name, total, was, deal)) in [
+                ('Hotel Mirador', '€ 2,355.18', '€ 2,770.80', '−15%'),
+                ('Casa do Rio', '€ 1,303.20', '€ 1,448.00', '−10%'),
+              ].indexed) ...[
+                if (i > 0) const SizedBox(width: 12),
+                SheenPremiumCard(
+                  name: name,
+                  total: total,
+                  wasTotal: was,
+                  deal: deal,
+                  dealNote: 'Ends Wed 21 Oct',
+                  nightsLabel: '2 nights',
+                  score: '9.2',
+                  headline: 'Old town',
+                  photo: GeneratedPhoto(seed: i + 2),
+                  saveLabel: 'Save',
+                  onSave: () {},
+                  onTap: () {},
+                ),
+              ],
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+        const SheenPriceBlock(total: 'AED 1,186.01', caption: '1 night', wasTotal: 'AED 1,210.21'),
+        const SizedBox(height: 10),
+        const Gap(children: [SheenDealBadge('−15%'), SheenDealBadge('−15%', small: true), SheenWasPrice('AED 1,210.21')]),
+      ],
+    ),
+  );
 
   @override
   Widget build(BuildContext context) => SheenPage(
     title: 'Travel',
     subtitle: 'import \'package:sheen/travel.dart\'',
     children: [
+      if (_open == 'deals') _deals(context),
       Demo(
         title: 'Hotel card',
         child: SheenHotelCard(
@@ -124,6 +192,7 @@ class _TravelPageState extends State<TravelPage> {
           ),
         ),
       ),
+      if (_open != 'deals') _deals(context),
     ],
   );
 }

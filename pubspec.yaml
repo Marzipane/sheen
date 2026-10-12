@@ -2,7 +2,7 @@ name: sheen
 description: >-
   A glass design system for Flutter: frosted glass, spring motion, one-accent theming and 80+ widgets, with booking
   widgets for travel apps.
-version: 0.2.3
+version: 0.2.4
 homepage: https://marzipane.github.io/sheen/
 repository: https://github.com/Marzipane/sheen
 issue_tracker: https://github.com/Marzipane/sheen/issues
@@ -38,6 +38,8 @@ screenshots:
     path: doc/screenshots/06-menu.webp
   - description: Progress bars and rings, loading placeholders, banners, status pills and countdowns.
     path: doc/screenshots/07-feedback.webp
+  - description: Hotel and featured cards on a deal - a badge on the photo and the price before the deal struck through.
+    path: doc/screenshots/11-deals.webp
   - description: Grouped lists, a photo card, a card swiper and an accordion in the dark theme.
     path: doc/screenshots/08-content.webp
   - description: The travel library - a hotel card with price, score and cancellation, and its loading skeleton.

@@ -1,3 +1,8 @@
+## 0.2.4
+
+- **Docs:** deals in the gallery (Travel → On a deal), a new screenshot on pub.dev and in the README, a deals section
+  in `doc/travel.md` with code, and `SheenDealBadge`/`SheenWasPrice` in the widget list. No change in behaviour.
+
 ## 0.2.3
 
 - **Hotel card on a deal:** the struck total moves from the name's line to the line under the total, beside the

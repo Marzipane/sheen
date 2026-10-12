@@ -109,7 +109,7 @@ SheenScope(
 | Feedback | `showSheenAlert`, `SheenToast`, `SheenActionBanner`, `SheenStatusPill`, `SheenStatusNotice`, `SheenStatusScreen`, `SheenEmptyState`, `SheenSkeleton`, `SheenProgressBar`, `SheenProgressRing`, `SheenSpinner`, `SheenProgressCapsule`, `SheenCountdownPill`, `SheenBadge`, `SheenSuccessCheck` |
 | Content | `SheenCard`, `SheenListGroup`, `SheenListRow`, `SheenAccordion`, `SheenKeyValueCard`, `SheenCardSwiper`, `SheenPhotoPager`, `SheenAvatar`, `SheenStarRating`, `SheenScoreBar` |
 | Layout | `SheenPage`, `SheenSectionLabel`, `SheenSectionNote`, `SheenScrollEdge`, `SheenEdgeFade` |
-| Travel | `SheenHotelCard`, `SheenPremiumCard`, `SheenCityTile`, `SheenPriceBlock`, `SheenCancellationLine`, `SheenScoreBadge`, `SheenPricePin`, `renderSheenPricePin` (map marker bitmaps) |
+| Travel | `SheenHotelCard`, `SheenPremiumCard`, `SheenCityTile`, `SheenPriceBlock`, `SheenCancellationLine`, `SheenScoreBadge`, `SheenDealBadge`, `SheenWasPrice`, `SheenPricePin`, `renderSheenPricePin` (map marker bitmaps) |
 
 Every widget has a page in the [gallery](example/); most have a code example in their API docs.
 
@@ -118,6 +118,7 @@ Every widget has a page in the [gallery](example/); most have a code example in 
   <img src="https://raw.githubusercontent.com/Marzipane/sheen/main/doc/screenshots/04-selection.webp" width="180" alt="Chips, segmented control and a date range">
   <img src="https://raw.githubusercontent.com/Marzipane/sheen/main/doc/screenshots/07-feedback.webp" width="180" alt="Progress, skeletons, banners and badges">
   <img src="https://raw.githubusercontent.com/Marzipane/sheen/main/doc/screenshots/09-travel.webp" width="180" alt="Hotel card, featured stays and map pins">
+  <img src="https://raw.githubusercontent.com/Marzipane/sheen/main/doc/screenshots/11-deals.webp" width="180" alt="Hotel and featured cards on a deal: a badge on the photo and the price before the deal struck through">
 </p>
 
 ## Travel library
@@ -126,6 +127,25 @@ Booking widgets live in a second library so apps that do not need them never see
 
 ```dart
 import 'package:sheen/travel.dart';
+```
+
+A stay on a deal gets a badge on its photo, the price before the deal struck through and a line about when it ends.
+Pass the struck price only when it is the same stay without the deal (a like-for-like saving):
+
+```dart
+SheenHotelCard(
+  name: 'Palace Downtown',
+  total: 'AED 1,186.01',
+  wasTotal: 'AED 1,210.21',        // struck through, under the total
+  wasLabel: 'was AED 1,210.21',    // what a screen reader says
+  deal: '−15%',                    // the badge on the photo
+  dealNote: 'Ends Sun 18 Oct',
+  photoCount: 3,
+  photoBuilder: (context, i) => Image.network(photos[i], fit: BoxFit.cover),
+  noPhotoLabel: 'No photo',
+  saveLabel: 'Save',
+  onTap: openHotel,
+)
 ```
 
 Prices, dates and labels are always yours, formatted and translated; the widgets only lay them out.
