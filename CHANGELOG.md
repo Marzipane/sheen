@@ -1,3 +1,8 @@
+## 0.2.2
+
+- `lib/src/travel/cards.dart` formatted with `dart format`, so the package gets its full pub.dev points again. No
+  change in behaviour.
+
 ## 0.2.1
 
 - **Premium card on a deal:** the struck total moves from the price line to the deal's line under it, before the note

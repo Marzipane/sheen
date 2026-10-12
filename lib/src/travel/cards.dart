@@ -501,7 +501,11 @@ class SheenPremiumCard extends StatelessWidget {
                       const SizedBox(height: 3),
                       Text.rich(
                         TextSpan(
-                          style: t.type.caption.copyWith(color: t.colors.warning, fontWeight: FontWeight.w700, height: 1.3),
+                          style: t.type.caption.copyWith(
+                            color: t.colors.warning,
+                            fontWeight: FontWeight.w700,
+                            height: 1.3,
+                          ),
                           children: [
                             if (wasTotal != null)
                               TextSpan(text: wasTotal, style: SheenWasPrice.wasStyle(t, 12).copyWith(height: 1.3)),
