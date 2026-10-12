@@ -202,10 +202,6 @@ class SheenHotelCard extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.baseline,
                                   textBaseline: TextBaseline.alphabetic,
                                   children: [
-                                    if (wasTotal != null) ...[
-                                      SheenWasPrice(wasTotal!, size: 13),
-                                      const SizedBox(width: 6),
-                                    ],
                                     Text(total, style: t.type.sized(t.type.price, 18).copyWith(color: t.colors.text)),
                                   ],
                                 ),
@@ -213,7 +209,9 @@ class SheenHotelCard extends StatelessWidget {
                             ),
                           ],
                         ),
-                        if (headline != null || perNight != null) ...[
+                        // On a deal the struck total sits under the total, beside the headline: on the name's line
+                        // it left the name only a few letters.
+                        if (headline != null || perNight != null || wasTotal != null) ...[
                           const SizedBox(height: 4),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -227,14 +225,27 @@ class SheenHotelCard extends StatelessWidget {
                                   style: t.type.sized(t.type.subhead, 14).copyWith(color: t.colors.textSecondary),
                                 ),
                               ),
-                              if (perNight != null) ...[
+                              if (perNight != null || wasTotal != null) ...[
                                 const SizedBox(width: 12),
                                 ConstrainedBox(
                                   constraints: BoxConstraints(maxWidth: priceMax),
-                                  child: Text(
-                                    perNight!,
-                                    textAlign: TextAlign.end,
-                                    style: small.copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      if (wasTotal != null)
+                                        FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          alignment: AlignmentDirectional.centerEnd,
+                                          child: SheenWasPrice(wasTotal!, size: 13),
+                                        ),
+                                      if (perNight != null)
+                                        Text(
+                                          perNight!,
+                                          textAlign: TextAlign.end,
+                                          style: small.copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
+                                        ),
+                                    ],
                                   ),
                                 ),
                               ],

@@ -1,3 +1,8 @@
+## 0.2.3
+
+- **Hotel card on a deal:** the struck total moves from the name's line to the line under the total, beside the
+  headline. On a phone the name had been cut to a few letters ("Palace Dow…").
+
 ## 0.2.2
 
 - `lib/src/travel/cards.dart` formatted with `dart format`, so the package gets its full pub.dev points again. No

@@ -249,8 +249,9 @@ void main() {
     expect(was.style!.decoration, TextDecoration.lineThrough);
     expect(find.text('−15%'), findsOneWidget);
     expect(find.text('Ends Sun 18 Oct'), findsOneWidget);
-    // the struck price comes before the price with the deal, on the same line
-    expect(t.getTopLeft(find.text('AED 1,422.17')).dx, lessThan(t.getTopLeft(find.text('AED 1,208.84')).dx));
+    // the struck price sits under the price with the deal, so the name's line keeps its width
+    expect(t.getTopLeft(find.text('AED 1,422.17')).dy, greaterThan(t.getTopLeft(find.text('AED 1,208.84')).dy));
+    expect(t.getTopRight(find.text('AED 1,422.17')).dx, closeTo(t.getTopRight(find.text('AED 1,208.84')).dx, 1));
   });
 
   for (final scale in [1.0, 1.3, 2.0]) {
