@@ -94,6 +94,8 @@ const Map<String, String> sheenStrokeIcons = {
   'search': r'''<circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5"></path>''',
   'share': r'''<path d="M12 15V4.5"></path><path d="m8 8.5 4-4 4 4"></path><path d="M5.5 12.5v6h13v-6"></path>''',
   'shield': r'''<path d="M12 3.5 19 6v5.5c0 4.3-3 7.8-7 9-4-1.2-7-4.7-7-9V6Z"></path><path d="m9 12 2 2 4-4"></path>''',
+  'ship':
+      r'''<path d="M3.5 13h17l-2.2 4.5H5.7Z"></path><path d="M7 13V9.5h10V13"></path><path d="M10.5 9.5v-3h3v3"></path><path d="M3 20.5c1.5 0 1.5-1 3-1s1.5 1 3 1 1.5-1 3-1 1.5 1 3 1 1.5-1 3-1 1.5 1 3 1"></path>''',
   'sidebar': r'''<rect x="3.5" y="4.5" width="17" height="15" rx="2.5"></rect><path d="M9.5 4.5v15"></path>''',
   'sign-out':
       r'''<path d="M14 4.5h4.5a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5H14"></path><path d="M10 16.5 5.5 12 10 7.5"></path><path d="M5.5 12H15"></path>''',

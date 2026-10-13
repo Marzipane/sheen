@@ -186,6 +186,9 @@ abstract final class SheenIcons {
   /// The shield icon.
   static const String shield = 'shield';
 
+  /// The ship icon.
+  static const String ship = 'ship';
+
   /// The sidebar icon.
   static const String sidebar = 'sidebar';
 
@@ -320,6 +323,7 @@ abstract final class SheenIcons {
     search,
     share,
     shield,
+    ship,
     sidebar,
     signOut,
     sliders,

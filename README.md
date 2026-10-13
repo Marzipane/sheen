@@ -109,7 +109,7 @@ SheenScope(
 | Feedback | `showSheenAlert`, `SheenToast`, `SheenActionBanner`, `SheenStatusPill`, `SheenStatusNotice`, `SheenStatusScreen`, `SheenEmptyState`, `SheenSkeleton`, `SheenProgressBar`, `SheenProgressRing`, `SheenSpinner`, `SheenProgressCapsule`, `SheenCountdownPill`, `SheenBadge`, `SheenSuccessCheck` |
 | Content | `SheenCard`, `SheenListGroup`, `SheenListRow`, `SheenAccordion`, `SheenKeyValueCard`, `SheenCardSwiper`, `SheenPhotoPager`, `SheenAvatar`, `SheenStarRating`, `SheenScoreBar` |
 | Layout | `SheenPage`, `SheenSectionLabel`, `SheenSectionNote`, `SheenScrollEdge`, `SheenEdgeFade` |
-| Travel | `SheenHotelCard`, `SheenPremiumCard`, `SheenCityTile`, `SheenPriceBlock`, `SheenCancellationLine`, `SheenScoreBadge`, `SheenDealBadge`, `SheenWasPrice`, `SheenPricePin`, `renderSheenPricePin` (map marker bitmaps) |
+| Travel | `SheenHotelCard`, `SheenPremiumCard`, `SheenCityTile`, `SheenPriceBlock`, `SheenCancellationLine`, `SheenScoreBadge`, `SheenDealBadge`, `SheenWasPrice`, `SheenTripCard`, `SheenItinerary`, `SheenPricePin`, `renderSheenPricePin` (map marker bitmaps) |
 
 Every widget has a page in the [gallery](example/); most have a code example in their API docs.
 

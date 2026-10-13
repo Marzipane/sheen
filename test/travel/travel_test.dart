@@ -1,6 +1,7 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sheen/sheen.dart';
 import 'package:sheen/travel.dart';
 
 import '../helpers.dart';
@@ -68,6 +69,34 @@ final cases = <String, Widget>{
     onSave: () {},
     onTap: () {},
   ),
+  'trip card': SheenTripCard(
+    title: 'Istanbul, Cappadocia and Ephesus',
+    eyebrow: 'Europamundo',
+    facts: '8 days · Turkey',
+    price: 'from AED 2,872',
+    priceLabel: 'a person',
+    tag: 'Guaranteed',
+    onTap: () {},
+  ),
+  'trip card without a photo or a price': SheenTripCard(
+    title: 'Greek Isles',
+    placeholderIcon: SheenIcons.ship,
+    noPhotoLabel: 'No photo yet',
+    onTap: () {},
+  ),
+  'itinerary': const SheenItinerary(
+    stops: [
+      SheenItineraryStop(marker: '1', title: 'Piraeus (Athens)', subtitle: 'Greece', trailing: '— 17:00'),
+      SheenItineraryStop(marker: '2', title: 'At sea', quiet: true),
+      SheenItineraryStop(
+        marker: '3',
+        title: 'Mykonos',
+        subtitle: 'Tender port',
+        trailing: '07:00 – 16:00',
+        detail: 'Whitewashed lanes, windmills and the beaches of the south coast.',
+      ),
+    ],
+  ),
   'city tile': SheenCityTile(
     name: 'Istanbul',
     distance: '3 h 40 min',
@@ -97,6 +126,33 @@ final cases = <String, Widget>{
 };
 
 void main() {
+  testWidgets('a trip card says everything in one label and its row height fits it at large text', (t) async {
+    await t.pumpWidget(
+      host(
+        MediaQuery(
+          data: const MediaQueryData(textScaler: TextScaler.linear(1.6)),
+          child: SizedBox(
+            height: SheenTripCard.heightFor(const TextScaler.linear(1.6)),
+            child: SheenTripCard(
+              title: 'Greek Isles',
+              eyebrow: 'Norwegian Viva',
+              facts: '7 nights · from Piraeus',
+              price: 'from AED 6,000',
+              priceLabel: 'a person',
+              tag: 'NCL',
+              onTap: () {},
+            ),
+          ),
+        ),
+      ),
+    );
+    expect(t.takeException(), isNull);
+    expect(
+      find.bySemanticsLabel('Greek Isles, Norwegian Viva, NCL, 7 nights · from Piraeus, from AED 6,000 a person'),
+      findsOneWidget,
+    );
+  });
+
   for (final MapEntry(key: name, value: widget) in cases.entries) {
     for (final scale in [1.0, 2.0]) {
       testWidgets('$name at ${(scale * 100).round()} % text, right to left, does not overflow', (t) async {

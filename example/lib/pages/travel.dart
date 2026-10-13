@@ -78,7 +78,9 @@ class _TravelPageState extends State<TravelPage> {
         const SizedBox(height: 16),
         const SheenPriceBlock(total: 'AED 1,186.01', caption: '1 night', wasTotal: 'AED 1,210.21'),
         const SizedBox(height: 10),
-        const Gap(children: [SheenDealBadge('−15%'), SheenDealBadge('−15%', small: true), SheenWasPrice('AED 1,210.21')]),
+        const Gap(
+          children: [SheenDealBadge('−15%'), SheenDealBadge('−15%', small: true), SheenWasPrice('AED 1,210.21')],
+        ),
       ],
     ),
   );
@@ -193,6 +195,62 @@ class _TravelPageState extends State<TravelPage> {
         ),
       ),
       if (_open != 'deals') _deals(context),
+      _trips(context),
     ],
+  );
+
+  /// Tours and cruises: cards for a carousel and the days or ports of one.
+  Widget _trips(BuildContext context) => Demo(
+    title: 'Tours & cruises',
+    note: 'Prices from the lowest departure; say what they are for.',
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SizedBox(
+          height: SheenTripCard.heightFor(MediaQuery.textScalerOf(context)),
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              SheenTripCard(
+                title: 'Istanbul, Cappadocia and Ephesus',
+                eyebrow: 'Europamundo',
+                facts: '8 days · Turkey',
+                price: 'from AED 2,872',
+                priceLabel: 'a person',
+                tag: 'Guaranteed',
+                photo: const GeneratedPhoto(seed: 3),
+                onTap: () {},
+              ),
+              const SizedBox(width: 12),
+              SheenTripCard(
+                title: 'Greek Isles',
+                eyebrow: 'Norwegian Viva',
+                facts: '7 nights · from Piraeus',
+                price: 'from AED 6,000',
+                priceLabel: 'a person',
+                tag: 'NCL',
+                placeholderIcon: SheenIcons.ship,
+                noPhotoLabel: 'No photo yet',
+                onTap: () {},
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 20),
+        const SheenItinerary(
+          stops: [
+            SheenItineraryStop(marker: '1', title: 'Piraeus (Athens)', subtitle: 'Greece', trailing: '— 17:00'),
+            SheenItineraryStop(marker: '2', title: 'At sea', quiet: true),
+            SheenItineraryStop(
+              marker: '3',
+              title: 'Mykonos',
+              subtitle: 'Tender port',
+              trailing: '07:00 – 16:00',
+              detail: 'Whitewashed lanes, windmills and the beaches of the south coast.',
+            ),
+          ],
+        ),
+      ],
+    ),
   );
 }

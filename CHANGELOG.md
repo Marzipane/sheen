@@ -1,3 +1,11 @@
+## 0.3.0
+
+- **Tours and cruises:** `SheenTripCard` (a carousel card the size of `SheenPremiumCard`, with a tag, an eyebrow,
+  facts and a price from), `SheenTripTag`, `SheenItinerary` with `SheenItineraryStop` (days or ports on a line of
+  numbered dots; quiet stops for days at sea) and `SheenTripIcon`. In the gallery under Travel → Tours & cruises and in
+  `doc/travel.md`.
+- **Icons:** `SheenIcons.ship`.
+
 ## 0.2.5
 
 - **pub.dev:** ten screenshots, the most pub.dev shows (0.2.4 listed eleven and lost the screenshots check). The
