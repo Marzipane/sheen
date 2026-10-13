@@ -167,8 +167,10 @@ void main() {
                 price: 'from AED 3,001',
                 priceLabel: 'a person',
                 wasPrice: 'AED 3,159',
+                wasLabel: 'was AED 3,159',
                 deal: '−5%',
-                dealNote: 'until 31 Oct',
+                dealNote: 'Ends 31 Oct',
+                tag: 'Guaranteed',
                 onTap: () {},
               ),
             ),
@@ -177,9 +179,15 @@ void main() {
       );
       expect(t.takeException(), isNull);
       expect(find.byType(SheenDealBadge), findsOneWidget);
+      // the badge top start, as on SheenPremiumCard, and the tag after it
+      final card = t.getTopLeft(find.byType(SheenTripCard));
+      expect(t.getTopLeft(find.byType(SheenDealBadge)) - card, const Offset(8, 8));
+      expect(t.getTopLeft(find.text('Guaranteed')).dx, greaterThan(t.getTopRight(find.byType(SheenDealBadge)).dx));
       expect(find.textContaining('AED 3,159', findRichText: true), findsOneWidget);
       expect(
-        find.bySemanticsLabel('Istanbul and Ephesus, −5%, from AED 3,001 a person, AED 3,159, until 31 Oct'),
+        find.bySemanticsLabel(
+          'Istanbul and Ephesus, Guaranteed, −5%, from AED 3,001 a person, was AED 3,159, Ends 31 Oct',
+        ),
         findsOneWidget,
       );
     },

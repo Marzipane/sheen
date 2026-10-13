@@ -1,3 +1,8 @@
+## 0.3.3
+
+- **Trip deals as hotel deals:** `SheenTripCard`'s `deal` badge sits top start, as on `SheenPremiumCard`, with the
+  tag after it; `wasLabel` says the struck price to a screen reader ("was AED 3,159").
+
 ## 0.3.2
 
 - **Deals on trips:** `SheenTripCard` takes `deal` (a badge on the photo, top end, such as "−5%"), `wasPrice` (the

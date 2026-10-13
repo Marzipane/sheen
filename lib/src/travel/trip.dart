@@ -24,6 +24,7 @@ class SheenTripCard extends StatelessWidget {
     this.placeholderIcon = SheenIcons.compass,
     this.tag,
     this.wasPrice,
+    this.wasLabel,
     this.deal,
     this.dealNote,
     this.width = 232,
@@ -59,7 +60,10 @@ class SheenTripCard extends StatelessWidget {
   /// The usual price before a deal, struck through under [price] ("AED 3,159"); null when there is no deal.
   final String? wasPrice;
 
-  /// The deal's badge on the photo, top end, such as "−5%".
+  /// [wasPrice] as a screen reader says it, such as "was AED 3,159"; [wasPrice] itself when null.
+  final String? wasLabel;
+
+  /// The deal's badge on the photo, top start as on [SheenPremiumCard], such as "−5%".
   final String? deal;
 
   /// A word about the deal after [wasPrice], such as "until 31 Oct".
@@ -106,7 +110,7 @@ class SheenTripCard extends StatelessWidget {
       deal,
       facts,
       if (price != null) [price, priceLabel].whereType<String>().join(' '),
-      wasPrice,
+      wasLabel ?? wasPrice,
       dealNote,
     ].whereType<String>().join(', ');
     return SheenPressable(
@@ -128,10 +132,23 @@ class SheenTripCard extends StatelessWidget {
                     ExcludeSemantics(
                       child: photo ?? SheenImagePlaceholder(label: noPhotoLabel, icon: placeholderIcon, iconSize: 30),
                     ),
-                    if (tag != null)
-                      PositionedDirectional(start: 8, top: 8, child: ExcludeSemantics(child: SheenTripTag(tag!))),
-                    if (deal != null)
-                      PositionedDirectional(end: 8, top: 8, child: ExcludeSemantics(child: SheenDealBadge(deal!))),
+                    // the deal's badge where SheenPremiumCard has it, top start; the tag follows it
+                    if (tag != null || deal != null)
+                      PositionedDirectional(
+                        start: 8,
+                        top: 8,
+                        end: 8,
+                        child: ExcludeSemantics(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (deal != null) SheenDealBadge(deal!),
+                              if (deal != null && tag != null) const SizedBox(width: 6),
+                              if (tag != null) Flexible(child: SheenTripTag(tag!)),
+                            ],
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               ),
