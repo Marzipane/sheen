@@ -1,3 +1,8 @@
+## 0.3.4
+
+- **Trip card:** the tag (a cruise line, "Guaranteed") moves to the photo's foot, bottom start, where a long name has
+  the whole width; the top start is the deal badge's alone, as on `SheenPremiumCard`.
+
 ## 0.3.3
 
 - **Trip deals as hotel deals:** `SheenTripCard`'s `deal` badge sits top start, as on `SheenPremiumCard`, with the

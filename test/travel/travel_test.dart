@@ -179,10 +179,11 @@ void main() {
       );
       expect(t.takeException(), isNull);
       expect(find.byType(SheenDealBadge), findsOneWidget);
-      // the badge top start, as on SheenPremiumCard, and the tag after it
+      // the badge top start, as on SheenPremiumCard
       final card = t.getTopLeft(find.byType(SheenTripCard));
       expect(t.getTopLeft(find.byType(SheenDealBadge)) - card, const Offset(8, 8));
-      expect(t.getTopLeft(find.text('Guaranteed')).dx, greaterThan(t.getTopRight(find.byType(SheenDealBadge)).dx));
+      // the tag at the photo's foot (the photo is 154 high), clear of the badge
+      expect(t.getBottomLeft(find.byType(SheenTripTag)) - card, const Offset(8, 154 - 8));
       expect(find.textContaining('AED 3,159', findRichText: true), findsOneWidget);
       expect(
         find.bySemanticsLabel(

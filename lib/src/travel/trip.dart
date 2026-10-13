@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:sheen/sheen.dart';
 import 'deal.dart';
 
-/// A card for a carousel of tours or cruises: a photo with an optional tag (a cruise line, "Guaranteed"), a small line
-/// above the title (the operator or the ship), the title, the facts ("8 days · Turkey") and the price from, with what
+/// A card for a carousel of tours or cruises: a photo with an optional tag at its foot (a cruise line, "Guaranteed"),
+/// a small line above the title (the operator or the ship), the title, the facts ("8 days · Turkey") and the price from, with what
 /// it is for ("a person"). 232 points wide by default, the size of [SheenPremiumCard]; [heightFor] gives the row
 /// height for a text size.
 ///
@@ -54,7 +54,7 @@ class SheenTripCard extends StatelessWidget {
   /// The placeholder's glyph: [SheenIcons.compass] for tours, [SheenIcons.ship] for cruises.
   final String placeholderIcon;
 
-  /// A chip on the photo, top start: the cruise line ("NCL") or a word such as "Guaranteed".
+  /// A chip on the photo, bottom start: the cruise line ("NCL") or a word such as "Guaranteed".
   final String? tag;
 
   /// The usual price before a deal, struck through under [price] ("AED 3,159"); null when there is no deal.
@@ -132,21 +132,17 @@ class SheenTripCard extends StatelessWidget {
                     ExcludeSemantics(
                       child: photo ?? SheenImagePlaceholder(label: noPhotoLabel, icon: placeholderIcon, iconSize: 30),
                     ),
-                    // the deal's badge where SheenPremiumCard has it, top start; the tag follows it
-                    if (tag != null || deal != null)
+                    // the deal's badge where SheenPremiumCard has it, top start; the tag (the cruise line, "Guaranteed")
+                    // at the photo's foot, where a long name has the whole width
+                    if (deal != null)
+                      PositionedDirectional(start: 8, top: 8, child: ExcludeSemantics(child: SheenDealBadge(deal!))),
+                    if (tag != null)
                       PositionedDirectional(
                         start: 8,
-                        top: 8,
                         end: 8,
+                        bottom: 8,
                         child: ExcludeSemantics(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              if (deal != null) SheenDealBadge(deal!),
-                              if (deal != null && tag != null) const SizedBox(width: 6),
-                              if (tag != null) Flexible(child: SheenTripTag(tag!)),
-                            ],
-                          ),
+                          child: Align(alignment: AlignmentDirectional.bottomStart, child: SheenTripTag(tag!)),
                         ),
                       ),
                   ],

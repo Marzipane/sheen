@@ -29,7 +29,7 @@ Row(children: [SheenDealBadge('−15%', small: true), SizedBox(width: 6), SheenW
 ## Tours and cruises
 
 `SheenTripCard` is the size of `SheenPremiumCard`, for a carousel of tours or cruises: the photo (or a placeholder
-with a compass or a ship), a tag on it such as the cruise line, a small line above the title (the operator or the
+with a compass or a ship), a tag at its foot such as the cruise line, a small line above the title (the operator or the
 ship), the facts and the lowest price with what it is for. `SheenTripCard.heightFor` gives the row height at the
 user's text size. On a deal, `deal` puts a badge on the photo and `wasPrice` strikes the usual price under the
 price (`dealNote` follows it); pass `heightFor(scaler, note: true)` for a row with such a card. `SheenItinerary` lists a tour's days or a cruise's ports on a line of numbered dots; a quiet stop,
