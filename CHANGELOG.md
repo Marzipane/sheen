@@ -1,3 +1,7 @@
+## 0.3.5
+
+- **Trip card:** the title takes up to two lines (cruise names are long); `heightFor` counts both.
+
 ## 0.3.4
 
 - **Trip card:** the tag (a cruise line, "Guaranteed") moves to the photo's foot, bottom start, where a long name has

@@ -76,7 +76,7 @@ class SheenTripCard extends StatelessWidget {
   final double width;
 
   /// The height a carousel row needs for these cards at the user's text size: the 154 pt photo, the 10 pt gap, the
-  /// eyebrow, the title, the facts and the price line at their scaled line heights.
+  /// eyebrow, the title's two lines, the facts and the price line at their scaled line heights.
   ///
   /// With [note], the row also holds a deal's line ([wasPrice], [dealNote]): pass it when any card of the row is on a
   /// deal, so every card of the row lines up.
@@ -87,7 +87,7 @@ class SheenTripCard extends StatelessWidget {
             10 +
             line(12, 1.3) +
             2 +
-            line(16, 1.25) +
+            2 * line(16, 1.25) +
             3 +
             line(13, 1.3) +
             3 +
@@ -174,7 +174,8 @@ class SheenTripCard extends StatelessWidget {
                     Text(
                       title,
                       textDirection: sheenTextDirectionOf(title),
-                      maxLines: 1,
+                      // two lines: cruise names are long ("9-day Greek Isles From Istanbul To Rome …")
+                      maxLines: 2,
                       strutStyle: _line(t.type.sized(t.type.headline, 16), 1.25),
                       overflow: TextOverflow.ellipsis,
                       style: t.type.sized(t.type.headline, 16).copyWith(color: t.colors.text),

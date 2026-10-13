@@ -153,6 +153,32 @@ void main() {
     );
   });
 
+  testWidgets('a long trip title takes two lines within the row height, at large text and on a deal', (t) async {
+    const long = '9-day Greek Isles From Istanbul To Rome: Santorini, Athens & Mykonos';
+    await t.pumpWidget(
+      host(
+        MediaQuery(
+          data: const MediaQueryData(textScaler: TextScaler.linear(1.6)),
+          child: SizedBox(
+            height: SheenTripCard.heightFor(const TextScaler.linear(1.6), note: true),
+            child: SheenTripCard(
+              title: long,
+              eyebrow: 'Norwegian Viva',
+              facts: '9 nights · from Istanbul',
+              price: 'from AED 17,037',
+              priceLabel: 'a person',
+              wasPrice: 'AED 18,930',
+              dealNote: 'Ends 31 Oct',
+              onTap: () {},
+            ),
+          ),
+        ),
+      ),
+    );
+    expect(t.takeException(), isNull);
+    expect(t.widget<Text>(find.text(long)).maxLines, 2);
+  });
+
   testWidgets(
     'a trip card on a deal: the badge on the photo, the usual price struck under the price, in its row height',
     (t) async {
