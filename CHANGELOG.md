@@ -1,3 +1,11 @@
+## 0.3.1
+
+- **Right to left:** `sheenTextDirectionOf(text)`, the direction a text reads in from its first letter.
+  `SheenTripCard` draws its title and eyebrow in their own direction, so an English title in an Arabic app reads
+  "9-day Greek Isles" and is cut at its end; `SheenKeyValueCard` does the same for each label and value ("965 ft").
+- **Fix:** `SheenTripCard` keeps each line at the height `heightFor` counts whatever font draws it; Arabic text no
+  longer overflowed the card by a pixel.
+
 ## 0.3.0
 
 - **Tours and cruises:** `SheenTripCard` (a carousel card the size of `SheenPremiumCard`, with a tag, an eyebrow,

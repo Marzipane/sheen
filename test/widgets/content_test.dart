@@ -68,6 +68,24 @@ void main() {
     expect(taps, 1);
   });
 
+  testWidgets('a key-value card in an Arabic app keeps "965 ft" in its order, on the value side', (t) async {
+    await t.pumpWidget(
+      host(
+        const SizedBox(
+          width: 360,
+          child: SheenKeyValueCard(rows: [SheenKeyValue('Length', '965 ft'), SheenKeyValue('الطول', '٢٩٤ م')]),
+        ),
+        direction: TextDirection.rtl,
+      ),
+    );
+    final value = t.widget<Text>(find.text('965 ft'));
+    expect(value.textDirection, TextDirection.ltr);
+    expect(t.widget<Text>(find.text('٢٩٤ م')).textDirection, TextDirection.rtl);
+    // the value side is the left in an Arabic app: the value starts there, whatever its own direction
+    expect(t.getTopLeft(find.text('965 ft')).dx, lessThan(t.getTopLeft(find.text('Length')).dx));
+    expect(value.textAlign, TextAlign.left);
+  });
+
   testWidgets('a chip row scrolls sideways and fades only the edge where more chips wait', (t) async {
     await t.pumpWidget(
       host(

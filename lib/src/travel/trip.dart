@@ -66,6 +66,10 @@ class SheenTripCard extends StatelessWidget {
     return (154 + 10 + line(12, 1.3) + 2 + line(16, 1.25) + 3 + line(13, 1.3) + 3 + priceRow).ceilToDouble();
   }
 
+  // Each line keeps the height [heightFor] counts, whatever font draws it (Arabic glyphs stand taller than Latin).
+  static StrutStyle _line(TextStyle style, double height) =>
+      StrutStyle.fromTextStyle(style.copyWith(height: height), forceStrutHeight: true);
+
   @override
   Widget build(BuildContext context) {
     final t = context.sheen;
@@ -111,7 +115,9 @@ class SheenTripCard extends StatelessWidget {
                     // the eyebrow's line is kept when empty, so cards of a row line up
                     Text(
                       eyebrow ?? '',
+                      textDirection: sheenTextDirectionOf(eyebrow),
                       maxLines: 1,
+                      strutStyle: _line(t.type.caption, 1.3),
                       overflow: TextOverflow.ellipsis,
                       style: t.type.caption.copyWith(
                         color: t.colors.textSecondary,
@@ -123,7 +129,9 @@ class SheenTripCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       title,
+                      textDirection: sheenTextDirectionOf(title),
                       maxLines: 1,
+                      strutStyle: _line(t.type.sized(t.type.headline, 16), 1.25),
                       overflow: TextOverflow.ellipsis,
                       style: t.type.sized(t.type.headline, 16).copyWith(color: t.colors.text),
                     ),
@@ -131,6 +139,7 @@ class SheenTripCard extends StatelessWidget {
                     Text(
                       facts ?? '',
                       maxLines: 1,
+                      strutStyle: _line(t.type.footnote, 1.3),
                       overflow: TextOverflow.ellipsis,
                       style: t.type.footnote.copyWith(color: t.colors.textSecondary, height: 1.3),
                     ),

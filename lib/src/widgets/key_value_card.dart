@@ -46,6 +46,7 @@ class SheenKeyValueCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = context.sheen;
     final style = t.type.sized(t.type.subhead, 14);
+    final rtl = Directionality.of(context) == TextDirection.rtl;
     return SheenCard(
       radius: 26,
       child: Column(
@@ -70,12 +71,18 @@ class SheenKeyValueCard extends StatelessWidget {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(r.label, style: style.copyWith(color: t.colors.textSecondary)),
+                            Text(
+                              r.label,
+                              textDirection: sheenTextDirectionOf(r.label),
+                              style: style.copyWith(color: t.colors.textSecondary),
+                            ),
                             const SizedBox(width: 12),
+                            // a value reads in its own direction ("965 ft" in an Arabic app) and keeps to the far side
                             Expanded(
                               child: Text(
                                 r.value,
-                                textAlign: TextAlign.end,
+                                textDirection: sheenTextDirectionOf(r.value),
+                                textAlign: rtl ? TextAlign.left : TextAlign.right,
                                 style: style.copyWith(
                                   color: r.onTap == null ? t.colors.text : t.colors.accentText,
                                   fontFeatures: const [FontFeature.tabularFigures()],

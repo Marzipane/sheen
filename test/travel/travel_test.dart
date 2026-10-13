@@ -153,6 +153,22 @@ void main() {
     );
   });
 
+  testWidgets('a trip card in an Arabic app draws an English title left to right, an Arabic one right to left', (
+    t,
+  ) async {
+    Widget card(String title) => SizedBox(
+      height: SheenTripCard.heightFor(TextScaler.noScaling),
+      child: SheenTripCard(title: title, eyebrow: 'Norwegian Viva', onTap: () {}),
+    );
+    await t.pumpWidget(
+      host(Row(children: [card('9-day Greek Isles'), card('جزر يونانية')]), direction: TextDirection.rtl),
+    );
+    TextDirection? of(String text) => t.widget<Text>(find.text(text).first).textDirection;
+    expect(of('9-day Greek Isles'), TextDirection.ltr);
+    expect(of('Norwegian Viva'), TextDirection.ltr);
+    expect(of('جزر يونانية'), TextDirection.rtl);
+  });
+
   for (final MapEntry(key: name, value: widget) in cases.entries) {
     for (final scale in [1.0, 2.0]) {
       testWidgets('$name at ${(scale * 100).round()} % text, right to left, does not overflow', (t) async {
