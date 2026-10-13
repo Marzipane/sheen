@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
+import 'deal.dart';
 
 /// A card for a carousel of tours or cruises: a photo with an optional tag (a cruise line, "Guaranteed"), a small line
 /// above the title (the operator or the ship), the title, the facts ("8 days · Turkey") and the price from, with what
@@ -22,6 +23,9 @@ class SheenTripCard extends StatelessWidget {
     this.noPhotoLabel,
     this.placeholderIcon = SheenIcons.compass,
     this.tag,
+    this.wasPrice,
+    this.deal,
+    this.dealNote,
     this.width = 232,
   });
 
@@ -52,6 +56,15 @@ class SheenTripCard extends StatelessWidget {
   /// A chip on the photo, top start: the cruise line ("NCL") or a word such as "Guaranteed".
   final String? tag;
 
+  /// The usual price before a deal, struck through under [price] ("AED 3,159"); null when there is no deal.
+  final String? wasPrice;
+
+  /// The deal's badge on the photo, top end, such as "−5%".
+  final String? deal;
+
+  /// A word about the deal after [wasPrice], such as "until 31 Oct".
+  final String? dealNote;
+
   /// Called when the card is tapped.
   final VoidCallback onTap;
 
@@ -60,10 +73,23 @@ class SheenTripCard extends StatelessWidget {
 
   /// The height a carousel row needs for these cards at the user's text size: the 154 pt photo, the 10 pt gap, the
   /// eyebrow, the title, the facts and the price line at their scaled line heights.
-  static double heightFor(TextScaler scaler) {
+  ///
+  /// With [note], the row also holds a deal's line ([wasPrice], [dealNote]): pass it when any card of the row is on a
+  /// deal, so every card of the row lines up.
+  static double heightFor(TextScaler scaler, {bool note = false}) {
     double line(double size, double height) => scaler.scale(size) * height;
     final priceRow = line(15, 1.2) > line(12, 1.25) ? line(15, 1.2) : line(12, 1.25);
-    return (154 + 10 + line(12, 1.3) + 2 + line(16, 1.25) + 3 + line(13, 1.3) + 3 + priceRow).ceilToDouble();
+    return (154 +
+            10 +
+            line(12, 1.3) +
+            2 +
+            line(16, 1.25) +
+            3 +
+            line(13, 1.3) +
+            3 +
+            priceRow +
+            (note ? 3 + line(12, 1.3) : 0))
+        .ceilToDouble();
   }
 
   // Each line keeps the height [heightFor] counts, whatever font draws it (Arabic glyphs stand taller than Latin).
@@ -77,8 +103,11 @@ class SheenTripCard extends StatelessWidget {
       title,
       eyebrow,
       tag,
+      deal,
       facts,
       if (price != null) [price, priceLabel].whereType<String>().join(' '),
+      wasPrice,
+      dealNote,
     ].whereType<String>().join(', ');
     return SheenPressable(
       onTap: onTap,
@@ -101,6 +130,8 @@ class SheenTripCard extends StatelessWidget {
                     ),
                     if (tag != null)
                       PositionedDirectional(start: 8, top: 8, child: ExcludeSemantics(child: SheenTripTag(tag!))),
+                    if (deal != null)
+                      PositionedDirectional(end: 8, top: 8, child: ExcludeSemantics(child: SheenDealBadge(deal!))),
                   ],
                 ),
               ),
@@ -165,6 +196,28 @@ class SheenTripCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
+                    // the deal's line: the usual price struck, and the note; the price line above stays whole
+                    if (wasPrice != null || dealNote != null) ...[
+                      const SizedBox(height: 3),
+                      Text.rich(
+                        strutStyle: _line(t.type.caption, 1.3),
+                        TextSpan(
+                          style: t.type.caption.copyWith(
+                            color: t.colors.warning,
+                            fontWeight: FontWeight.w700,
+                            height: 1.3,
+                          ),
+                          children: [
+                            if (wasPrice != null)
+                              TextSpan(text: wasPrice, style: SheenWasPrice.wasStyle(t, 12).copyWith(height: 1.3)),
+                            if (wasPrice != null && dealNote != null) const TextSpan(text: '  '),
+                            if (dealNote != null) TextSpan(text: dealNote),
+                          ],
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ],
                 ),
               ),

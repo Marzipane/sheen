@@ -153,6 +153,38 @@ void main() {
     );
   });
 
+  testWidgets(
+    'a trip card on a deal: the badge on the photo, the usual price struck under the price, in its row height',
+    (t) async {
+      await t.pumpWidget(
+        host(
+          MediaQuery(
+            data: const MediaQueryData(textScaler: TextScaler.linear(1.6)),
+            child: SizedBox(
+              height: SheenTripCard.heightFor(const TextScaler.linear(1.6), note: true),
+              child: SheenTripCard(
+                title: 'Istanbul and Ephesus',
+                price: 'from AED 3,001',
+                priceLabel: 'a person',
+                wasPrice: 'AED 3,159',
+                deal: '−5%',
+                dealNote: 'until 31 Oct',
+                onTap: () {},
+              ),
+            ),
+          ),
+        ),
+      );
+      expect(t.takeException(), isNull);
+      expect(find.byType(SheenDealBadge), findsOneWidget);
+      expect(find.textContaining('AED 3,159', findRichText: true), findsOneWidget);
+      expect(
+        find.bySemanticsLabel('Istanbul and Ephesus, −5%, from AED 3,001 a person, AED 3,159, until 31 Oct'),
+        findsOneWidget,
+      );
+    },
+  );
+
   testWidgets('a trip card in an Arabic app draws an English title left to right, an Arabic one right to left', (
     t,
   ) async {

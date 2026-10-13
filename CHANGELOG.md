@@ -1,3 +1,9 @@
+## 0.3.2
+
+- **Deals on trips:** `SheenTripCard` takes `deal` (a badge on the photo, top end, such as "−5%"), `wasPrice` (the
+  usual price struck through under the price) and `dealNote` ("until 31 Oct"), as `SheenPremiumCard` does.
+  `SheenTripCard.heightFor(scaler, note: true)` makes room for the deal's line in a row with a card on a deal.
+
 ## 0.3.1
 
 - **Right to left:** `sheenTextDirectionOf(text)`, the direction a text reads in from its first letter.
