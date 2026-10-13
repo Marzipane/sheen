@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sheen/sheen.dart';
+import 'package:sheen/travel.dart';
 
 import '../helpers.dart';
 
@@ -66,6 +67,28 @@ void main() {
     expect(t.widget<Text>(find.text('See charges')).style!.color, SheenColors.light().accentText);
     await t.tap(find.text('See charges'));
     expect(taps, 1);
+  });
+
+  testWidgets('on a deal a row strikes the usual price under its value, as a hotel room does', (t) async {
+    await t.pumpWidget(
+      host(
+        SizedBox(
+          width: 360,
+          child: Column(
+            children: [
+              const SheenKeyValueCard(rows: [SheenKeyValue('Double room', 'AED 3,053.51', was: 'AED 3,214.22')]),
+              SheenListRow(title: 'Inside', value: 'AED 17,037', wasValue: 'AED 18,930', onTap: () {}),
+            ],
+          ),
+        ),
+      ),
+    );
+    expect(t.takeException(), isNull);
+    expect(find.byType(SheenWasPrice), findsNWidgets(2));
+    // under the value, at its end
+    expect(t.getTopLeft(find.text('AED 3,214.22')).dy, greaterThan(t.getBottomLeft(find.text('AED 3,053.51')).dy - 1));
+    expect(t.getTopRight(find.text('AED 3,214.22')).dx, closeTo(t.getTopRight(find.text('AED 3,053.51')).dx, 1));
+    expect(find.bySemanticsLabel('Inside, AED 17,037, AED 18,930'), findsOneWidget);
   });
 
   testWidgets('a key-value card in an Arabic app keeps "965 ft" in its order, on the value side', (t) async {

@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
+import '../travel/deal.dart';
+
 /// Inset grouped rows, as in iOS Settings: one rounded group with hairline separators between the rows.
 /// ```dart
 /// SheenListGroup(children: [
@@ -56,6 +58,7 @@ class SheenListRow extends StatelessWidget {
     this.icon,
     this.iconColor,
     this.value,
+    this.wasValue,
     this.trailing,
     this.onTap,
     this.semanticLabel,
@@ -76,6 +79,9 @@ class SheenListRow extends StatelessWidget {
   /// A value before the chevron, such as the current setting.
   final String? value;
 
+  /// On a deal, the usual [value] struck through under it, as a hotel room shows it ("AED 18,930").
+  final String? wasValue;
+
   /// A widget at the end, such as a [SheenSwitch]; replaces the chevron.
   final Widget? trailing;
 
@@ -88,6 +94,12 @@ class SheenListRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = context.sheen;
+    final valueText = Text(
+      value ?? '',
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: t.type.body.copyWith(color: t.colors.textSecondary),
+    );
     Widget row(bool pressed) => LayoutBuilder(
       builder: (context, box) {
         final valueMax = box.maxWidth * .45;
@@ -128,12 +140,14 @@ class SheenListRow extends StatelessWidget {
                 // At most 45 % of the row, so a long value ellipsizes before the title does.
                 ConstrainedBox(
                   constraints: BoxConstraints(maxWidth: valueMax),
-                  child: Text(
-                    value!,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: t.type.body.copyWith(color: t.colors.textSecondary),
-                  ),
+                  child: wasValue == null
+                      ? valueText
+                      // on a deal the usual value struck under it, as a hotel room shows it
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [valueText, SheenWasPrice(wasValue!, size: 13)],
+                        ),
                 ),
               ],
               if (trailing != null) ...[
@@ -152,7 +166,7 @@ class SheenListRow extends StatelessWidget {
     return SheenPressable(
       onTap: onTap,
       pressedScale: 1,
-      semanticLabel: semanticLabel ?? [title, ?subtitle, ?value].join(', '),
+      semanticLabel: semanticLabel ?? [title, ?subtitle, ?value, ?wasValue].join(', '),
       builder: (context, pressed) => ExcludeSemantics(child: row(pressed)),
     );
   }

@@ -1,3 +1,8 @@
+## 0.3.6
+
+- **Struck prices in rows:** `SheenKeyValue(was:)` and `SheenListRow(wasValue:)` strike the usual value under the
+  value on a deal, as a hotel room shows it.
+
 ## 0.3.5
 
 - **Trip card:** the title takes up to two lines (cruise names are long); `heightFor` counts both.
