@@ -66,6 +66,24 @@ void main() {
     expect(pic.colorFilter, const ColorFilter.mode(Color(0xFF123456), BlendMode.srcIn));
   });
 
+  test('music glyphs exist', () {
+    for (final n in [
+      SheenIcons.playFill, SheenIcons.pauseFill, SheenIcons.nextFill, SheenIcons.previousFill,
+      SheenIcons.shuffle, SheenIcons.repeat, SheenIcons.repeatOne, SheenIcons.lyrics, SheenIcons.queue,
+      SheenIcons.airplay, SheenIcons.moon, SheenIcons.thumbDown, SheenIcons.versions, SheenIcons.onDevice,
+      SheenIcons.music,
+    ]) {
+      expect(SheenIcon(n).svg(), contains('<'), reason: n);
+    }
+  });
+
+  testWidgets('media controls do not mirror in right to left (as the Apple HIG asks)', (t) async {
+    for (final n in [SheenIcons.playFill, SheenIcons.nextFill, SheenIcons.previousFill, SheenIcons.shuffle]) {
+      await t.pumpWidget(box(SheenIcon(n), dir: TextDirection.rtl));
+      expect(find.byType(Transform), findsNothing, reason: n);
+    }
+  });
+
   test('an unknown name fails loudly in debug', () {
     expect(() => const SheenIcon('no-such-icon').svg(), throwsA(isA<AssertionError>()));
   });

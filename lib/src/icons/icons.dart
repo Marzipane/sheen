@@ -15,6 +15,9 @@ import 'icon.dart';
 ///
 /// {@category Foundation}
 abstract final class SheenIcons {
+  /// The airplay icon.
+  static const String airplay = 'airplay';
+
   /// The arrow up icon.
   static const String arrowUp = 'arrow-up';
 
@@ -132,6 +135,9 @@ abstract final class SheenIcons {
   /// The lock icon.
   static const String lock = 'lock';
 
+  /// The lyrics icon.
+  static const String lyrics = 'lyrics';
+
   /// The mail icon.
   static const String mail = 'mail';
 
@@ -144,11 +150,20 @@ abstract final class SheenIcons {
   /// The minus icon.
   static const String minus = 'minus';
 
+  /// The moon icon.
+  static const String moon = 'moon';
+
   /// The more icon.
   static const String more = 'more';
 
+  /// The music icon.
+  static const String music = 'music';
+
   /// The navigate icon.
   static const String navigate = 'navigate';
+
+  /// The on device icon.
+  static const String onDevice = 'on-device';
 
   /// The passport icon.
   static const String passport = 'passport';
@@ -171,8 +186,17 @@ abstract final class SheenIcons {
   /// The pool icon.
   static const String pool = 'pool';
 
+  /// The queue icon.
+  static const String queue = 'queue';
+
   /// The refresh icon.
   static const String refresh = 'refresh';
+
+  /// The repeat one icon.
+  static const String repeatOne = 'repeat-one';
+
+  /// The repeat icon.
+  static const String repeat = 'repeat';
 
   /// The room service icon.
   static const String roomService = 'room-service';
@@ -188,6 +212,9 @@ abstract final class SheenIcons {
 
   /// The ship icon.
   static const String ship = 'ship';
+
+  /// The shuffle icon.
+  static const String shuffle = 'shuffle';
 
   /// The sidebar icon.
   static const String sidebar = 'sidebar';
@@ -219,11 +246,17 @@ abstract final class SheenIcons {
   /// The tag icon.
   static const String tag = 'tag';
 
+  /// The thumb down icon.
+  static const String thumbDown = 'thumb-down';
+
   /// The trash icon.
   static const String trash = 'trash';
 
   /// The user icon.
   static const String user = 'user';
+
+  /// The versions icon.
+  static const String versions = 'versions';
 
   /// The wallet icon.
   static const String wallet = 'wallet';
@@ -258,6 +291,18 @@ abstract final class SheenIcons {
   /// The filled map glyph.
   static const String mapFill = 'map.fill';
 
+  /// The filled next glyph.
+  static const String nextFill = 'next.fill';
+
+  /// The filled pause glyph.
+  static const String pauseFill = 'pause.fill';
+
+  /// The filled play glyph.
+  static const String playFill = 'play.fill';
+
+  /// The filled previous glyph.
+  static const String previousFill = 'previous.fill';
+
   /// The filled star glyph.
   static const String starFill = 'star.fill';
 
@@ -266,6 +311,7 @@ abstract final class SheenIcons {
 
   /// Every built-in name: the stroke icons, then the filled glyphs.
   static const List<String> all = [
+    airplay,
     arrowUp,
     back,
     bed,
@@ -305,12 +351,16 @@ abstract final class SheenIcons {
     link,
     location,
     lock,
+    lyrics,
     mail,
     map,
     mic,
     minus,
+    moon,
     more,
+    music,
     navigate,
+    onDevice,
     passport,
     people,
     phone,
@@ -318,12 +368,16 @@ abstract final class SheenIcons {
     plane,
     plus,
     pool,
+    queue,
     refresh,
+    repeatOne,
+    repeat,
     roomService,
     search,
     share,
     shield,
     ship,
+    shuffle,
     sidebar,
     signOut,
     sliders,
@@ -334,8 +388,10 @@ abstract final class SheenIcons {
     sun,
     swap,
     tag,
+    thumbDown,
     trash,
     user,
+    versions,
     wallet,
     waves,
     wifi,
@@ -347,6 +403,10 @@ abstract final class SheenIcons {
     heartFill,
     homeFill,
     mapFill,
+    nextFill,
+    pauseFill,
+    playFill,
+    previousFill,
     starFill,
     userFill,
   ];
