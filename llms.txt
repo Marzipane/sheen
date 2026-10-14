@@ -30,6 +30,7 @@ The theme and the tokens every widget reads. Put a `SheenScope` above your scree
 - [SheenTone](https://pub.dev/documentation/sheen/latest/sheen/SheenTone.html): What a message means, which picks its colour: toasts, banners, status pills and status screens take a tone.
 - [SheenTracking](https://pub.dev/documentation/sheen/latest/sheen/SheenTracking-class.html): Apple's tracking for San Francisco by point size: the iOS table of the Human Interface Guidelines (Typography › Tracking values, read 2026-10-03).
 - [SheenType](https://pub.dev/documentation/sheen/latest/sheen/SheenType-class.html): The type scale of a sheen theme.
+- [sheenTextDirectionOf](https://pub.dev/documentation/sheen/latest/sheen/sheenTextDirectionOf.html): The direction text reads in, from its first letter: right to left for Hebrew and Arabic scripts, left to right for any other; null when it has no letter (the app's direction then applies).
 
 ## Glass
 
@@ -184,20 +185,48 @@ Cards, grouped lists with tinted glyph tiles, accordions, key-value cards, a car
 
 ## Travel
 
-Hotel cards (and their loading skeleton), featured cards, city tiles with the visa rule, price blocks, cancellation lines, score badges, deal badges with the price before the deal struck through, and map price pins, as widgets and as bitmaps for native map markers. Prices and words are always yours.
+Hotel cards (and their loading skeleton), featured cards, tour and cruise cards with their itinerary, city tiles with the visa rule, price blocks, cancellation lines, score badges, deal badges with the price before the deal struck through, and map price pins, as widgets and as bitmaps for native map markers. Prices and words are always yours.
 
 - [SheenCancellationLine](https://pub.dev/documentation/sheen/latest/travel/SheenCancellationLine-class.html): The cancellation terms in one line: a check in the success colour with free-cancellation text, or a crossed circle with non-refundable text.
 - [SheenCityTile](https://pub.dev/documentation/sheen/latest/travel/SheenCityTile-class.html): A destination: a city photo with a darkened foot, the name and distance, and the visa rule with its coloured dot. Without a photo it is a plain card with the same text.
 - [SheenDealBadge](https://pub.dev/documentation/sheen/latest/travel/SheenDealBadge-class.html): A deal's mark: a red capsule with its words, such as "−15%", for the corner of a photo or beside a price.
 - [SheenHotelCard](https://pub.dev/documentation/sheen/latest/travel/SheenHotelCard-class.html): A hotel in a list of results: a photo pager with Save; the name and the total; a headline and the price per night; the score, a recommendation share and the board; the cancellation line.
 - [SheenHotelCardSkeleton](https://pub.dev/documentation/sheen/latest/travel/SheenHotelCardSkeleton-class.html): A SheenHotelCard while results load: a photo block, name and price bars and two text lines, shimmering (still with Reduce Motion).
+- [SheenItinerary](https://pub.dev/documentation/sheen/latest/travel/SheenItinerary-class.html): A tour's days or a cruise's ports, top to bottom, on a line that joins numbered dots.
+- [SheenItineraryStop](https://pub.dev/documentation/sheen/latest/travel/SheenItineraryStop-class.html): One stop of a SheenItinerary: a day of a tour or a port of a cruise.
 - [SheenPremiumCard](https://pub.dev/documentation/sheen/latest/travel/SheenPremiumCard-class.html): A card for a carousel of featured stays: a photo with Save, the name, score and headline, and the total with a nights label. 232 points wide by default; heightFor gives the row height for a text size.
 - [SheenPriceBlock](https://pub.dev/documentation/sheen/latest/travel/SheenPriceBlock-class.html): A price with the total first and the price per night second. All strings arrive formatted, in the user's currency.
 - [SheenPricePin](https://pub.dev/documentation/sheen/latest/travel/SheenPricePin-class.html): A price on a map drawn by Flutter: a 30-point glass capsule; selected, a 34-point prominent one. For native map markers, use renderSheenPricePin.
 - [SheenScoreBadge](https://pub.dev/documentation/sheen/latest/travel/SheenScoreBadge-class.html): A guest score on the accent colour in tabular figures, such as "9.1". Its text grows with the user's text size up to 1.3 times, so the badge stays a badge.
 - [SheenScoreSize](https://pub.dev/documentation/sheen/latest/travel/SheenScoreSize.html): The sizes of a SheenScoreBadge.
+- [SheenTripCard](https://pub.dev/documentation/sheen/latest/travel/SheenTripCard-class.html): A card for a carousel of tours or cruises: a photo with an optional tag at its foot (a cruise line, "Guaranteed"), a small line above the title (the operator or the ship), the title, the facts ("8 days · Turkey") and the price from, with what it is for ("a person"). 232 points wide by default, the size of SheenPremiumCard; heightFor gives the row height for a text size.
+- [SheenTripIcon](https://pub.dev/documentation/sheen/latest/travel/SheenTripIcon-class.html): The glyph for a trip kind, for lists and buttons: a compass for tours, a ship for cruises.
+- [SheenTripTag](https://pub.dev/documentation/sheen/latest/travel/SheenTripTag-class.html): A small dark chip for a photo: a cruise line, "Guaranteed". Readable on any photo in both looks.
 - [SheenVisaKind](https://pub.dev/documentation/sheen/latest/travel/SheenVisaKind.html): How a destination's visa rule reads for a passport; it picks the colour of the rule's dot on a SheenCityTile.
 - [SheenWasPrice](https://pub.dev/documentation/sheen/latest/travel/SheenWasPrice-class.html): The price before a deal, struck through in the secondary colour. Show it only next to the price with the deal, and only when it is the same stay without the deal (a like-for-like saving).
 - [renderSheenPickedPlacePin](https://pub.dev/documentation/sheen/latest/travel/renderSheenPickedPlacePin.html): A place picked on a map as a marker bitmap: its name in a red capsule over a red dot with a white ring. The record's anchor is the dot's centre as a fraction of the image, for the marker's anchor.
 - [renderSheenPlacePin](https://pub.dev/documentation/sheen/latest/travel/renderSheenPlacePin.html): A place marker for a native map, as PNG bytes (Google Maps and Apple Maps draw markers from bitmaps, not widgets): a 34-point circle in the accent colour with a white icon glyph, a thin rim and a soft shadow, drawn pixelRatio times the logical size. Give the marker the same ratio and anchor it at the centre.
 - [renderSheenPricePin](https://pub.dev/documentation/sheen/latest/travel/renderSheenPricePin.html): A SheenPricePin drawn as a PNG for a native map's marker (Google Maps draws markers from bitmaps, not widgets): the same capsule, label and sizes, with the glass approximated by its tint and rim, and a soft shadow around it. The image is pixelRatio times the logical size; give the marker the same ratio. Text grows with textScale up to 1.5, as the widget's does.
+
+## Music
+
+The parts of a music player: the cover and its glow behind the glass, a mini player above the tab bar, a seek bar, transport controls, song rows with a save button, shelves of covers, synced lyrics, a queue to reorder and equaliser bands. Titles and words are always yours; `SheenMusicScope` translates the few labels the widgets announce.
+
+- [SheenArtwork](https://pub.dev/documentation/sheen/latest/music/SheenArtwork-class.html): A song's or album's cover: a square image clipped to radius, or a music glyph on a quiet ground when there is no image or it fails to load. A hairline edge keeps a dark cover apart from a dark page.
+- [SheenArtworkGlow](https://pub.dev/documentation/sheen/latest/music/SheenArtworkGlow-class.html): The ground of a player or an album page: the cover, blurred and saturated into a soft glow, fading into the page's background, so the glass above takes the song's colours.
+- [SheenArtworkTile](https://pub.dev/documentation/sheen/latest/music/SheenArtworkTile-class.html): A cover with one or two lines under it, for a shelf of albums, mixes or artists. Artists are round and centred.
+- [SheenBandSlider](https://pub.dev/documentation/sheen/latest/music/SheenBandSlider-class.html): One band of an equaliser: a vertical slider in decibels with its centre at 0 dB, the value above and the band's name below. The fill grows from the centre up (boost) or down (cut). A screen reader moves it 1 dB at a time.
+- [SheenLyricsLine](https://pub.dev/documentation/sheen/latest/music/SheenLyricsLine-class.html): One timed line of lyrics.
+- [SheenLyricsView](https://pub.dev/documentation/sheen/latest/music/SheenLyricsView-class.html): Synced lyrics: large lines, the one being sung bright and the rest dim, scrolling by themselves to keep the current line in the upper third. A tap on a line jumps the song there. With no timed lines, plain lyrics show as text.
+- [SheenMiniPlayer](https://pub.dev/documentation/sheen/latest/music/SheenMiniPlayer-class.html): The glass bar above the tab bar that shows what plays: the cover, title and artist, play/pause and next, and a thin progress line along its foot.
+- [SheenMusicScope](https://pub.dev/documentation/sheen/latest/music/SheenMusicScope-class.html): Provides SheenMusicStrings to the music widgets below it.
+- [SheenMusicStrings](https://pub.dev/documentation/sheen/latest/music/SheenMusicStrings-class.html): The words the music widgets show or announce when you give them none.
+- [SheenPlayingBars](https://pub.dev/documentation/sheen/latest/music/SheenPlayingBars-class.html): Three small bars that rise and fall while a song plays, in the accent colour, as the playing row of a list shows.
+- [SheenReorderList](https://pub.dev/documentation/sheen/latest/music/SheenReorderList-class.html): A list whose rows can be dragged by a handle into a new order and swiped away, as a queue or a playlist is edited.
+- [SheenRepeatMode](https://pub.dev/documentation/sheen/latest/music/SheenRepeatMode.html): What repeats.
+- [SheenSeekBar](https://pub.dev/documentation/sheen/latest/music/SheenSeekBar-class.html): The seek line of a player: a thin track that thickens under the finger, the played part in the text colour, the buffered part fainter, and the time played and the time left under it in tabular figures.
+- [SheenShelf](https://pub.dev/documentation/sheen/latest/music/SheenShelf-class.html): A titled row of tiles that scrolls sideways, with an optional "See all" link, as on a music home page.
+- [SheenTrackRow](https://pub.dev/documentation/sheen/latest/music/SheenTrackRow-class.html): One song in a list: its cover, title, artist and a short fact ("4.1M plays", "3:56"), with a save button and a menu button at the end.
+- [SheenTrackSave](https://pub.dev/documentation/sheen/latest/music/SheenTrackSave.html): Whether a song can be stored on the device, is being stored, or is stored.
+- [SheenTransportControls](https://pub.dev/documentation/sheen/latest/music/SheenTransportControls-class.html): The row of a player's controls: shuffle, previous, play/pause on a large glass circle, next and repeat.
+- [formatSheenDuration](https://pub.dev/documentation/sheen/latest/music/formatSheenDuration.html): A time as a player shows it: 1:30, 0:05, 1:02:03, or -2:27 for time left.

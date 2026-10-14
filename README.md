@@ -32,7 +32,7 @@ Frosted glass for Flutter: a design system with one-accent theming, spring motio
   menus, alerts). Text inputs use Flutter's `TextField` and work under any app.
 - **More than glass.** Pages with large titles, sheets with detents, a date-range picker, one-time-code and password
   fields, toasts, skeletons, empty states, a steps line, rolling digits, and a travel library with hotel cards, prices
-  and map pins.
+  and map pins, and a music library with a player, a mini player, song rows and synced lyrics.
 
 ## Install
 
@@ -110,6 +110,7 @@ SheenScope(
 | Content | `SheenCard`, `SheenListGroup`, `SheenListRow`, `SheenAccordion`, `SheenKeyValueCard`, `SheenCardSwiper`, `SheenPhotoPager`, `SheenAvatar`, `SheenStarRating`, `SheenScoreBar` |
 | Layout | `SheenPage`, `SheenSectionLabel`, `SheenSectionNote`, `SheenScrollEdge`, `SheenEdgeFade` |
 | Travel | `SheenHotelCard`, `SheenPremiumCard`, `SheenCityTile`, `SheenPriceBlock`, `SheenCancellationLine`, `SheenScoreBadge`, `SheenDealBadge`, `SheenWasPrice`, `SheenTripCard`, `SheenItinerary`, `SheenPricePin`, `renderSheenPricePin` (map marker bitmaps) |
+| Music | `SheenArtwork`, `SheenArtworkGlow`, `SheenMiniPlayer`, `SheenSeekBar`, `SheenTransportControls`, `SheenTrackRow`, `SheenArtworkTile`, `SheenShelf`, `SheenLyricsView`, `SheenReorderList`, `SheenBandSlider`, `SheenPlayingBars`, `SheenMusicScope` |
 
 Every widget has a page in the [gallery](example/); most have a code example in their API docs.
 
@@ -118,6 +119,7 @@ Every widget has a page in the [gallery](example/); most have a code example in 
   <img src="https://raw.githubusercontent.com/Marzipane/sheen/main/doc/screenshots/04-selection.webp" width="180" alt="Chips, segmented control and a date range">
   <img src="https://raw.githubusercontent.com/Marzipane/sheen/main/doc/screenshots/07-feedback.webp" width="180" alt="Progress, skeletons, banners and badges">
   <img src="https://raw.githubusercontent.com/Marzipane/sheen/main/doc/screenshots/09-travel.webp" width="180" alt="Hotel card, featured stays and map pins">
+  <img src="https://raw.githubusercontent.com/Marzipane/sheen/main/doc/screenshots/12-music.webp" width="180" alt="The music widgets: a player over the cover's glow, the seek bar, controls and the mini player">
   <img src="https://raw.githubusercontent.com/Marzipane/sheen/main/doc/screenshots/11-deals.webp" width="180" alt="Hotel and featured cards on a deal: a badge on the photo and the price before the deal struck through">
 </p>
 
@@ -149,6 +151,18 @@ SheenHotelCard(
 ```
 
 Prices, dates and labels are always yours, formatted and translated; the widgets only lay them out.
+
+## Music library
+
+Player widgets live in a third library:
+
+```dart
+import 'package:sheen/music.dart';
+```
+
+`SheenMiniPlayer` above the tab bar, `SheenSeekBar` and `SheenTransportControls` over `SheenArtworkGlow` (the cover
+blurred behind the glass), `SheenTrackRow` with a save button that fills as the song is stored, `SheenShelf` of covers,
+`SheenLyricsView`, `SheenReorderList` for a queue and `SheenBandSlider` for an equaliser. See [doc/music.md](doc/music.md).
 
 ## Platforms
 

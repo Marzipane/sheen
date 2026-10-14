@@ -1,3 +1,16 @@
+## 0.4.0
+
+- **Music library:** `import 'package:sheen/music.dart'` for the parts of a music player. `SheenArtwork` (a cover with a
+  placeholder), `SheenArtworkGlow` (the cover blurred behind the glass; a flat tint with Reduce Transparency),
+  `SheenMiniPlayer` (tap or drag up to open, swipe to change song), `SheenSeekBar` (previews while dragging, reports on
+  release, 10-second steps for screen readers) with `formatSheenDuration`, `SheenTransportControls` with
+  `SheenRepeatMode`, `SheenTrackRow` with `SheenTrackSave` (save, saving with a ring, saved), `SheenArtworkTile` and
+  `SheenShelf`, `SheenLyricsView` with `SheenLyricsLine`, `SheenReorderList`, `SheenBandSlider`, `SheenPlayingBars`,
+  and `SheenMusicStrings` / `SheenMusicScope` for the words. In the gallery under Music and in `doc/music.md`.
+- **Icons:** `SheenIcons.playFill`, `pauseFill`, `nextFill`, `previousFill`, `shuffle`, `repeat`, `repeatOne`, `lyrics`,
+  `queue`, `airplay`, `moon`, `thumbDown`, `versions`, `onDevice`, `music` and `grip`. Media controls do not mirror in
+  right-to-left text.
+
 ## 0.3.6
 
 - **Struck prices in rows:** `SheenKeyValue(was:)` and `SheenListRow(wasValue:)` strike the usual value under the
