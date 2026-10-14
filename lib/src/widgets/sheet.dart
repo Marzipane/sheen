@@ -28,6 +28,9 @@ import '../glass/painters.dart';
 ///
 /// Returns the value the sheet was popped with, or null. The labels default to [SheenStrings].
 ///
+/// Set [useRootNavigator] when [context] is inside a nested navigator (a tab with its own back stack), so the sheet
+/// covers the whole app, tab bar included.
+///
 /// {@category Sheets}
 Future<T?> showSheenSheet<T>({
   required BuildContext context,
@@ -40,11 +43,13 @@ Future<T?> showSheenSheet<T>({
   double medium = .55,
   double large = .92,
   bool startLarge = true,
+  bool useRootNavigator = false,
 }) => showSheenCustomSheet<T>(
   context: context,
   medium: medium,
   large: large,
   startLarge: startLarge,
+  useRootNavigator: useRootNavigator,
   builder: (sheetContext, scroll) => SheenSheetBody(
     title: title,
     subtitle: subtitle,
@@ -62,7 +67,8 @@ Future<T?> showSheenSheet<T>({
 );
 
 /// Opens a sheet whose whole surface [builder] draws, usually a [SheenSheetBody] whose header it controls itself (for
-/// example a Done button that waits for a valid choice). The presentation is that of [showSheenSheet].
+/// example a Done button that waits for a valid choice). The presentation is that of [showSheenSheet], and so is
+/// [useRootNavigator].
 ///
 /// {@category Sheets}
 Future<T?> showSheenCustomSheet<T>({

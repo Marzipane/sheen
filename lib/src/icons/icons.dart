@@ -129,6 +129,9 @@ abstract final class SheenIcons {
   /// The layers icon.
   static const String layers = 'layers';
 
+  /// The library icon.
+  static const String library = 'library';
+
   /// The link icon.
   static const String link = 'link';
 
@@ -264,6 +267,9 @@ abstract final class SheenIcons {
   /// The wallet icon.
   static const String wallet = 'wallet';
 
+  /// The waveform icon.
+  static const String waveform = 'waveform';
+
   /// The waves icon.
   static const String waves = 'waves';
 
@@ -291,8 +297,14 @@ abstract final class SheenIcons {
   /// The filled home glyph.
   static const String homeFill = 'home.fill';
 
+  /// The filled library glyph.
+  static const String libraryFill = 'library.fill';
+
   /// The filled map glyph.
   static const String mapFill = 'map.fill';
+
+  /// The filled music glyph.
+  static const String musicFill = 'music.fill';
 
   /// The filled next glyph.
   static const String nextFill = 'next.fill';
@@ -311,6 +323,9 @@ abstract final class SheenIcons {
 
   /// The filled user glyph.
   static const String userFill = 'user.fill';
+
+  /// The filled waveform glyph.
+  static const String waveformFill = 'waveform.fill';
 
   /// Every built-in name: the stroke icons, then the filled glyphs.
   static const List<String> all = [
@@ -352,6 +367,7 @@ abstract final class SheenIcons {
     info,
     key,
     layers,
+    library,
     link,
     location,
     lock,
@@ -397,6 +413,7 @@ abstract final class SheenIcons {
     user,
     versions,
     wallet,
+    waveform,
     waves,
     wifi,
     wrench,
@@ -406,12 +423,15 @@ abstract final class SheenIcons {
     compassFill,
     heartFill,
     homeFill,
+    libraryFill,
     mapFill,
+    musicFill,
     nextFill,
     pauseFill,
     playFill,
     previousFill,
     starFill,
     userFill,
+    waveformFill,
   ];
 }

@@ -29,7 +29,7 @@ class SheenChoice<T> {
 ///
 /// Use it for languages, currencies, countries, sort orders: any single choice from a list. Long lists get a filter
 /// field; [suggested] values come first under [suggestedLabel], the whole list under [allLabel], and [note] closes the
-/// list.
+/// list. Set [useRootNavigator] from inside a nested navigator, as for [showSheenSheet].
 ///
 /// ```dart
 /// final code = await showSheenChoiceSheet<String>(
@@ -50,8 +50,10 @@ Future<T?> showSheenChoiceSheet<T>(
   String? suggestedLabel,
   String? allLabel,
   String? note,
+  bool useRootNavigator = false,
 }) => showSheenCustomSheet<T>(
   context: context,
+  useRootNavigator: useRootNavigator,
   builder: (sheetContext, scroll) => SheenSheetBody(
     title: title,
     onCancel: () => Navigator.of(sheetContext).pop(),

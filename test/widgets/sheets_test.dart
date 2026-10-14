@@ -167,4 +167,54 @@ void main() {
     expect(find.text('Yes, until the day before.'), findsNothing);
     handle.dispose();
   });
+
+  group('nested navigators', () {
+    Future<void> openFrom(WidgetTester t, {required bool root, required bool choice}) async {
+      await t.pumpWidget(
+        host(
+          Navigator(
+            key: const ValueKey('tab'),
+            onGenerateRoute: (_) => PageRouteBuilder<void>(
+              pageBuilder: (c, _, _) => Builder(
+                builder: (c) => GestureDetector(
+                  onTap: () => choice
+                      ? showSheenChoiceSheet<int>(
+                          c,
+                          title: 'Pick',
+                          choices: const [SheenChoice(value: 1, title: 'One')],
+                          useRootNavigator: root,
+                        )
+                      : showSheenSheet<void>(
+                          context: c,
+                          title: 'Pick',
+                          useRootNavigator: root,
+                          builder: (_, scroll) => ListView(controller: scroll, children: const [Text('One')]),
+                        ),
+                  child: const Text('open'),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      await t.tap(find.text('open'));
+      await t.pumpAndSettle();
+    }
+
+    final inTab = find.descendant(of: find.byKey(const ValueKey('tab')), matching: find.text('Pick'));
+
+    for (final choice in [false, true]) {
+      final name = choice ? 'choice sheet' : 'sheet';
+      testWidgets('a $name opens in the nearest navigator by default', (t) async {
+        await openFrom(t, root: false, choice: choice);
+        expect(inTab, findsOneWidget);
+      });
+
+      testWidgets('a $name with useRootNavigator opens over the nested navigator', (t) async {
+        await openFrom(t, root: true, choice: choice);
+        expect(find.text('Pick'), findsOneWidget);
+        expect(inTab, findsNothing);
+      });
+    }
+  });
 }

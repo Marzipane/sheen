@@ -1,3 +1,11 @@
+## 0.4.2
+
+- **Sheets from nested navigators:** `showSheenSheet` and `showSheenChoiceSheet` take `useRootNavigator`, as
+  `showSheenCustomSheet` does, so a sheet opened inside a tab with its own back stack covers the whole app, tab bar
+  included.
+- **Icons:** `SheenIcons.musicFill`, `waveform`, `waveformFill`, `library` and `libraryFill`, for the tabs of a music
+  app.
+
 ## 0.4.1
 
 - Formatting only (`dart format` at 120 columns, as CI checks); no change to the API or to how anything draws.

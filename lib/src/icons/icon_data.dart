@@ -64,6 +64,7 @@ const Map<String, String> sheenStrokeIcons = {
       r'''<circle cx="8" cy="12" r="3.5"></circle><path d="M11.5 12H20.5"></path><path d="M17.5 12v3"></path><path d="M20.5 12v2"></path>''',
   'layers':
       r'''<path d="m12 4 8.5 4.5L12 13 3.5 8.5Z"></path><path d="m3.5 12.5 8.5 4.5 8.5-4.5"></path><path d="m3.5 16.5 8.5 4.5 8.5-4.5"></path>''',
+  'library': r'''<path d="M5 4v16M9.8 4v16M14.2 5l4.8 15"></path>''',
   'link':
       r'''<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"></path><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"></path>''',
   'location': r'''<path d="M20 4 4 11l7 2 2 7Z"></path>''',
@@ -138,6 +139,7 @@ const Map<String, String> sheenStrokeIcons = {
       r'''<rect x="3.5" y="7.5" width="12.5" height="12.5" rx="2.5"></rect><path d="M8 4h9.5A3 3 0 0 1 20.5 7v9.5"></path>''',
   'wallet':
       r'''<rect x="3.5" y="6" width="17" height="13" rx="2.5"></rect><path d="M3.5 10h17"></path><path d="M6 6V5a1.5 1.5 0 0 1 1.5-1.5h9A1.5 1.5 0 0 1 18 5v1"></path>''',
+  'waveform': r'''<path d="M3 12h1.5M7 8v8M11.5 4.5v15M16 8.5v7M20.5 11v2"></path>''',
   'waves':
       r'''<path d="M3 9c1.5 0 1.5-1.5 3-1.5S7.5 9 9 9s1.5-1.5 3-1.5S13.5 9 15 9s1.5-1.5 3-1.5S19.5 9 21 9"></path><path d="M3 15c1.5 0 1.5-1.5 3-1.5S7.5 15 9 15s1.5-1.5 3-1.5S13.5 15 15 15s1.5-1.5 3-1.5S19.5 15 21 15"></path>''',
   'wifi':
@@ -159,8 +161,12 @@ const Map<String, String> sheenFilledIcons = {
       r'''<path d="M12 20.3S3.5 15.5 3.5 9.3A4.6 4.6 0 0 1 12 6.8a4.6 4.6 0 0 1 8.5 2.5c0 6.2-8.5 11-8.5 11Z"></path>''',
   'home':
       r'''<path d="M12 3.1 2.8 10.4a.9.9 0 0 0 .6 1.6H5v7.6c0 .8.6 1.4 1.4 1.4h3.8v-5.6h3.6V21h3.8c.8 0 1.4-.6 1.4-1.4V12h1.6a.9.9 0 0 0 .6-1.6Z"></path>''',
+  'library':
+      r'''<rect x="3.5" y="3.5" width="3.4" height="17" rx="1.2"></rect><rect x="8.6" y="3.5" width="3.4" height="17" rx="1.2"></rect><rect x="14.6" y="3.7" width="3.4" height="17" rx="1.2" transform="rotate(-16 16.3 12.2)"></rect>''',
   'map':
       r'''<path d="M8.6 3.6 3.9 5.4a1.4 1.4 0 0 0-.9 1.3v12.6c0 .7.7 1.2 1.3.9l4.3-1.6Z"></path><path d="M10.2 3.6v15l4.6 2V5.6Z"></path><path d="M16.4 5.6v15l4.7-1.8c.5-.2.9-.7.9-1.3V4.9c0-.7-.7-1.2-1.3-.9Z"></path>''',
+  'music':
+      r'''<path d="M9.2 5.7 19.3 3.9A.9.9 0 0 1 20.4 4.8V15.6a3 3 0 1 1-1.9-2.8V8.2l-8.6 1.6v7.8a3 3 0 1 1-1.9-2.8V6.6a.9.9 0 0 1 .7-.9Z"></path>''',
   'next':
       r'''<path d="M4.5 6.3v11.4a.9.9 0 0 0 1.4.74l8.2-5.7a.9.9 0 0 0 0-1.48l-8.2-5.7a.9.9 0 0 0-1.4.74Z"></path><rect x="16.3" y="5" width="3.2" height="14" rx="1.2"></rect>''',
   'pause':
@@ -171,4 +177,6 @@ const Map<String, String> sheenFilledIcons = {
   'star': r'''<path d="m12 3.6 2.5 5.2 5.6.6-4.2 3.8 1.2 5.6L12 16l-5.1 2.8 1.2-5.6L3.9 9.4l5.6-.6Z"></path>''',
   'user':
       r'''<circle cx="12" cy="7.6" r="4.1"></circle><path d="M3.9 20c.7-4 4.1-6.6 8.1-6.6s7.4 2.6 8.1 6.6c.1.6-.4 1.1-1 1.1H4.9c-.6 0-1.1-.5-1-1.1Z"></path>''',
+  'waveform':
+      r'''<rect x="2.6" y="10" width="2.6" height="4" rx="1.3"></rect><rect x="6.9" y="6.5" width="2.6" height="11" rx="1.3"></rect><rect x="11.2" y="3.5" width="2.6" height="17" rx="1.3"></rect><rect x="15.5" y="7.5" width="2.6" height="9" rx="1.3"></rect><rect x="19.8" y="10.5" width="2.6" height="3" rx="1.3"></rect>''',
 };
