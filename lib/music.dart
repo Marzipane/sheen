@@ -6,4 +6,6 @@ library;
 
 export 'src/music/artwork.dart';
 export 'src/music/playing_bars.dart';
+export 'src/music/seek_bar.dart';
 export 'src/music/strings.dart';
+export 'src/music/transport.dart';
