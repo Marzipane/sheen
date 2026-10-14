@@ -56,9 +56,9 @@ class SheenArtworkTile extends StatelessWidget {
           children: [
             SheenArtwork(image: artwork, size: size, round: round, radius: 14),
             const SizedBox(height: SheenSpace.s),
-            Text(title, maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: align, textScaler: scaler, style: t.type.subhead.copyWith(color: t.colors.text, fontWeight: FontWeight.w600)),
+            Text(title, textDirection: sheenTextDirectionOf(title), maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: align, textScaler: scaler, style: t.type.subhead.copyWith(color: t.colors.text, fontWeight: FontWeight.w600)),
             if (subtitle != null)
-              Text(subtitle!, maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: align, textScaler: scaler, style: t.type.footnote.copyWith(color: t.colors.textSecondary)),
+              Text(subtitle!, textDirection: sheenTextDirectionOf(subtitle!), maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: align, textScaler: scaler, style: t.type.footnote.copyWith(color: t.colors.textSecondary)),
           ],
         ),
       ),

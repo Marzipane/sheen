@@ -102,6 +102,9 @@ abstract final class SheenIcons {
   /// The grid icon.
   static const String grid = 'grid';
 
+  /// The grip icon.
+  static const String grip = 'grip';
+
   /// The heart icon.
   static const String heart = 'heart';
 
@@ -340,6 +343,7 @@ abstract final class SheenIcons {
     flag,
     globe,
     grid,
+    grip,
     heart,
     help,
     hourglass,

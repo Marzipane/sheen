@@ -90,7 +90,7 @@ class SheenReorderList<T> extends StatelessWidget {
             button: true,
             child: SizedBox.square(
               dimension: SheenSpace.hit,
-              child: Center(child: SheenIcon(SheenIcons.queue, size: 20, color: t.colors.textTertiary)),
+              child: Center(child: SheenIcon(SheenIcons.grip, size: 20, color: t.colors.textTertiary)),
             ),
           ),
         );

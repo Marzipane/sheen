@@ -9,6 +9,7 @@ import 'pages/glass.dart';
 import 'pages/inputs.dart';
 import 'pages/selection.dart';
 import 'pages/sheets.dart';
+import 'pages/music.dart';
 import 'pages/travel.dart';
 
 /// One page of the gallery.
@@ -95,6 +96,14 @@ final List<PageSpec> catalog = [
     icon: SheenIcons.plane,
     tint: SheenTint.blue,
     page: () => const TravelPage(),
+  ),
+  PageSpec(
+    id: 'music',
+    title: 'Music',
+    subtitle: 'Player, mini player, songs, lyrics',
+    icon: SheenIcons.music,
+    tint: SheenTint.red,
+    page: () => const MusicPage(),
   ),
   PageSpec(
     id: 'foundation',

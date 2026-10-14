@@ -88,7 +88,7 @@ class SheenTrackRow extends StatelessWidget {
   /// Whether the player plays (the bars move on the [current] row).
   final bool playing;
 
-  /// Shows the on-device mark before the subtitle.
+  /// Shows the on-device mark before the subtitle (unless the save button already shows it).
   final bool onDevice;
 
   /// Draws the row faded, for songs that cannot play now (offline).
@@ -147,23 +147,21 @@ class SheenTrackRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                title,
+              Text(title, textDirection: sheenTextDirectionOf(title),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textScaler: scaler,
                 style: t.type.body.copyWith(color: current ? t.colors.accentText : t.colors.text),
               ),
-              if (second.isNotEmpty || onDevice)
+              if (second.isNotEmpty || (onDevice && save != SheenTrackSave.saved))
                 Row(
                   children: [
-                    if (onDevice) ...[
+                    if (onDevice && save != SheenTrackSave.saved) ...[
                       SheenIcon(SheenIcons.onDevice, size: 13, color: t.colors.success, semanticLabel: s.saved),
                       const SizedBox(width: 3),
                     ],
                     Flexible(
-                      child: Text(
-                        second,
+                      child: Text(second, textDirection: sheenTextDirectionOf(second),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         textScaler: scaler,

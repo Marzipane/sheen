@@ -69,26 +69,27 @@ class SheenBandSlider extends StatelessWidget {
       child: ExcludeSemantics(
         child: Column(
           children: [
-            Text(_db(v), style: t.type.caption.copyWith(color: t.colors.textSecondary, fontFeatures: const [FontFeature.tabularFigures()])),
+            Text(_db(v), textDirection: TextDirection.ltr, style: t.type.caption.copyWith(color: t.colors.textSecondary, fontFeatures: const [FontFeature.tabularFigures()])),
             const SizedBox(height: SheenSpace.s),
             Expanded(
               child: LayoutBuilder(
                 builder: (context, c) {
-                  final h = c.maxHeight;
-                  final zeroY = h * (max / (max - min));
-                  final y = h * ((max - v) / (max - min));
+                  const knob = 11.0;
+                  final h = c.maxHeight - 2 * knob;
+                  final zeroY = knob + h * (max / (max - min));
+                  final y = knob + h * ((max - v) / (max - min));
                   return GestureDetector(
                     key: const ValueKey('sheen-band-track'),
                     behavior: HitTestBehavior.opaque,
-                    onVerticalDragUpdate: onChanged == null ? null : (d) => set(fromDy(d.localPosition.dy, h)),
+                    onVerticalDragUpdate: onChanged == null ? null : (d) => set(fromDy(d.localPosition.dy - knob, h)),
                     onVerticalDragEnd: onChangeEnd == null ? null : (_) => onChangeEnd!(value),
-                    onTapDown: onChanged == null ? null : (d) => set(fromDy(d.localPosition.dy, h)),
+                    onTapDown: onChanged == null ? null : (d) => set(fromDy(d.localPosition.dy - knob, h)),
                     child: SizedBox(
                       width: SheenSpace.hit,
                       child: Stack(
                         alignment: Alignment.topCenter,
                         children: [
-                          Positioned(top: 0, bottom: 0, child: Container(width: 6, decoration: BoxDecoration(color: t.colors.track, borderRadius: BorderRadius.circular(3)))),
+                          Positioned(top: knob, bottom: knob, child: Container(width: 6, decoration: BoxDecoration(color: t.colors.track, borderRadius: BorderRadius.circular(3)))),
                           Positioned(
                             top: y < zeroY ? y : zeroY,
                             height: (y - zeroY).abs(),

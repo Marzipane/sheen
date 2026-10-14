@@ -144,7 +144,7 @@ class _SheenLyricsViewState extends State<SheenLyricsView> {
                   child: AnimatedOpacity(
                     duration: SheenMotion.reduced(context) ? Duration.zero : const Duration(milliseconds: 250),
                     opacity: i == current ? 1 : (i < current ? .3 : .45),
-                    child: Text(widget.lines[i].text, style: style),
+                    child: Text(widget.lines[i].text, textDirection: sheenTextDirectionOf(widget.lines[i].text), style: style),
                   ),
                 ),
               ),

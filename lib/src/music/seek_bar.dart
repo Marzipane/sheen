@@ -190,9 +190,9 @@ class _SheenSeekBarState extends State<SheenSeekBar> {
             if (widget.showTimes)
               Row(
                 children: [
-                  Text(formatSheenDuration(shown), style: timeStyle),
+                  Text(formatSheenDuration(shown), style: timeStyle, textDirection: TextDirection.ltr),
                   const Spacer(),
-                  Text(formatSheenDuration(shown - widget.duration), style: timeStyle),
+                  Text(formatSheenDuration(shown - widget.duration), style: timeStyle, textDirection: TextDirection.ltr),
                 ],
               ),
           ],

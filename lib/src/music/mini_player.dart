@@ -131,9 +131,9 @@ class SheenMiniPlayer extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(title, maxLines: 1, overflow: TextOverflow.ellipsis, textScaler: scaler, style: t.type.headline.copyWith(color: t.colors.text, fontSize: 15)),
+                                Text(title, textDirection: sheenTextDirectionOf(title), maxLines: 1, overflow: TextOverflow.ellipsis, textScaler: scaler, style: t.type.headline.copyWith(color: t.colors.text, fontSize: 15)),
                                 if (subtitle != null)
-                                  Text(subtitle!, maxLines: 1, overflow: TextOverflow.ellipsis, textScaler: scaler, style: t.type.footnote.copyWith(color: t.colors.textSecondary)),
+                                  Text(subtitle!, textDirection: sheenTextDirectionOf(subtitle!), maxLines: 1, overflow: TextOverflow.ellipsis, textScaler: scaler, style: t.type.footnote.copyWith(color: t.colors.textSecondary)),
                               ],
                             ),
                           ),

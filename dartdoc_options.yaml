@@ -24,4 +24,6 @@ dartdoc:
       markdown: doc/layout.md
     Travel:
       markdown: doc/travel.md
-  categoryOrder: [Foundation, Glass, Motion, Buttons, Navigation, Inputs, Selection, Sheets, Feedback, Content, Layout, Travel]
+    Music:
+      markdown: doc/music.md
+  categoryOrder: [Foundation, Glass, Motion, Buttons, Navigation, Inputs, Selection, Sheets, Feedback, Content, Layout, Travel, Music]
