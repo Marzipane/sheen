@@ -72,6 +72,8 @@ class SheenReorderList<T> extends StatelessWidget {
       physics: physics,
       padding: padding,
       onReorderStart: (_) => HapticFeedback.selectionClick(),
+      // onReorderItem, its replacement in newer Flutter, does not exist in the oldest Flutter sheen supports
+      // ignore: deprecated_member_use
       onReorder: (from, to) {
         final dest = to > from ? to - 1 : to;
         if (dest != from) onReorder?.call(from, dest);

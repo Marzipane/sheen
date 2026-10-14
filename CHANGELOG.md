@@ -1,3 +1,8 @@
+## 0.4.3
+
+- No change in behaviour: `SheenReorderList` keeps a callback that newer Flutter deprecates (its replacement does not
+  exist in the oldest Flutter sheen supports), with the analyzer told why, so the package scores in full again.
+
 ## 0.4.2
 
 - **Sheets from nested navigators:** `showSheenSheet` and `showSheenChoiceSheet` take `useRootNavigator`, as
