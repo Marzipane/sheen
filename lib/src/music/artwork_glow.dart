@@ -56,7 +56,12 @@ class SheenArtworkGlow extends StatelessWidget {
               ),
               child: Transform.scale(
                 scale: 1.4,
-                child: Image(image: image!, fit: BoxFit.cover, gaplessPlayback: true, errorBuilder: (_, _, _) => const SizedBox()),
+                child: Image(
+                  image: image!,
+                  fit: BoxFit.cover,
+                  gaplessPlayback: true,
+                  errorBuilder: (_, _, _) => const SizedBox(),
+                ),
               ),
             ),
           ),
@@ -76,7 +81,11 @@ class SheenArtworkGlow extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [bg.withValues(alpha: 0), bg.withValues(alpha: dark ? .35 : .5), bg.withValues(alpha: .9)],
+                  colors: [
+                    bg.withValues(alpha: 0),
+                    bg.withValues(alpha: dark ? .35 : .5),
+                    bg.withValues(alpha: .9),
+                  ],
                   stops: const [0, .6, 1],
                 ),
               ),

@@ -1,3 +1,7 @@
+## 0.4.1
+
+- Formatting only (`dart format` at 120 columns, as CI checks); no change to the API or to how anything draws.
+
 ## 0.4.0
 
 - **Music library:** `import 'package:sheen/music.dart'` for the parts of a music player. `SheenArtwork` (a cover with a

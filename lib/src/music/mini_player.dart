@@ -94,7 +94,10 @@ class SheenMiniPlayer extends StatelessWidget {
               HapticFeedback.lightImpact();
               onTap();
             },
-      child: SizedBox.square(dimension: SheenSpace.hit, child: Center(child: SheenIcon(icon, size: 24, filled: true, color: t.colors.text))),
+      child: SizedBox.square(
+        dimension: SheenSpace.hit,
+        child: Center(child: SheenIcon(icon, size: 24, filled: true, color: t.colors.text)),
+      ),
     );
 
     return GestureDetector(
@@ -131,9 +134,23 @@ class SheenMiniPlayer extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(title, textDirection: sheenTextDirectionOf(title), maxLines: 1, overflow: TextOverflow.ellipsis, textScaler: scaler, style: t.type.headline.copyWith(color: t.colors.text, fontSize: 15)),
+                                Text(
+                                  title,
+                                  textDirection: sheenTextDirectionOf(title),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  textScaler: scaler,
+                                  style: t.type.headline.copyWith(color: t.colors.text, fontSize: 15),
+                                ),
                                 if (subtitle != null)
-                                  Text(subtitle!, textDirection: sheenTextDirectionOf(subtitle!), maxLines: 1, overflow: TextOverflow.ellipsis, textScaler: scaler, style: t.type.footnote.copyWith(color: t.colors.textSecondary)),
+                                  Text(
+                                    subtitle!,
+                                    textDirection: sheenTextDirectionOf(subtitle!),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    textScaler: scaler,
+                                    style: t.type.footnote.copyWith(color: t.colors.textSecondary),
+                                  ),
                               ],
                             ),
                           ),

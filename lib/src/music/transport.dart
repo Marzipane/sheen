@@ -90,15 +90,20 @@ class SheenTransportControls extends StatelessWidget {
       size: SheenSpace.hit,
       child: SheenIcon(icon, size: 22, color: on ? t.colors.accentText : ink.withValues(alpha: .75)),
     );
-    Widget skip(String icon, String label, VoidCallback? onTap) =>
-        _Tap(label: label, onTap: onTap, size: 56, child: SheenIcon(icon, size: 30, color: ink, filled: true));
+    Widget skip(String icon, String label, VoidCallback? onTap) => _Tap(
+      label: label,
+      onTap: onTap,
+      size: 56,
+      child: SheenIcon(icon, size: 30, color: ink, filled: true),
+    );
 
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          if (onShuffle != null) small(SheenIcons.shuffle, shuffle ? s.shuffleOn : s.shuffleOff, onShuffle, on: shuffle),
+          if (onShuffle != null)
+            small(SheenIcons.shuffle, shuffle ? s.shuffleOn : s.shuffleOff, onShuffle, on: shuffle),
           skip(SheenIcons.previousFill, s.previous, onPrevious),
           _Tap(
             label: playing ? s.pause : s.play,
@@ -163,6 +168,9 @@ class _Tap extends StatelessWidget {
             HapticFeedback.lightImpact();
             onTap!();
           },
-    child: SizedBox.square(dimension: size, child: Center(child: child)),
+    child: SizedBox.square(
+      dimension: size,
+      child: Center(child: child),
+    ),
   );
 }

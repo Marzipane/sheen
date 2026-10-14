@@ -48,9 +48,7 @@ class SheenArtwork extends StatelessWidget {
             gaplessPlayback: true,
             filterQuality: FilterQuality.medium,
             errorBuilder: (_, _, _) => placeholder,
-            frameBuilder: (context, child, frame, sync) => sync || frame != null
-                ? child
-                : placeholder,
+            frameBuilder: (context, child, frame, sync) => sync || frame != null ? child : placeholder,
           );
     final body = SizedBox.square(
       dimension: size,
@@ -70,6 +68,8 @@ class SheenArtwork extends StatelessWidget {
         ),
       ),
     );
-    return semanticLabel == null ? ExcludeSemantics(child: body) : Semantics(image: true, label: semanticLabel, child: body);
+    return semanticLabel == null
+        ? ExcludeSemantics(child: body)
+        : Semantics(image: true, label: semanticLabel, child: body);
   }
 }

@@ -68,10 +68,22 @@ void main() {
 
   test('music glyphs exist', () {
     for (final n in [
-      SheenIcons.playFill, SheenIcons.pauseFill, SheenIcons.nextFill, SheenIcons.previousFill,
-      SheenIcons.shuffle, SheenIcons.repeat, SheenIcons.repeatOne, SheenIcons.lyrics, SheenIcons.queue,
-      SheenIcons.airplay, SheenIcons.moon, SheenIcons.thumbDown, SheenIcons.versions, SheenIcons.onDevice,
-      SheenIcons.music, SheenIcons.grip,
+      SheenIcons.playFill,
+      SheenIcons.pauseFill,
+      SheenIcons.nextFill,
+      SheenIcons.previousFill,
+      SheenIcons.shuffle,
+      SheenIcons.repeat,
+      SheenIcons.repeatOne,
+      SheenIcons.lyrics,
+      SheenIcons.queue,
+      SheenIcons.airplay,
+      SheenIcons.moon,
+      SheenIcons.thumbDown,
+      SheenIcons.versions,
+      SheenIcons.onDevice,
+      SheenIcons.music,
+      SheenIcons.grip,
     ]) {
       expect(SheenIcon(n).svg(), contains('<'), reason: n);
     }

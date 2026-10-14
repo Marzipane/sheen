@@ -121,7 +121,10 @@ class SheenTrackRow extends StatelessWidget {
     Widget button(String icon, String label, VoidCallback? onTap, {Color? color}) => SheenPressable(
       semanticLabel: label,
       onTap: onTap,
-      child: SizedBox.square(dimension: SheenSpace.hit, child: Center(child: SheenIcon(icon, size: 20, color: color ?? t.colors.textSecondary))),
+      child: SizedBox.square(
+        dimension: SheenSpace.hit,
+        child: Center(child: SheenIcon(icon, size: 20, color: color ?? t.colors.textSecondary)),
+      ),
     );
 
     final saveButton = switch (save) {
@@ -147,7 +150,9 @@ class SheenTrackRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(title, textDirection: sheenTextDirectionOf(title),
+              Text(
+                title,
+                textDirection: sheenTextDirectionOf(title),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textScaler: scaler,
@@ -161,7 +166,9 @@ class SheenTrackRow extends StatelessWidget {
                       const SizedBox(width: 3),
                     ],
                     Flexible(
-                      child: Text(second, textDirection: sheenTextDirectionOf(second),
+                      child: Text(
+                        second,
+                        textDirection: sheenTextDirectionOf(second),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         textScaler: scaler,

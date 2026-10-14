@@ -42,11 +42,21 @@ void main() {
 
     testWidgets('saving shows a ring with progress; saved shows the device mark', (t) async {
       await t.pumpWidget(
-        host(const SizedBox(width: 380, child: SheenTrackRow(title: 'A', save: SheenTrackSave.saving, saveProgress: .4))),
+        host(
+          const SizedBox(
+            width: 380,
+            child: SheenTrackRow(title: 'A', save: SheenTrackSave.saving, saveProgress: .4),
+          ),
+        ),
       );
       expect(find.byType(SheenProgressRing), findsOneWidget);
       await t.pumpWidget(
-        host(const SizedBox(width: 380, child: SheenTrackRow(title: 'A', save: SheenTrackSave.saved, onDevice: true))),
+        host(
+          const SizedBox(
+            width: 380,
+            child: SheenTrackRow(title: 'A', save: SheenTrackSave.saved, onDevice: true),
+          ),
+        ),
       );
       expect(icon(SheenIcons.onDevice), findsWidgets);
       expect(find.byType(SheenProgressRing), findsNothing);

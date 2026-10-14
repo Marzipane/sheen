@@ -178,7 +178,9 @@ class _SheenSeekBarState extends State<SheenSeekBar> {
       label: widget.semanticLabel ?? strings.position,
       value: formatSheenDuration(shown),
       increasedValue: formatSheenDuration(shown + const Duration(seconds: 10)),
-      decreasedValue: formatSheenDuration(shown - const Duration(seconds: 10) < Duration.zero ? Duration.zero : shown - const Duration(seconds: 10)),
+      decreasedValue: formatSheenDuration(
+        shown - const Duration(seconds: 10) < Duration.zero ? Duration.zero : shown - const Duration(seconds: 10),
+      ),
       onIncrease: _enabled ? () => _step(10) : null,
       onDecrease: _enabled ? () => _step(-10) : null,
       child: ExcludeSemantics(
@@ -192,7 +194,11 @@ class _SheenSeekBarState extends State<SheenSeekBar> {
                 children: [
                   Text(formatSheenDuration(shown), style: timeStyle, textDirection: TextDirection.ltr),
                   const Spacer(),
-                  Text(formatSheenDuration(shown - widget.duration), style: timeStyle, textDirection: TextDirection.ltr),
+                  Text(
+                    formatSheenDuration(shown - widget.duration),
+                    style: timeStyle,
+                    textDirection: TextDirection.ltr,
+                  ),
                 ],
               ),
           ],

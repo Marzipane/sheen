@@ -13,8 +13,22 @@ void main() {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SheenSeekBar(position: const Duration(seconds: 90), duration: const Duration(seconds: 237), buffered: const Duration(seconds: 160), onSeekEnd: (_) {}),
-              SheenTransportControls(playing: true, onPlayPause: () {}, onNext: () {}, onPrevious: () {}, shuffle: true, onShuffle: () {}, repeat: SheenRepeatMode.one, onRepeat: () {}),
+              SheenSeekBar(
+                position: const Duration(seconds: 90),
+                duration: const Duration(seconds: 237),
+                buffered: const Duration(seconds: 160),
+                onSeekEnd: (_) {},
+              ),
+              SheenTransportControls(
+                playing: true,
+                onPlayPause: () {},
+                onNext: () {},
+                onPrevious: () {},
+                shuffle: true,
+                onShuffle: () {},
+                repeat: SheenRepeatMode.one,
+                onRepeat: () {},
+              ),
             ],
           ),
         ),
@@ -25,7 +39,15 @@ void main() {
       () => overPhoto(
         SizedBox(
           width: 360,
-          child: SheenMiniPlayer(title: 'BRATAN', subtitle: 'Big Baby Tape', playing: true, progress: .38, onPlayPause: () {}, onNext: () {}, onOpen: () {}),
+          child: SheenMiniPlayer(
+            title: 'BRATAN',
+            subtitle: 'Big Baby Tape',
+            playing: true,
+            progress: .38,
+            onPlayPause: () {},
+            onNext: () {},
+            onOpen: () {},
+          ),
         ),
       ),
     ),
@@ -36,9 +58,34 @@ void main() {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SheenTrackRow(title: '98 Flow (feat. Khaski)', subtitle: 'Big Baby Tape', meta: '4.1M plays', current: true, playing: false, save: SheenTrackSave.saved, onSave: () {}, onMore: () {}),
-            SheenTrackRow(title: 'BENZIN', subtitle: 'Big Baby Tape, Молодой Платон', meta: '12M plays', save: SheenTrackSave.saving, saveProgress: .6, onSave: () {}, onMore: () {}),
-            SheenTrackRow(title: 'AAutro', subtitle: 'Big Baby Tape, Aarne', meta: '3:02', onDevice: true, save: SheenTrackSave.available, onSave: () {}, onMore: () {}),
+            SheenTrackRow(
+              title: '98 Flow (feat. Khaski)',
+              subtitle: 'Big Baby Tape',
+              meta: '4.1M plays',
+              current: true,
+              playing: false,
+              save: SheenTrackSave.saved,
+              onSave: () {},
+              onMore: () {},
+            ),
+            SheenTrackRow(
+              title: 'BENZIN',
+              subtitle: 'Big Baby Tape, Молодой Платон',
+              meta: '12M plays',
+              save: SheenTrackSave.saving,
+              saveProgress: .6,
+              onSave: () {},
+              onMore: () {},
+            ),
+            SheenTrackRow(
+              title: 'AAutro',
+              subtitle: 'Big Baby Tape, Aarne',
+              meta: '3:02',
+              onDevice: true,
+              save: SheenTrackSave.available,
+              onSave: () {},
+              onMore: () {},
+            ),
             const SheenTrackRow(title: 'Mama Makusa', subtitle: 'Needs internet', dimmed: true),
           ],
         ),
@@ -82,9 +129,15 @@ void main() {
         height: 200,
         child: Row(
           children: [
-            Expanded(child: SheenBandSlider(label: 'Bass', value: 6, onChanged: (_) {})),
-            Expanded(child: SheenBandSlider(label: 'Mid', value: 0, onChanged: (_) {})),
-            Expanded(child: SheenBandSlider(label: 'Treble', value: -4, onChanged: (_) {})),
+            Expanded(
+              child: SheenBandSlider(label: 'Bass', value: 6, onChanged: (_) {}),
+            ),
+            Expanded(
+              child: SheenBandSlider(label: 'Mid', value: 0, onChanged: (_) {}),
+            ),
+            Expanded(
+              child: SheenBandSlider(label: 'Treble', value: -4, onChanged: (_) {}),
+            ),
             const SheenPlayingBars(playing: false, size: 20),
           ],
         ),

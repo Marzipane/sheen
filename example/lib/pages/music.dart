@@ -107,7 +107,10 @@ class _MusicPageState extends State<MusicPage> {
                     SheenArtwork(image: _covers[0], size: 220, radius: 18),
                     const SizedBox(height: 18),
                     Text('98 Flow', style: context.sheen.type.title),
-                    Text('Big Baby Tape', style: context.sheen.type.subhead.copyWith(color: context.sheen.colors.textSecondary)),
+                    Text(
+                      'Big Baby Tape',
+                      style: context.sheen.type.subhead.copyWith(color: context.sheen.colors.textSecondary),
+                    ),
                     const SizedBox(height: 8),
                     SheenSeekBar(
                       position: _pos,
@@ -152,9 +155,38 @@ class _MusicPageState extends State<MusicPage> {
         note: 'Save, saving and saved; the current song with the playing bars.',
         child: Column(
           children: [
-            SheenTrackRow(title: '98 Flow (feat. Khaski)', subtitle: 'Big Baby Tape', meta: '4.1M plays', artwork: _covers[0], current: true, playing: _playing, onDevice: true, save: SheenTrackSave.saved, onSave: () {}, onMore: () {}, onTap: () {}),
-            SheenTrackRow(title: 'BENZIN', subtitle: 'Big Baby Tape, Молодой Платон', meta: '12M plays', artwork: _covers[5], save: _save, saveProgress: _progress, onSave: _saveSong, onMore: () {}, onTap: () {}),
-            SheenTrackRow(title: 'AAutro', subtitle: 'Big Baby Tape, Aarne', meta: '3:02', artwork: _covers[1], dimmed: true, onMore: () {}),
+            SheenTrackRow(
+              title: '98 Flow (feat. Khaski)',
+              subtitle: 'Big Baby Tape',
+              meta: '4.1M plays',
+              artwork: _covers[0],
+              current: true,
+              playing: _playing,
+              onDevice: true,
+              save: SheenTrackSave.saved,
+              onSave: () {},
+              onMore: () {},
+              onTap: () {},
+            ),
+            SheenTrackRow(
+              title: 'BENZIN',
+              subtitle: 'Big Baby Tape, Молодой Платон',
+              meta: '12M plays',
+              artwork: _covers[5],
+              save: _save,
+              saveProgress: _progress,
+              onSave: _saveSong,
+              onMore: () {},
+              onTap: () {},
+            ),
+            SheenTrackRow(
+              title: 'AAutro',
+              subtitle: 'Big Baby Tape, Aarne',
+              meta: '3:02',
+              artwork: _covers[1],
+              dimmed: true,
+              onMore: () {},
+            ),
           ],
         ),
       ),
@@ -166,9 +198,21 @@ class _MusicPageState extends State<MusicPage> {
           onAction: () {},
           padding: EdgeInsets.zero,
           children: [
-            for (final (i, (t, s)) in [('98 Flow', 'Big Baby Tape'), ('Silhouette', 'Miyagi'), ('BRATAN', 'Big Baby Tape'), ('Mix', 'For you')].indexed)
+            for (final (i, (t, s)) in [
+              ('98 Flow', 'Big Baby Tape'),
+              ('Silhouette', 'Miyagi'),
+              ('BRATAN', 'Big Baby Tape'),
+              ('Mix', 'For you'),
+            ].indexed)
               SheenArtworkTile(title: t, subtitle: s, artwork: _covers[i], size: 128, onTap: () {}),
-            SheenArtworkTile(title: 'Big Baby Tape', subtitle: 'Artist', artwork: _covers[4], size: 128, round: true, onTap: () {}),
+            SheenArtworkTile(
+              title: 'Big Baby Tape',
+              subtitle: 'Artist',
+              artwork: _covers[4],
+              size: 128,
+              round: true,
+              onTap: () {},
+            ),
           ],
         ),
       ),
@@ -182,7 +226,8 @@ class _MusicPageState extends State<MusicPage> {
           keyOf: ValueKey.new,
           onReorder: (a, b) => setState(() => _queue.insert(b, _queue.removeAt(a))),
           onRemove: (i) => setState(() => _queue.removeAt(i)),
-          itemBuilder: (context, s, i, handle) => SheenTrackRow(title: s, subtitle: 'Big Baby Tape', artwork: _covers[i % 6], trailing: handle),
+          itemBuilder: (context, s, i, handle) =>
+              SheenTrackRow(title: s, subtitle: 'Big Baby Tape', artwork: _covers[i % 6], trailing: handle),
         ),
       ),
       Demo(
@@ -200,7 +245,13 @@ class _MusicPageState extends State<MusicPage> {
           child: Row(
             children: [
               for (final (i, name) in ['Bass', 'Mid', 'Treble'].indexed)
-                Expanded(child: SheenBandSlider(label: name, value: _bands[i], onChanged: (v) => setState(() => _bands[i] = v))),
+                Expanded(
+                  child: SheenBandSlider(
+                    label: name,
+                    value: _bands[i],
+                    onChanged: (v) => setState(() => _bands[i] = v),
+                  ),
+                ),
             ],
           ),
         ),

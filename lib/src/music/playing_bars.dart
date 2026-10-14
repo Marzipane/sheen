@@ -88,7 +88,11 @@ class _SheenPlayingBarsState extends State<SheenPlayingBars> with SingleTickerPr
                   Container(
                     key: ValueKey('sheen-bar-$i'),
                     width: barW,
-                    height: s * (_moving(context) ? .25 + .75 * (.5 + .5 * math.sin(_c.value * 2 * math.pi + _phase[i])) : _rest[i]),
+                    height:
+                        s *
+                        (_moving(context)
+                            ? .25 + .75 * (.5 + .5 * math.sin(_c.value * 2 * math.pi + _phase[i]))
+                            : _rest[i]),
                     decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(barW / 2)),
                   ),
               ],

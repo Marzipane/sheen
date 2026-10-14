@@ -69,7 +69,14 @@ class SheenBandSlider extends StatelessWidget {
       child: ExcludeSemantics(
         child: Column(
           children: [
-            Text(_db(v), textDirection: TextDirection.ltr, style: t.type.caption.copyWith(color: t.colors.textSecondary, fontFeatures: const [FontFeature.tabularFigures()])),
+            Text(
+              _db(v),
+              textDirection: TextDirection.ltr,
+              style: t.type.caption.copyWith(
+                color: t.colors.textSecondary,
+                fontFeatures: const [FontFeature.tabularFigures()],
+              ),
+            ),
             const SizedBox(height: SheenSpace.s),
             Expanded(
               child: LayoutBuilder(
@@ -89,13 +96,26 @@ class SheenBandSlider extends StatelessWidget {
                       child: Stack(
                         alignment: Alignment.topCenter,
                         children: [
-                          Positioned(top: knob, bottom: knob, child: Container(width: 6, decoration: BoxDecoration(color: t.colors.track, borderRadius: BorderRadius.circular(3)))),
+                          Positioned(
+                            top: knob,
+                            bottom: knob,
+                            child: Container(
+                              width: 6,
+                              decoration: BoxDecoration(color: t.colors.track, borderRadius: BorderRadius.circular(3)),
+                            ),
+                          ),
                           Positioned(
                             top: y < zeroY ? y : zeroY,
                             height: (y - zeroY).abs(),
-                            child: Container(width: 6, decoration: BoxDecoration(color: t.colors.accent, borderRadius: BorderRadius.circular(3))),
+                            child: Container(
+                              width: 6,
+                              decoration: BoxDecoration(color: t.colors.accent, borderRadius: BorderRadius.circular(3)),
+                            ),
                           ),
-                          Positioned(top: zeroY - .5, child: Container(width: 14, height: 1, color: t.colors.textTertiary)),
+                          Positioned(
+                            top: zeroY - .5,
+                            child: Container(width: 14, height: 1, color: t.colors.textTertiary),
+                          ),
                           Positioned(
                             top: y - 11,
                             child: Container(

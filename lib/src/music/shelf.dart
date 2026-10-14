@@ -56,9 +56,25 @@ class SheenArtworkTile extends StatelessWidget {
           children: [
             SheenArtwork(image: artwork, size: size, round: round, radius: 14),
             const SizedBox(height: SheenSpace.s),
-            Text(title, textDirection: sheenTextDirectionOf(title), maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: align, textScaler: scaler, style: t.type.subhead.copyWith(color: t.colors.text, fontWeight: FontWeight.w600)),
+            Text(
+              title,
+              textDirection: sheenTextDirectionOf(title),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: align,
+              textScaler: scaler,
+              style: t.type.subhead.copyWith(color: t.colors.text, fontWeight: FontWeight.w600),
+            ),
             if (subtitle != null)
-              Text(subtitle!, textDirection: sheenTextDirectionOf(subtitle!), maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: align, textScaler: scaler, style: t.type.footnote.copyWith(color: t.colors.textSecondary)),
+              Text(
+                subtitle!,
+                textDirection: sheenTextDirectionOf(subtitle!),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: align,
+                textScaler: scaler,
+                style: t.type.footnote.copyWith(color: t.colors.textSecondary),
+              ),
           ],
         ),
       ),
@@ -110,7 +126,12 @@ class SheenShelf extends StatelessWidget {
           padding: padding,
           child: Row(
             children: [
-              Expanded(child: Semantics(header: true, child: Text(title, style: t.type.title.copyWith(color: t.colors.text)))),
+              Expanded(
+                child: Semantics(
+                  header: true,
+                  child: Text(title, style: t.type.title.copyWith(color: t.colors.text)),
+                ),
+              ),
               if (actionLabel != null) SheenTextLink(label: actionLabel!, onPressed: onAction, size: 15),
             ],
           ),

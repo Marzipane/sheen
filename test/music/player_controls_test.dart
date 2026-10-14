@@ -74,7 +74,13 @@ void main() {
       final h = t.ensureSemantics();
       Duration? end;
       await t.pumpWidget(
-        bar(SheenSeekBar(position: const Duration(seconds: 30), duration: const Duration(seconds: 100), onSeekEnd: (d) => end = d)),
+        bar(
+          SheenSeekBar(
+            position: const Duration(seconds: 30),
+            duration: const Duration(seconds: 100),
+            onSeekEnd: (d) => end = d,
+          ),
+        ),
       );
       final node = t.getSemantics(find.byType(SheenSeekBar));
       expect(node.label, 'Position');
@@ -125,13 +131,22 @@ void main() {
         host(
           SizedBox(
             width: 360,
-            child: SheenTransportControls(playing: false, shuffle: true, repeat: SheenRepeatMode.all, onPlayPause: () {}, onShuffle: () {}, onRepeat: () {}),
+            child: SheenTransportControls(
+              playing: false,
+              shuffle: true,
+              repeat: SheenRepeatMode.all,
+              onPlayPause: () {},
+              onShuffle: () {},
+              onRepeat: () {},
+            ),
           ),
         ),
       );
       expect(find.bySemanticsLabel('Play'), findsOneWidget);
       expect(find.bySemanticsLabel('Shuffle: on'), findsOneWidget);
-      final shuffle = t.widget<SheenIcon>(find.byWidgetPredicate((w) => w is SheenIcon && w.name == SheenIcons.shuffle));
+      final shuffle = t.widget<SheenIcon>(
+        find.byWidgetPredicate((w) => w is SheenIcon && w.name == SheenIcons.shuffle),
+      );
       final ctx = t.element(find.byType(SheenTransportControls));
       expect(shuffle.color, ctx.sheen.colors.accentText);
     });

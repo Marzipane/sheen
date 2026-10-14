@@ -79,7 +79,10 @@ class SheenReorderList<T> extends StatelessWidget {
       proxyDecorator: (child, _, a) => AnimatedBuilder(
         animation: a,
         builder: (context, child) => Transform.scale(scale: 1 + .02 * a.value, child: child),
-        child: SheenGlass(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)), child: child),
+        child: SheenGlass(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          child: child,
+        ),
       ),
       itemBuilder: (context, i) {
         final item = items[i];

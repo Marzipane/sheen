@@ -43,7 +43,10 @@ void main() {
 
     testWidgets('stands still when paused and under Reduce Motion', (t) async {
       double h() => t.getSize(find.byKey(const ValueKey('sheen-bar-0'))).height;
-      for (final (widget, reduce) in [(const SheenPlayingBars(playing: false), false), (const SheenPlayingBars(), true)]) {
+      for (final (widget, reduce) in [
+        (const SheenPlayingBars(playing: false), false),
+        (const SheenPlayingBars(), true),
+      ]) {
         await t.pumpWidget(host(widget, reduceMotion: reduce));
         await t.pump();
         final before = h();
@@ -75,7 +78,9 @@ void main() {
 
     testWidgets('clips to its radius', (t) async {
       await t.pumpWidget(host(const SheenArtwork(size: 48, radius: 12)));
-      final clip = t.widget<ClipRRect>(find.descendant(of: find.byType(SheenArtwork), matching: find.byType(ClipRRect)));
+      final clip = t.widget<ClipRRect>(
+        find.descendant(of: find.byType(SheenArtwork), matching: find.byType(ClipRRect)),
+      );
       expect(clip.borderRadius, BorderRadius.circular(12));
     });
   });

@@ -9,16 +9,93 @@ import 'package:sheen/sheen.dart';
 import '../helpers.dart';
 
 // A 1×1 PNG.
-final png = MemoryImage(Uint8List.fromList(const [
-  137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 1, 0, 0, 0, 1, 8, 6, 0, 0, 0, 31, 21, 196,
-  137, 0, 0, 0, 13, 73, 68, 65, 84, 120, 156, 99, 248, 207, 192, 240, 31, 0, 5, 0, 1, 255, 137, 153, 61, 29, 0, 0, 0,
-  0, 73, 69, 78, 68, 174, 66, 96, 130,
-]));
+final png = MemoryImage(
+  Uint8List.fromList(const [
+    137,
+    80,
+    78,
+    71,
+    13,
+    10,
+    26,
+    10,
+    0,
+    0,
+    0,
+    13,
+    73,
+    72,
+    68,
+    82,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    1,
+    8,
+    6,
+    0,
+    0,
+    0,
+    31,
+    21,
+    196,
+    137,
+    0,
+    0,
+    0,
+    13,
+    73,
+    68,
+    65,
+    84,
+    120,
+    156,
+    99,
+    248,
+    207,
+    192,
+    240,
+    31,
+    0,
+    5,
+    0,
+    1,
+    255,
+    137,
+    153,
+    61,
+    29,
+    0,
+    0,
+    0,
+    0,
+    73,
+    69,
+    78,
+    68,
+    174,
+    66,
+    96,
+    130,
+  ]),
+);
 
 void main() {
   group('SheenArtworkGlow', () {
     testWidgets('blurs the cover behind its child', (t) async {
-      await t.pumpWidget(host(SizedBox(width: 300, height: 300, child: SheenArtworkGlow(image: png, child: const Text('x')))));
+      await t.pumpWidget(
+        host(
+          SizedBox(
+            width: 300,
+            height: 300,
+            child: SheenArtworkGlow(image: png, child: const Text('x')),
+          ),
+        ),
+      );
       expect(find.byType(ImageFiltered), findsOneWidget);
       expect(find.text('x'), findsOneWidget);
     });
@@ -26,7 +103,11 @@ void main() {
     testWidgets('with reduced transparency it is a flat tint, no blur', (t) async {
       await t.pumpWidget(
         host(
-          SizedBox(width: 300, height: 300, child: SheenArtworkGlow(image: png, child: const Text('x'))),
+          SizedBox(
+            width: 300,
+            height: 300,
+            child: SheenArtworkGlow(image: png, child: const Text('x')),
+          ),
           theme: SheenThemeData.light().copyWith(reduceTransparency: true),
         ),
       );
@@ -76,7 +157,13 @@ void main() {
 
     testWidgets('plain lyrics are shown as text when there are no timed lines', (t) async {
       await t.pumpWidget(
-        host(const SizedBox(width: 320, height: 500, child: SheenLyricsView(lines: [], plain: 'line a\nline b'))),
+        host(
+          const SizedBox(
+            width: 320,
+            height: 500,
+            child: SheenLyricsView(lines: [], plain: 'line a\nline b'),
+          ),
+        ),
       );
       expect(find.textContaining('line a'), findsOneWidget);
     });
@@ -97,7 +184,15 @@ void main() {
               keyOf: (s) => ValueKey(s),
               onReorder: (from, to) => moves.add((from, to)),
               onRemove: removed.add,
-              itemBuilder: (context, s, i, handle) => SizedBox(height: 60, child: Row(children: [Expanded(child: Text(s)), handle])),
+              itemBuilder: (context, s, i, handle) => SizedBox(
+                height: 60,
+                child: Row(
+                  children: [
+                    Expanded(child: Text(s)),
+                    handle,
+                  ],
+                ),
+              ),
             ),
           ),
         ),
