@@ -5,6 +5,9 @@
 - `SheenPage.leading`: a control at the top start of a page without a back button (a tab's first page).
 - `SheenShareCard` shows when its song is the one playing: `current` puts the title in the accent with small
   playing bars, and with `playing` the button shows pause (and says Pause to screen readers).
+- **Reactions the way people expect from Instagram:** `SheenChatBubble.onDoubleTap` (a heart pops over the message),
+  `onReact` (a small heart button beside every message, so reacting is discoverable; a long press does the same), and
+  `showSheenReactionBar`, which opens the emoji row right above the message (or under it near the top).
 
 ## 0.5.0
 

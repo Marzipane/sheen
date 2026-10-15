@@ -286,4 +286,98 @@ void main() {
     await t.pumpWidget(card(current: true, playing: false));
     expect(find.bySemanticsLabel('Play'), findsOneWidget);
   });
+
+  testWidgets('SheenChatBubble: a double tap likes with a heart that pops and fades', (t) async {
+    var liked = 0;
+    await t.pumpWidget(
+      host(
+        SizedBox(
+          width: 380,
+          child: SheenChatBubble(text: 'listen', onDoubleTap: () => liked++),
+        ),
+      ),
+    );
+    expect(find.byKey(const ValueKey('sheen-heart-burst')), findsNothing);
+    await t.tap(find.text('listen'));
+    await t.pump(const Duration(milliseconds: 50));
+    await t.tap(find.text('listen'));
+    await t.pump(const Duration(milliseconds: 120));
+    expect(liked, 1);
+    expect(find.byKey(const ValueKey('sheen-heart-burst')), findsOneWidget);
+    await t.pump(const Duration(seconds: 1));
+    expect(find.byKey(const ValueKey('sheen-heart-burst')), findsNothing);
+  });
+
+  testWidgets('SheenChatBubble: the react button is visible and tells where the message is', (t) async {
+    Rect? at;
+    await t.pumpWidget(
+      host(
+        SizedBox(
+          width: 380,
+          child: SheenChatBubble(text: 'listen', mine: true, onReact: (r) => at = r),
+        ),
+      ),
+    );
+    expect(find.bySemanticsLabel('React'), findsOneWidget);
+    await t.tap(find.bySemanticsLabel('React'));
+    await settle(t);
+    expect(at, isNotNull);
+    expect(at!.contains(t.getCenter(find.text('listen'))), isTrue);
+    at = null;
+    await t.longPress(find.text('listen'));
+    await settle(t);
+    expect(at, isNotNull);
+  });
+
+  testWidgets('SheenChatBubble: no react button without onReact', (t) async {
+    await t.pumpWidget(host(const SizedBox(width: 380, child: SheenChatBubble(text: 'listen'))));
+    expect(find.bySemanticsLabel('React'), findsNothing);
+  });
+
+  testWidgets('showSheenReactionBar opens above the message and returns the pick', (t) async {
+    String? picked = 'none';
+    await t.pumpWidget(
+      host(
+        Builder(
+          builder: (c) => GestureDetector(
+            onTap: () async => picked = await showSheenReactionBar(
+              context: c,
+              anchor: const Rect.fromLTWH(20, 400, 200, 80),
+              chosen: '🔥',
+            ),
+            child: const SizedBox(width: 300, height: 300, child: Text('open')),
+          ),
+        ),
+      ),
+    );
+    await t.tap(find.text('open'));
+    await settle(t);
+    final bar = t.getRect(find.byType(SheenReactionBar));
+    expect(bar.bottom, lessThanOrEqualTo(400));
+    await t.tap(find.text('😂'));
+    await settle(t);
+    expect(picked, '😂');
+    expect(find.byType(SheenReactionBar), findsNothing);
+  });
+
+  testWidgets('showSheenReactionBar goes under a message at the top of the screen and dismisses to null', (t) async {
+    String? picked = 'none';
+    await t.pumpWidget(
+      host(
+        Builder(
+          builder: (c) => GestureDetector(
+            onTap: () async =>
+                picked = await showSheenReactionBar(context: c, anchor: const Rect.fromLTWH(20, 10, 200, 60)),
+            child: const SizedBox(width: 300, height: 300, child: Text('open')),
+          ),
+        ),
+      ),
+    );
+    await t.tap(find.text('open'));
+    await settle(t);
+    expect(t.getRect(find.byType(SheenReactionBar)).top, greaterThanOrEqualTo(70));
+    await t.tapAt(const Offset(5, 590));
+    await settle(t);
+    expect(picked, isNull);
+  });
 }
