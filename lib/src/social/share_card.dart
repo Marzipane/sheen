@@ -52,6 +52,9 @@ class SheenShareCard extends StatelessWidget {
     this.compact = false,
     this.round = false,
     this.placeholderIcon = SheenIcons.music,
+    this.current = false,
+    this.playing = false,
+    this.loading = false,
   });
 
   /// What is shared, small and in capitals.
@@ -87,6 +90,15 @@ class SheenShareCard extends StatelessWidget {
   /// The glyph when there is no cover.
   final String placeholderIcon;
 
+  /// Whether the card's song is the one in the player: its title takes the accent and small bars show by the kind.
+  final bool current;
+
+  /// Whether the player plays (with [current]: the bars move and the button shows pause; [onPlay] then pauses).
+  final bool playing;
+
+  /// With [current]: the song is still loading, and a spinner fills the play button.
+  final bool loading;
+
   @override
   Widget build(BuildContext context) {
     final t = context.sheen;
@@ -96,10 +108,23 @@ class SheenShareCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          kind.toUpperCase(),
-          textScaler: scaler,
-          style: t.type.caption.copyWith(fontWeight: FontWeight.w600, letterSpacing: .6, color: t.colors.textTertiary),
+        Row(
+          children: [
+            Flexible(
+              child: Text(
+                kind.toUpperCase(),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textScaler: scaler,
+                style: t.type.caption.copyWith(
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: .6,
+                  color: t.colors.textTertiary,
+                ),
+              ),
+            ),
+            if (current) ...[const SizedBox(width: 6), SheenPlayingBars(playing: playing, size: 11)],
+          ],
         ),
         Text(
           title,
@@ -107,7 +132,7 @@ class SheenShareCard extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           textScaler: scaler,
           textDirection: sheenTextDirectionOf(title),
-          style: t.type.headline.copyWith(color: t.colors.text),
+          style: t.type.headline.copyWith(color: current ? t.colors.accentText : t.colors.text),
         ),
         if (subtitle != null)
           Text(
@@ -191,7 +216,7 @@ class SheenShareCard extends StatelessWidget {
                       bottom: 10,
                       child: SheenPressable(
                         onTap: onPlay,
-                        semanticLabel: s.play,
+                        semanticLabel: current && playing ? s.pause : s.play,
                         child: Container(
                           width: 44,
                           height: 44,
@@ -202,7 +227,15 @@ class SheenShareCard extends StatelessWidget {
                               BoxShadow(color: Color(0x40000000), blurRadius: 12, offset: Offset(0, 4)),
                             ],
                           ),
-                          child: Center(child: SheenIcon(SheenIcons.playFill, size: 18, color: t.colors.onAccent)),
+                          child: Center(
+                            child: current && loading
+                                ? SheenSpinner(size: 18, color: t.colors.onAccent)
+                                : SheenIcon(
+                                    current && playing ? SheenIcons.pauseFill : SheenIcons.playFill,
+                                    size: 18,
+                                    color: t.colors.onAccent,
+                                  ),
+                          ),
                         ),
                       ),
                     ),

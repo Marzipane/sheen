@@ -1,3 +1,11 @@
+## 0.5.1
+
+- **Loading is shown:** `SheenMiniPlayer`, `SheenTransportControls` and `SheenShareCard` take `loading`; a spinner
+  takes the play button's place while the song loads (a tap still pauses).
+- `SheenPage.leading`: a control at the top start of a page without a back button (a tab's first page).
+- `SheenShareCard` shows when its song is the one playing: `current` puts the title in the accent with small
+  playing bars, and with `playing` the button shows pause (and says Pause to screen readers).
+
 ## 0.5.0
 
 - New `package:sheen/social.dart`: chat and sharing widgets. `SheenPresenceAvatar` (online dot, playing bars),

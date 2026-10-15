@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sheen/music.dart';
 import 'package:sheen/social.dart';
 
 import '../helpers.dart';
@@ -267,5 +268,22 @@ void main() {
       ),
     );
     expect(t.takeException(), isNull);
+  });
+
+  testWidgets('a share card whose song plays says so: pause, moving bars, accent title', (t) async {
+    var taps = 0;
+    Widget card({required bool current, required bool playing}) =>
+        host(SheenShareCard(kind: 'Song', title: 'Habibi', current: current, playing: playing, onPlay: () => taps++));
+    await t.pumpWidget(card(current: false, playing: false));
+    expect(find.bySemanticsLabel('Play'), findsOneWidget);
+    expect(find.byType(SheenPlayingBars), findsNothing);
+    await t.pumpWidget(card(current: true, playing: true));
+    expect(find.bySemanticsLabel('Pause'), findsOneWidget);
+    expect(find.byType(SheenPlayingBars), findsOneWidget);
+    await t.tap(find.bySemanticsLabel('Pause'));
+    await settle(t);
+    expect(taps, 1);
+    await t.pumpWidget(card(current: true, playing: false));
+    expect(find.bySemanticsLabel('Play'), findsOneWidget);
   });
 }

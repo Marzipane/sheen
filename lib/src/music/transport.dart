@@ -42,6 +42,7 @@ class SheenTransportControls extends StatelessWidget {
   const SheenTransportControls({
     super.key,
     required this.playing,
+    this.loading = false,
     this.onPlayPause,
     this.onNext,
     this.onPrevious,
@@ -54,6 +55,9 @@ class SheenTransportControls extends StatelessWidget {
 
   /// Whether music plays (the big button shows pause).
   final bool playing;
+
+  /// Whether the song is still loading: a spinner fills the play button (a tap still pauses).
+  final bool loading;
 
   /// Play or pause.
   final VoidCallback? onPlayPause;
@@ -120,13 +124,15 @@ class SheenTransportControls extends StatelessWidget {
                       opacity: a,
                       child: ScaleTransition(scale: Tween(begin: .7, end: 1.0).animate(a), child: child),
                     ),
-                    child: SheenIcon(
-                      playing ? SheenIcons.pauseFill : SheenIcons.playFill,
-                      key: ValueKey(playing),
-                      size: 34,
-                      color: ink,
-                      filled: true,
-                    ),
+                    child: loading
+                        ? SheenSpinner(key: const ValueKey('loading'), size: 30, color: ink, stroke: 3)
+                        : SheenIcon(
+                            playing ? SheenIcons.pauseFill : SheenIcons.playFill,
+                            key: ValueKey(playing),
+                            size: 34,
+                            color: ink,
+                            filled: true,
+                          ),
                   ),
                 ),
               ),

@@ -31,6 +31,7 @@ class SheenPage extends StatefulWidget {
     this.subtitle,
     this.close = false,
     this.trailing,
+    this.leading,
     this.bottom,
     this.onBack,
     this.backLabel,
@@ -51,6 +52,9 @@ class SheenPage extends StatefulWidget {
 
   /// A control at the top end, such as a [SheenIconButton].
   final Widget? trailing;
+
+  /// A control at the top start, shown on a page that has no back button (a tab's first page).
+  final Widget? leading;
 
   /// A bar at the bottom, such as a [SheenPrimaryButton] with `expand: true`.
   final Widget? bottom;
@@ -182,6 +186,7 @@ class _SheenPageState extends State<SheenPage> {
                 onTap: w.onBack ?? () => Navigator.of(context).maybePop(),
               ),
             ),
+          if (!canGoBack && w.leading != null) PositionedDirectional(start: inset, top: pad.top + 7, child: w.leading!),
           if (w.trailing != null) PositionedDirectional(end: inset, top: pad.top + 7, child: w.trailing!),
           if (w.bottom != null) ...[
             SheenScrollEdge.bottom(height: pad.bottom + 100),

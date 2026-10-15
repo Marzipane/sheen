@@ -35,6 +35,7 @@ class SheenMiniPlayer extends StatelessWidget {
     this.subtitle,
     this.artwork,
     this.playing = false,
+    this.loading = false,
     this.progress = 0,
     this.onPlayPause,
     this.onNext,
@@ -62,6 +63,9 @@ class SheenMiniPlayer extends StatelessWidget {
   /// Play or pause.
   final VoidCallback? onPlayPause;
 
+  /// Whether the song is still loading: a spinner takes the play button's place (a tap still pauses).
+  final bool loading;
+
   /// Next song.
   final VoidCallback? onNext;
 
@@ -86,7 +90,7 @@ class SheenMiniPlayer extends StatelessWidget {
     Widget art = SheenArtwork(image: artwork, size: 44, radius: 10);
     if (heroTag != null) art = Hero(tag: heroTag!, child: art);
 
-    Widget button(String icon, String label, VoidCallback? onTap) => SheenPressable(
+    Widget button(String icon, String label, VoidCallback? onTap, {bool spin = false}) => SheenPressable(
       semanticLabel: label,
       onTap: onTap == null
           ? null
@@ -96,7 +100,11 @@ class SheenMiniPlayer extends StatelessWidget {
             },
       child: SizedBox.square(
         dimension: SheenSpace.hit,
-        child: Center(child: SheenIcon(icon, size: 24, filled: true, color: t.colors.text)),
+        child: Center(
+          child: spin
+              ? SheenSpinner(size: 20, color: t.colors.text, trackColor: t.colors.track)
+              : SheenIcon(icon, size: 24, filled: true, color: t.colors.text),
+        ),
       ),
     );
 
@@ -158,7 +166,12 @@ class SheenMiniPlayer extends StatelessWidget {
                       ),
                     ),
                   ),
-                  button(playing ? SheenIcons.pauseFill : SheenIcons.playFill, playing ? s.pause : s.play, onPlayPause),
+                  button(
+                    playing ? SheenIcons.pauseFill : SheenIcons.playFill,
+                    playing ? s.pause : s.play,
+                    onPlayPause,
+                    spin: loading,
+                  ),
                   button(SheenIcons.nextFill, s.next, onNext),
                 ],
               ),

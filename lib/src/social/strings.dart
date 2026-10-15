@@ -21,6 +21,7 @@ class SheenSocialStrings with Diagnosticable {
     this.join = 'Join',
     this.leave = 'Leave',
     this.play = 'Play',
+    this.pause = 'Pause',
     this.react = 'React',
     this.selected = 'Selected',
   });
@@ -57,6 +58,9 @@ class SheenSocialStrings with Diagnosticable {
 
   /// The play button on a shared card.
   final String play;
+
+  /// The same button while the card's song plays.
+  final String pause;
 
   /// The reaction bar.
   final String react;
