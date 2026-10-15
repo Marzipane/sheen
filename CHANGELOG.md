@@ -4,6 +4,7 @@
   `SheenAvatarStack`, `SheenChatRow`, `SheenUnreadCount`, `SheenRequestCard`, `SheenPresenceStrip`,
   `SheenChatBubble`, `SheenReactions`, `SheenReactionBar`, `SheenTypingIndicator`, `SheenShareCard`,
   `SheenComposer`, `SheenFriendPicker`, `SheenListenTogetherBanner`, with `SheenSocialStrings` / `SheenSocialScope`.
+- Filled glyphs `SheenIcons.chatFill` and `SheenIcons.peopleFill`, for a Friends or Messages tab.
 
 ## 0.4.3
 

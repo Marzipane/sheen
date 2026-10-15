@@ -285,6 +285,9 @@ abstract final class SheenIcons {
   /// The filled bed glyph.
   static const String bedFill = 'bed.fill';
 
+  /// The filled chat glyph.
+  static const String chatFill = 'chat.fill';
+
   /// The filled check circle glyph.
   static const String checkCircleFill = 'check-circle.fill';
 
@@ -311,6 +314,9 @@ abstract final class SheenIcons {
 
   /// The filled pause glyph.
   static const String pauseFill = 'pause.fill';
+
+  /// The filled people glyph.
+  static const String peopleFill = 'people.fill';
 
   /// The filled play glyph.
   static const String playFill = 'play.fill';
@@ -419,6 +425,7 @@ abstract final class SheenIcons {
     wrench,
     xCircle,
     bedFill,
+    chatFill,
     checkCircleFill,
     compassFill,
     heartFill,
@@ -428,6 +435,7 @@ abstract final class SheenIcons {
     musicFill,
     nextFill,
     pauseFill,
+    peopleFill,
     playFill,
     previousFill,
     starFill,

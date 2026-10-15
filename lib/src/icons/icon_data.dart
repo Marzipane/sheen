@@ -153,6 +153,8 @@ const Map<String, String> sheenStrokeIcons = {
 const Map<String, String> sheenFilledIcons = {
   'bed':
       r'''<path d="M2.5 6.5a1 1 0 0 1 2 0V13h7V9.5c0-.6.4-1 1-1h5.5a3.5 3.5 0 0 1 3.5 3.5v7a1 1 0 0 1-2 0v-2h-15v2a1 1 0 0 1-2 0Z"></path><circle cx="7.5" cy="10" r="2"></circle>''',
+  'chat':
+      r'''<path d="M5.5 4.3h13a2.2 2.2 0 0 1 2.2 2.2v8.2a2.2 2.2 0 0 1-2.2 2.2H10l-4.3 3.6c-.6.5-1.5.1-1.5-.7v-2.9h0A2.2 2.2 0 0 1 3.3 14.7V6.5a2.2 2.2 0 0 1 2.2-2.2Z"></path>''',
   'check-circle':
       r'''<path fill-rule="evenodd" d="M12 2.5a9.5 9.5 0 1 1 0 19 9.5 9.5 0 0 1 0-19Zm4.3 6.3a.9.9 0 0 0-1.3 0l-4.3 4.6-1.8-1.8a.9.9 0 1 0-1.3 1.3l2.5 2.4c.4.4 1 .4 1.3 0l5-5.3c.3-.4.3-.9-.1-1.2Z"></path>''',
   'compass':
@@ -171,6 +173,8 @@ const Map<String, String> sheenFilledIcons = {
       r'''<path d="M4.5 6.3v11.4a.9.9 0 0 0 1.4.74l8.2-5.7a.9.9 0 0 0 0-1.48l-8.2-5.7a.9.9 0 0 0-1.4.74Z"></path><rect x="16.3" y="5" width="3.2" height="14" rx="1.2"></rect>''',
   'pause':
       r'''<rect x="6" y="4.5" width="4.2" height="15" rx="1.4"></rect><rect x="13.8" y="4.5" width="4.2" height="15" rx="1.4"></rect>''',
+  'people':
+      r'''<circle cx="9" cy="8.6" r="3.4"></circle><path d="M2.9 18.9c.7-3.3 3.2-5.2 6.1-5.2s5.4 1.9 6.1 5.2c.1.6-.3 1.1-.9 1.1H3.8c-.6 0-1-.5-.9-1.1Z"></path><circle cx="16.8" cy="9.2" r="2.8"></circle><path d="M16.4 14c2.3.2 4.1 1.8 4.7 4.6.1.6-.3 1.1-.9 1.1h-3.5c.1-2.3-.2-4-1.3-5.4.3-.2.6-.3 1-.3Z"></path>''',
   'play': r'''<path d="M8 5.6v12.8a1 1 0 0 0 1.5.86l10.6-6.4a1 1 0 0 0 0-1.72L9.5 4.74A1 1 0 0 0 8 5.6Z"></path>''',
   'previous':
       r'''<path d="M19.5 6.3v11.4a.9.9 0 0 1-1.4.74l-8.2-5.7a.9.9 0 0 1 0-1.48l8.2-5.7a.9.9 0 0 1 1.4.74Z"></path><rect x="4.5" y="5" width="3.2" height="14" rx="1.2"></rect>''',
