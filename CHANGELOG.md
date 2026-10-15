@@ -1,3 +1,10 @@
+## 0.5.0
+
+- New `package:sheen/social.dart`: chat and sharing widgets. `SheenPresenceAvatar` (online dot, playing bars),
+  `SheenAvatarStack`, `SheenChatRow`, `SheenUnreadCount`, `SheenRequestCard`, `SheenPresenceStrip`,
+  `SheenChatBubble`, `SheenReactions`, `SheenReactionBar`, `SheenTypingIndicator`, `SheenShareCard`,
+  `SheenComposer`, `SheenFriendPicker`, `SheenListenTogetherBanner`, with `SheenSocialStrings` / `SheenSocialScope`.
+
 ## 0.4.3
 
 - No change in behaviour: `SheenReorderList` keeps a callback that newer Flutter deprecates (its replacement does not
