@@ -1,3 +1,22 @@
+## 0.6.0
+
+- **Long audio (audiobooks, podcasts)** in `package:sheen/music.dart`:
+  - `SheenTransportControls.onSkipBack` / `onSkipForward` put "back 15" and "forward 30" buttons (`skipBack`,
+    `skipForward` set how far) in place of previous and next; `leading` and `trailing` take the places of shuffle and
+    repeat, for a speed or sleep timer button. Existing players are unchanged.
+  - `SheenSkipButton`: the circular arrow with the seconds inside; media controls keep their direction in right to left.
+  - `SheenSeekBar.marks` draws a tick where each chapter starts; `SheenSeekBar.rate` makes the time left follow the
+    playback speed.
+  - `SheenSpeedPicker` and `formatSheenSpeed` (`1.25×`).
+  - `SheenChapter`, `currentSheenChapter` and `SheenChapterList`: the chapter playing in the accent colour, the ones
+    heard dimmed, a tap picks one.
+  - `SheenResumeCard`: "Continue listening" with the cover, what is left, progress and play.
+  - `SheenTag` / `SheenTagRow`: small facts under a row ("Whole book · Ukrainian").
+  - `SheenArtwork(book: true)`: a 3:4 book cover with a spine shadow.
+  - `SheenMusicStrings`: `skipBack`, `skipForward`, `speed`, `chapters`, `continueListening`.
+- Icons: `book`, `bookmark`, `chapters`, `skipBack`, `skipForward`.
+- AUTHORS: sheen is made and owned by Danil Martsinkovskii and Roman Chernogorov.
+
 ## 0.5.1
 
 - **Loading is shown:** `SheenMiniPlayer`, `SheenTransportControls` and `SheenShareCard` take `loading`; a spinner

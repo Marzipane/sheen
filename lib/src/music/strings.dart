@@ -35,6 +35,11 @@ class SheenMusicStrings with Diagnosticable {
     this.openPlayer = 'Open player',
     this.position = 'Position',
     this.reorder = 'Drag to reorder',
+    this.skipBack = 'Back {n} seconds',
+    this.skipForward = 'Forward {n} seconds',
+    this.speed = 'Speed',
+    this.chapters = 'Chapters',
+    this.continueListening = 'Continue listening',
   });
 
   /// Play button.
@@ -90,6 +95,21 @@ class SheenMusicStrings with Diagnosticable {
 
   /// A drag handle.
   final String reorder;
+
+  /// The skip-back button of long audio; `{n}` is the number of seconds.
+  final String skipBack;
+
+  /// The skip-forward button of long audio; `{n}` is the number of seconds.
+  final String skipForward;
+
+  /// The playback speed control.
+  final String speed;
+
+  /// The chapter list.
+  final String chapters;
+
+  /// The heading of the `SheenResumeCard`.
+  final String continueListening;
 
   /// The strings of the nearest [SheenMusicScope], or the English defaults.
   static SheenMusicStrings of(BuildContext context) =>

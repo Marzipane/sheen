@@ -30,6 +30,12 @@ abstract final class SheenIcons {
   /// The bell icon.
   static const String bell = 'bell';
 
+  /// The book icon.
+  static const String book = 'book';
+
+  /// The bookmark icon.
+  static const String bookmark = 'bookmark';
+
   /// The calendar plus icon.
   static const String calendarPlus = 'calendar-plus';
 
@@ -41,6 +47,9 @@ abstract final class SheenIcons {
 
   /// The card icon.
   static const String card = 'card';
+
+  /// The chapters icon.
+  static const String chapters = 'chapters';
 
   /// The chat icon.
   static const String chat = 'chat';
@@ -228,6 +237,12 @@ abstract final class SheenIcons {
   /// The sign out icon.
   static const String signOut = 'sign-out';
 
+  /// The skip back icon.
+  static const String skipBack = 'skip-back';
+
+  /// The skip forward icon.
+  static const String skipForward = 'skip-forward';
+
   /// The sliders icon.
   static const String sliders = 'sliders';
 
@@ -340,10 +355,13 @@ abstract final class SheenIcons {
     back,
     bed,
     bell,
+    book,
+    bookmark,
     calendarPlus,
     calendar,
     car,
     card,
+    chapters,
     chat,
     check,
     chevronDown,
@@ -406,6 +424,8 @@ abstract final class SheenIcons {
     shuffle,
     sidebar,
     signOut,
+    skipBack,
+    skipForward,
     sliders,
     spa,
     sparkle,

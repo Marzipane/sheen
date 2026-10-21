@@ -70,6 +70,27 @@ SheenTrackRow(
 on a line seeks there. `SheenReorderList` gives each row a drag handle and removes a row on a swipe; `onReorder` gets
 the old and the new index. `SheenBandSlider` is one equaliser band in dB with its centre at 0.
 
+## Long audio: books and podcasts
+
+The same player serves an audiobook with a few swaps. `onSkipBack` and `onSkipForward` replace previous and next
+with "back 15" and "forward 30" buttons; `leading` and `trailing` take the places of shuffle and repeat:
+
+```dart
+SheenTransportControls(
+  playing: state.playing,
+  onPlayPause: player.toggle,
+  onSkipBack: () => player.seekBy(const Duration(seconds: -15)),
+  onSkipForward: () => player.seekBy(const Duration(seconds: 30)),
+  leading: SheenPressable(onTap: openSpeed, child: Text(formatSheenSpeed(state.speed))),
+  trailing: sleepButton,
+)
+```
+
+`SheenSeekBar(marks: [for (final c in chapters) c.start], rate: state.speed)` ticks where chapters start and shows
+the real time left at the chosen speed. Put `SheenSpeedPicker` and `SheenChapterList` in a sheet;
+`currentSheenChapter` tells which chapter holds a position. `SheenResumeCard` is the "Continue listening" card for a
+home page, `SheenTagRow` lists small facts under a row, and `SheenArtwork(book: true)` draws a 3:4 cover.
+
 ## Words
 
 ```dart

@@ -1,5 +1,6 @@
 /// Music widgets built on sheen: covers, the mini player, a seek bar, transport controls, song rows, shelves,
-/// synced lyrics, a reorderable queue and equaliser bands.
+/// synced lyrics, a reorderable queue, equaliser bands, and the controls of long audio (books, podcasts): skip buttons,
+/// speed, chapters and a resume card.
 ///
 /// Import it next to `package:sheen/sheen.dart`.
 library;
@@ -7,6 +8,7 @@ library;
 export 'src/music/artwork.dart';
 export 'src/music/artwork_glow.dart';
 export 'src/music/band_slider.dart';
+export 'src/music/long_audio.dart';
 export 'src/music/lyrics_view.dart';
 export 'src/music/mini_player.dart';
 export 'src/music/playing_bars.dart';

@@ -9,6 +9,9 @@ const Map<String, String> sheenStrokeIcons = {
   'bed':
       r'''<path d="M3 18V7"></path><path d="M3 14h18v4"></path><path d="M21 14v-2.5A2.5 2.5 0 0 0 18.5 9H11v5"></path><circle cx="7" cy="11" r="1.6"></circle>''',
   'bell': r'''<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 1.5h-15Z"></path><path d="M10 20.5h4"></path>''',
+  'book':
+      r'''<path d="M5 4.5h10.5a2 2 0 0 1 2 2v13H7a2 2 0 0 1-2-2Z"></path><path d="M5 17.5a2 2 0 0 1 2-2h10.5"></path><path d="M9 8.5h5"></path>''',
+  'bookmark': r'''<path d="M7 4.5h10v15l-5-3.6-5 3.6Z"></path>''',
   'calendar-plus':
       r'''<rect x="4" y="5.5" width="16" height="14" rx="1.5"></rect><path d="M4 10h16"></path><path d="M8.5 3.5v4"></path><path d="M15.5 3.5v4"></path><path d="M12 12.5v5"></path><path d="M9.5 15h5"></path>''',
   'calendar':
@@ -17,6 +20,7 @@ const Map<String, String> sheenStrokeIcons = {
       r'''<path d="M5 16.5V12l2-5h10l2 5v4.5"></path><path d="M3.5 12h17v4.5h-17Z"></path><circle cx="7.5" cy="14.3" r=".8"></circle><circle cx="16.5" cy="14.3" r=".8"></circle><path d="M6 16.5v2"></path><path d="M18 16.5v2"></path>''',
   'card':
       r'''<rect x="3" y="5.5" width="18" height="13" rx="2"></rect><path d="M3 9.5h18"></path><path d="M6.5 15h4"></path>''',
+  'chapters': r'''<path d="M8.5 6h11M8.5 12h11M8.5 18h11"></path><path d="M4.5 6h.01M4.5 12h.01M4.5 18h.01"></path>''',
   'chat': r'''<path d="M4 5.5h16v10H9.5L5 19.5v-4H4Z"></path><path d="M8.5 10.5h7"></path>''',
   'check': r'''<path d="m5 12.5 4.5 4.5L19 7.5"></path>''',
   'chevron-down': r'''<path d="m6 9.5 6 6 6-6"></path>''',
@@ -117,6 +121,8 @@ const Map<String, String> sheenStrokeIcons = {
   'sidebar': r'''<rect x="3.5" y="4.5" width="17" height="15" rx="2.5"></rect><path d="M9.5 4.5v15"></path>''',
   'sign-out':
       r'''<path d="M14 4.5h4.5a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5H14"></path><path d="M10 16.5 5.5 12 10 7.5"></path><path d="M5.5 12H15"></path>''',
+  'skip-back': r'''<path d="M4.6 9.2A8 8 0 1 1 4 12"></path><path d="M4.2 4.8v4.6h4.6"></path>''',
+  'skip-forward': r'''<path d="M19.4 9.2A8 8 0 1 0 20 12"></path><path d="M19.8 4.8v4.6h-4.6"></path>''',
   'sliders':
       r'''<path d="M4 7h10"></path><path d="M18 7h2"></path><circle cx="16" cy="7" r="2"></circle><path d="M4 17h2"></path><path d="M10 17h10"></path><circle cx="8" cy="17" r="2"></circle>''',
   'spa':

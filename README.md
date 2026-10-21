@@ -162,7 +162,10 @@ import 'package:sheen/music.dart';
 
 `SheenMiniPlayer` above the tab bar, `SheenSeekBar` and `SheenTransportControls` over `SheenArtworkGlow` (the cover
 blurred behind the glass), `SheenTrackRow` with a save button that fills as the song is stored, `SheenShelf` of covers,
-`SheenLyricsView`, `SheenReorderList` for a queue and `SheenBandSlider` for an equaliser. See [doc/music.md](doc/music.md).
+`SheenLyricsView`, `SheenReorderList` for a queue and `SheenBandSlider` for an equaliser. For long audio (audiobooks,
+podcasts): `SheenTransportControls` with "back 15 / forward 30" `SheenSkipButton`s, chapter marks on `SheenSeekBar`,
+`SheenSpeedPicker`, `SheenChapterList`, `SheenResumeCard`, `SheenTagRow` and book covers (`SheenArtwork(book: true)`).
+See [doc/music.md](doc/music.md).
 
 ## Platforms
 
@@ -192,6 +195,15 @@ compare them). Icons are SVG files in `tool/icons/`; `dart run tool/gen_icons.da
 regenerates `SheenIcons`. After changing public API docs, run `dart doc --output tool/out/api` and then
 `dart run tool/gen_llms.dart` to refresh [llms.txt](llms.txt), the one-page summary for AI coding assistants.
 
+## Authors
+
+sheen is made and owned by:
+
+- Danil Martsinkovskii ([@marzipane](https://github.com/marzipane))
+- Roman Chernogorov ([@aristosya](https://github.com/aristosya))
+
+See [AUTHORS](AUTHORS).
+
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT, © the sheen authors. See [LICENSE](LICENSE).

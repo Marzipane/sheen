@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sheen/sheen.dart';
 
+import 'long_audio.dart';
 import 'strings.dart';
 
 /// What repeats.
@@ -19,6 +20,10 @@ enum SheenRepeatMode {
 }
 
 /// The row of a player's controls: shuffle, previous, play/pause on a large glass circle, next and repeat.
+///
+/// For long audio (books, podcasts), [onSkipBack] and [onSkipForward] put "back 15" and "forward 30" buttons in place
+/// of previous and next, and [leading] and [trailing] take the places of shuffle and repeat (a speed button, a sleep
+/// timer).
 ///
 /// Shuffle and repeat turn the accent colour when on; repeat shows a "1" when one song repeats. The play glyph cross-
 /// fades into pause. Media controls keep their direction in right-to-left text, as Apple's guidelines ask.
@@ -50,6 +55,12 @@ class SheenTransportControls extends StatelessWidget {
     this.onShuffle,
     this.repeat = SheenRepeatMode.off,
     this.onRepeat,
+    this.onSkipBack,
+    this.onSkipForward,
+    this.skipBack = const Duration(seconds: 15),
+    this.skipForward = const Duration(seconds: 30),
+    this.leading,
+    this.trailing,
     this.color,
   });
 
@@ -80,6 +91,24 @@ class SheenTransportControls extends StatelessWidget {
   /// Move to the next repeat mode; the button is hidden when null.
   final VoidCallback? onRepeat;
 
+  /// Jump back [skipBack] (long audio: books, podcasts). When set, a skip-back button takes the place of previous.
+  final VoidCallback? onSkipBack;
+
+  /// Jump ahead [skipForward]. When set, a skip-forward button takes the place of next.
+  final VoidCallback? onSkipForward;
+
+  /// How far [onSkipBack] goes, shown in its button; 15 seconds by default.
+  final Duration skipBack;
+
+  /// How far [onSkipForward] goes, shown in its button; 30 seconds by default.
+  final Duration skipForward;
+
+  /// A small control at the start in place of shuffle, such as a speed button; about 44 points square.
+  final Widget? leading;
+
+  /// A small control at the end in place of repeat, such as a sleep timer button.
+  final Widget? trailing;
+
   /// The glyph colour; the theme's text colour by default.
   final Color? color;
 
@@ -106,9 +135,17 @@ class SheenTransportControls extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          if (onShuffle != null)
+          if (leading != null)
+            SizedBox(
+              height: SheenSpace.hit,
+              child: Center(child: leading),
+            )
+          else if (onShuffle != null)
             small(SheenIcons.shuffle, shuffle ? s.shuffleOn : s.shuffleOff, onShuffle, on: shuffle),
-          skip(SheenIcons.previousFill, s.previous, onPrevious),
+          if (onSkipBack != null)
+            SheenSkipButton(seconds: skipBack.inSeconds, forward: false, onPressed: onSkipBack, color: ink)
+          else
+            skip(SheenIcons.previousFill, s.previous, onPrevious),
           _Tap(
             label: playing ? s.pause : s.play,
             onTap: onPlayPause,
@@ -138,8 +175,16 @@ class SheenTransportControls extends StatelessWidget {
               ),
             ),
           ),
-          skip(SheenIcons.nextFill, s.next, onNext),
-          if (onRepeat != null)
+          if (onSkipForward != null)
+            SheenSkipButton(seconds: skipForward.inSeconds, forward: true, onPressed: onSkipForward, color: ink)
+          else
+            skip(SheenIcons.nextFill, s.next, onNext),
+          if (trailing != null)
+            SizedBox(
+              height: SheenSpace.hit,
+              child: Center(child: trailing),
+            )
+          else if (onRepeat != null)
             small(
               repeat == SheenRepeatMode.one ? SheenIcons.repeatOne : SheenIcons.repeat,
               switch (repeat) {

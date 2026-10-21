@@ -46,6 +46,8 @@ class SheenSeekBar extends StatefulWidget {
     this.showTimes = true,
     this.color,
     this.semanticLabel,
+    this.marks = const [],
+    this.rate = 1,
   });
 
   /// Where the song is.
@@ -71,6 +73,12 @@ class SheenSeekBar extends StatefulWidget {
 
   /// What a screen reader calls it; [SheenMusicStrings.position] by default.
   final String? semanticLabel;
+
+  /// Times to mark on the line with a thin tick, such as where each chapter starts; a mark at zero is not drawn.
+  final List<Duration> marks;
+
+  /// The playback speed: the time left is the real time left at this speed (2 hours at 2× shows 1 hour).
+  final double rate;
 
   @override
   State<SheenSeekBar> createState() => _SheenSeekBarState();
@@ -103,6 +111,12 @@ class _SheenSeekBarState extends State<SheenSeekBar> {
       HapticFeedback.selectionClick();
       widget.onSeekEnd?.call(_at(f));
     }
+  }
+
+  Duration _left(Duration shown) {
+    final left = widget.duration - shown;
+    final rate = widget.rate > 0 ? widget.rate : 1;
+    return -Duration(milliseconds: (left.inMilliseconds / rate).round());
   }
 
   void _step(int seconds) {
@@ -163,6 +177,17 @@ class _SheenSeekBarState extends State<SheenSeekBar> {
                         widthFactor: played,
                         child: ColoredBox(color: ink.withValues(alpha: active ? 1 : .85)),
                       ),
+                      for (final m in widget.marks)
+                        if (m > Duration.zero && m < widget.duration)
+                          Align(
+                            alignment: Alignment((rtl ? -1 : 1) * (_fraction(m) * 2 - 1), 0),
+                            child: SizedBox(
+                              key: const ValueKey('sheen-seek-mark'),
+                              width: 2,
+                              height: double.infinity,
+                              child: ColoredBox(color: t.colors.background.withValues(alpha: .7)),
+                            ),
+                          ),
                     ],
                   ),
                 ),
@@ -194,11 +219,7 @@ class _SheenSeekBarState extends State<SheenSeekBar> {
                 children: [
                   Text(formatSheenDuration(shown), style: timeStyle, textDirection: TextDirection.ltr),
                   const Spacer(),
-                  Text(
-                    formatSheenDuration(shown - widget.duration),
-                    style: timeStyle,
-                    textDirection: TextDirection.ltr,
-                  ),
+                  Text(formatSheenDuration(_left(shown)), style: timeStyle, textDirection: TextDirection.ltr),
                 ],
               ),
           ],
