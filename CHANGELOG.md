@@ -1,3 +1,10 @@
+## 0.6.2
+
+- `SheenChapterList` shows how long each chapter is on the right ("30 min", "1 h 5 min") and where it starts under
+  the title ("From 1:30:00"): a start time alone on the right read as a length ("0:00:00" looked like an empty
+  chapter). The new `length` (of the audio the chapters belong to) gives the last chapter its length.
+- `formatSheenLength`, and the strings `chapterFrom`, `minutes` and `hoursMinutes` in `SheenMusicStrings`.
+
 ## 0.6.1
 
 - `SheenMiniPlayer.onSkipForward` (and `skipForward`): a "forward 30" button in place of next, for long audio.

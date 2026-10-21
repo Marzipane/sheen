@@ -40,6 +40,9 @@ class SheenMusicStrings with Diagnosticable {
     this.speed = 'Speed',
     this.chapters = 'Chapters',
     this.continueListening = 'Continue listening',
+    this.chapterFrom = 'From {time}',
+    this.minutes = '{m} min',
+    this.hoursMinutes = '{h} h {m} min',
   });
 
   /// Play button.
@@ -110,6 +113,15 @@ class SheenMusicStrings with Diagnosticable {
 
   /// The heading of the `SheenResumeCard`.
   final String continueListening;
+
+  /// Where a chapter starts, under its title; `{time}` is the time.
+  final String chapterFrom;
+
+  /// A length under an hour (a chapter); `{m}` is the minutes.
+  final String minutes;
+
+  /// A length of an hour or more; `{h}` and `{m}` are the hours and minutes.
+  final String hoursMinutes;
 
   /// The strings of the nearest [SheenMusicScope], or the English defaults.
   static SheenMusicStrings of(BuildContext context) =>

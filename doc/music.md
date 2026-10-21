@@ -88,7 +88,8 @@ SheenTransportControls(
 
 `SheenSeekBar(marks: [for (final c in chapters) c.start], rate: state.speed)` ticks where chapters start and shows
 the real time left at the chosen speed. Put `SheenSpeedPicker` and `SheenChapterList` in a sheet;
-`currentSheenChapter` tells which chapter holds a position. `SheenResumeCard` is the "Continue listening" card for a
+`SheenChapterList` shows each chapter's length on the right and where it starts under the title; pass `length` (of
+the audio) so the last chapter has one too. `currentSheenChapter` tells which chapter holds a position. `SheenResumeCard` is the "Continue listening" card for a
 home page, `SheenTagRow` lists small facts under a row, and `SheenArtwork(book: true)` draws a 3:4 cover.
 
 ## Words

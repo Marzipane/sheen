@@ -177,12 +177,55 @@ void main() {
           ),
         ),
       );
-      expect(find.text('0:40:00'), findsOneWidget, reason: 'start times in hours when the book is long');
+      expect(
+        find.text('From 0:40:00'),
+        findsOneWidget,
+        reason: 'where a chapter starts, in hours when the book is long',
+      );
+      expect(
+        find.text('40 min'),
+        findsNWidgets(2),
+        reason: 'on the right, how long a chapter is (not where it starts)',
+      );
+      expect(find.text('From 0:00:00'), findsOneWidget);
       expect(t.getSemantics(find.text('The storm')), isSemantics(isSelected: true));
       expect(t.getSemantics(find.text('The taiga')), isSemantics(isSelected: false));
       await t.tap(find.text('The taiga'));
       expect(picked, _chapters[2]);
       h.dispose();
+    });
+
+    testWidgets('the last chapter is as long as what is left of [length]; unknown without it', (t) async {
+      await t.pumpWidget(
+        host(
+          const SizedBox(
+            width: 360,
+            child: SheenChapterList(
+              chapters: _chapters,
+              position: Duration.zero,
+              length: Duration(hours: 2, minutes: 25),
+            ),
+          ),
+        ),
+      );
+      expect(find.text('1 h 5 min'), findsOneWidget);
+      await t.pumpWidget(
+        host(
+          const SizedBox(
+            width: 360,
+            child: SheenChapterList(chapters: _chapters, position: Duration.zero),
+          ),
+        ),
+      );
+      expect(find.text('40 min'), findsNWidgets(2));
+      expect(find.text('1 h 5 min'), findsNothing);
+    });
+
+    test('formatSheenLength', () {
+      const s = SheenMusicStrings();
+      expect(formatSheenLength(const Duration(minutes: 30), s), '30 min');
+      expect(formatSheenLength(const Duration(hours: 1, minutes: 5, seconds: 20), s), '1 h 5 min');
+      expect(formatSheenLength(const Duration(seconds: 20), s), '1 min', reason: 'never "0 min"');
     });
 
     test('currentSheenChapter', () {

@@ -220,7 +220,17 @@ int currentSheenChapter(List<SheenChapter> chapters, Duration position) {
   return at;
 }
 
-/// The chapters of a long recording as rows: the title and its start time, the chapter playing in the accent colour,
+/// A length as a listener says it: "30 min", "1 h 5 min" (never "0 min").
+///
+/// {@category Music}
+String formatSheenLength(Duration d, SheenMusicStrings s) {
+  final m = (d.inSeconds / 60).round().clamp(1, 1 << 30);
+  return m < 60
+      ? s.minutes.replaceAll('{m}', '$m')
+      : s.hoursMinutes.replaceAll('{h}', '${m ~/ 60}').replaceAll('{m}', '${m % 60}');
+}
+
+/// The chapters of a long recording as rows: the title, where it starts and how long it is, the chapter playing in the accent colour,
 /// the ones already heard dimmed. A tap picks a chapter.
 ///
 /// It is a column, not a scroll view: put it in the sheet or page that scrolls.
@@ -231,8 +241,9 @@ int currentSheenChapter(List<SheenChapter> chapters, Duration position) {
 ///
 /// {@category Music}
 class SheenChapterList extends StatelessWidget {
-  /// [chapters] with the one holding [position] marked.
-  const SheenChapterList({super.key, required this.chapters, required this.position, this.onSelected});
+  /// [chapters] with the one holding [position] marked. Each row shows how long its chapter is, and where it starts
+  /// under the title (a start time alone on the right reads as a length: "0:00:00" looked like an empty chapter).
+  const SheenChapterList({super.key, required this.chapters, required this.position, this.length, this.onSelected});
 
   /// The chapters, sorted by start.
   final List<SheenChapter> chapters;
@@ -240,13 +251,23 @@ class SheenChapterList extends StatelessWidget {
   /// Where playback is.
   final Duration position;
 
+  /// How long the audio these chapters belong to is: the length of the last chapter. Without it the last one shows
+  /// no length.
+  final Duration? length;
+
   /// Called with the chapter tapped.
   final ValueChanged<SheenChapter>? onSelected;
 
   @override
   Widget build(BuildContext context) {
     final t = context.sheen;
+    final s = SheenMusicStrings.of(context);
     final now = currentSheenChapter(chapters, position);
+    Duration? lengthOf(int i) {
+      final end = i + 1 < chapters.length ? chapters[i + 1].start : length;
+      return end == null || end <= chapters[i].start ? null : end - chapters[i].start;
+    }
+
     final hours = chapters.isNotEmpty && chapters.last.start >= const Duration(hours: 1);
     String time(Duration d) {
       final f = formatSheenDuration(d);
@@ -270,30 +291,41 @@ class SheenChapterList extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text(
-                      chapters[i].title,
-                      textDirection: sheenTextDirectionOf(chapters[i].title),
-                      style: t.type.body.copyWith(
-                        fontWeight: i == now ? FontWeight.w600 : null,
-                        color: i == now
-                            ? t.colors.accentText
-                            : i < now
-                            ? t.colors.textSecondary
-                            : t.colors.text,
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          chapters[i].title,
+                          textDirection: sheenTextDirectionOf(chapters[i].title),
+                          style: t.type.body.copyWith(
+                            fontWeight: i == now ? FontWeight.w600 : null,
+                            color: i == now
+                                ? t.colors.accentText
+                                : i < now
+                                ? t.colors.textSecondary
+                                : t.colors.text,
+                          ),
+                        ),
+                        Text(
+                          s.chapterFrom.replaceAll('{time}', time(chapters[i].start)),
+                          style: t.type.footnote.copyWith(
+                            color: t.colors.textSecondary,
+                            fontFeatures: const [FontFeature.tabularFigures()],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(width: SheenSpace.m),
-                  ExcludeSemantics(
-                    child: Text(
-                      time(chapters[i].start),
-                      textDirection: TextDirection.ltr,
+                  if (lengthOf(i) case final len?) ...[
+                    const SizedBox(width: SheenSpace.m),
+                    Text(
+                      formatSheenLength(len, s),
                       style: t.type.subhead.copyWith(
                         color: t.colors.textSecondary,
                         fontFeatures: const [FontFeature.tabularFigures()],
                       ),
                     ),
-                  ),
+                  ],
                 ],
               ),
             ),
