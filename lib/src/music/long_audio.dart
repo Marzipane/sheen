@@ -98,7 +98,7 @@ String formatSheenSpeed(double speed) {
   return '$s×';
 }
 
-/// The playback speed choice of long audio: a row of speeds, the chosen one filled.
+/// The playback speed choice of long audio: one row of equal buttons, the chosen one filled.
 ///
 /// ```dart
 /// SheenSpeedPicker(value: state.speed, onChanged: player.setSpeed)
@@ -130,48 +130,54 @@ class SheenSpeedPicker extends StatelessWidget {
     return Semantics(
       container: true,
       label: s.speed,
-      child: Wrap(
-        spacing: SheenSpace.s,
-        runSpacing: SheenSpace.s,
+      // one row of equal buttons; under large text a button grows taller, never the row wider
+      child: Row(
         children: [
-          for (final v in speeds)
-            Builder(
-              builder: (context) {
-                final on = (v - value).abs() < .001;
-                final label = formatSheenSpeed(v);
-                return SheenPressable(
-                  selected: on,
-                  semanticLabel: label,
-                  onTap: onChanged == null
-                      ? null
-                      : () {
-                          HapticFeedback.selectionClick();
-                          onChanged!(v);
-                        },
-                  child: AnimatedContainer(
-                    duration: SheenMotion.reduced(context) ? Duration.zero : SheenMotion.fadeIn,
-                    constraints: const BoxConstraints(minWidth: 58, minHeight: 40),
-                    padding: const EdgeInsets.symmetric(horizontal: SheenSpace.m),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: on ? t.colors.text : t.colors.surfaceMuted,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: ExcludeSemantics(
-                      child: Text(
-                        label,
-                        textDirection: TextDirection.ltr,
-                        style: t.type.subhead.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: on ? t.colors.background : t.colors.textSecondary,
-                          fontFeatures: const [FontFeature.tabularFigures()],
+          for (final (i, v) in speeds.indexed) ...[
+            if (i > 0) const SizedBox(width: SheenSpace.s),
+            Expanded(
+              child: Builder(
+                builder: (context) {
+                  final on = (v - value).abs() < .001;
+                  final label = formatSheenSpeed(v);
+                  return SheenPressable(
+                    selected: on,
+                    semanticLabel: label,
+                    onTap: onChanged == null
+                        ? null
+                        : () {
+                            HapticFeedback.selectionClick();
+                            onChanged!(v);
+                          },
+                    child: AnimatedContainer(
+                      duration: SheenMotion.reduced(context) ? Duration.zero : SheenMotion.fadeIn,
+                      constraints: const BoxConstraints(minHeight: 40),
+                      padding: const EdgeInsets.symmetric(horizontal: SheenSpace.xs, vertical: SheenSpace.s),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: on ? t.colors.text : t.colors.surfaceMuted,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: ExcludeSemantics(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            label,
+                            textDirection: TextDirection.ltr,
+                            style: t.type.subhead.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: on ? t.colors.background : t.colors.textSecondary,
+                              fontFeatures: const [FontFeature.tabularFigures()],
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
+          ],
         ],
       ),
     );

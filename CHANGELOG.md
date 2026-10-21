@@ -1,6 +1,8 @@
 ## 0.6.1
 
 - `SheenMiniPlayer.onSkipForward` (and `skipForward`): a "forward 30" button in place of next, for long audio.
+- `SheenSpeedPicker` lays its speeds out as one row of equal buttons; in a list (which gives its children the full
+  width) each speed took a whole line.
 - `currentSheenChapter` returns -1 when the position is before the first chapter, so a `SheenChapterList` of another
   part of a book marks no chapter as playing.
 

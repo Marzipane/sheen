@@ -152,6 +152,11 @@ void main() {
       expect(t.getSemantics(find.text('1×')), isSemantics(isSelected: false));
       await t.tap(find.text('1.5×'));
       expect(picked, 1.5);
+      // the speeds share one row (a list page gives them its full width; none takes it all)
+      final rows = {
+        for (final s in ['0.8×', '1×', '2×']) t.getCenter(find.text(s)).dy.round(),
+      };
+      expect(rows.length, 1);
       h.dispose();
     });
   });
