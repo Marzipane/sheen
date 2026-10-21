@@ -1,3 +1,9 @@
+## 0.6.1
+
+- `SheenMiniPlayer.onSkipForward` (and `skipForward`): a "forward 30" button in place of next, for long audio.
+- `currentSheenChapter` returns -1 when the position is before the first chapter, so a `SheenChapterList` of another
+  part of a book marks no chapter as playing.
+
 ## 0.6.0
 
 - **Long audio (audiobooks, podcasts)** in `package:sheen/music.dart`:

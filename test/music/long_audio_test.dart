@@ -185,6 +185,11 @@ void main() {
       expect(currentSheenChapter(_chapters, const Duration(minutes: 40)), 1);
       expect(currentSheenChapter(_chapters, const Duration(hours: 5)), 2);
       expect(currentSheenChapter(const [], Duration.zero), -1);
+      expect(
+        currentSheenChapter(const [SheenChapter('Later', Duration(minutes: 5))], Duration.zero),
+        -1,
+        reason: 'before the first chapter (another part of the book) no chapter is current',
+      );
     });
   });
 
@@ -211,6 +216,31 @@ void main() {
       await t.tap(find.bySemanticsLabel('Play'));
       await t.tap(find.text('Tigrolovy'));
       expect((played, opened), (1, 1));
+      h.dispose();
+    });
+  });
+
+  group('SheenMiniPlayer for long audio', () {
+    testWidgets('a skip-forward button takes the place of next', (t) async {
+      final h = t.ensureSemantics();
+      var fwd = 0;
+      await t.pumpWidget(
+        host(
+          SizedBox(
+            width: 360,
+            child: SheenMiniPlayer(
+              title: 'Tigrolovy',
+              playing: true,
+              onPlayPause: () {},
+              onNext: () => fail('next must not show'),
+              onSkipForward: () => fwd++,
+            ),
+          ),
+        ),
+      );
+      expect(find.bySemanticsLabel('Next'), findsNothing);
+      await t.tap(find.bySemanticsLabel('Forward 30 seconds'));
+      expect(fwd, 1);
       h.dispose();
     });
   });

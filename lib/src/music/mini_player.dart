@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:sheen/sheen.dart';
 
 import 'artwork.dart';
+import 'long_audio.dart';
 import 'strings.dart';
 
 /// The glass bar above the tab bar that shows what plays: the cover, title and artist, play/pause and next, and a thin
@@ -39,6 +40,8 @@ class SheenMiniPlayer extends StatelessWidget {
     this.progress = 0,
     this.onPlayPause,
     this.onNext,
+    this.onSkipForward,
+    this.skipForward = const Duration(seconds: 30),
     this.onOpen,
     this.onSwipeNext,
     this.onSwipePrevious,
@@ -68,6 +71,12 @@ class SheenMiniPlayer extends StatelessWidget {
 
   /// Next song.
   final VoidCallback? onNext;
+
+  /// Jump ahead [skipForward] (long audio: books, podcasts); when set, a skip-forward button takes the place of next.
+  final VoidCallback? onSkipForward;
+
+  /// How far [onSkipForward] goes; 30 seconds by default.
+  final Duration skipForward;
 
   /// Opens the full player.
   final VoidCallback? onOpen;
@@ -172,7 +181,16 @@ class SheenMiniPlayer extends StatelessWidget {
                     onPlayPause,
                     spin: loading,
                   ),
-                  button(SheenIcons.nextFill, s.next, onNext),
+                  if (onSkipForward != null)
+                    SheenSkipButton(
+                      seconds: skipForward.inSeconds,
+                      forward: true,
+                      onPressed: onSkipForward,
+                      size: SheenSpace.hit,
+                      color: t.colors.text,
+                    )
+                  else
+                    button(SheenIcons.nextFill, s.next, onNext),
                 ],
               ),
             ),

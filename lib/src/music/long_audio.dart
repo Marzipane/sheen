@@ -202,11 +202,12 @@ class SheenChapter {
   String toString() => 'SheenChapter($title, $start)';
 }
 
-/// The index of the chapter that holds [position] in [chapters] (sorted by start), or -1 when there are none.
+/// The index of the chapter that holds [position] in [chapters] (sorted by start), or -1 when there are none or
+/// [position] is before the first.
 ///
 /// {@category Music}
 int currentSheenChapter(List<SheenChapter> chapters, Duration position) {
-  var at = chapters.isEmpty ? -1 : 0;
+  var at = -1;
   for (var i = 0; i < chapters.length; i++) {
     if (chapters[i].start <= position) at = i;
   }
