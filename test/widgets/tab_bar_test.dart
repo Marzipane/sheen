@@ -185,10 +185,17 @@ void main() {
     SheenTabItem(icon: SheenIcons.map, selectedIcon: SheenIcons.mapFill, label: 'Map'),
   ];
 
-  Widget pairedBar(int index, {bool minimized = false}) => host(
+  Widget pairedBar(int index, {bool minimized = false, bool searchActive = false}) => host(
     SizedBox(
       width: 390,
-      child: SheenTabBar(items: paired, index: index, onSelect: (_) {}, onSearch: () {}, minimized: minimized),
+      child: SheenTabBar(
+        items: paired,
+        index: index,
+        onSelect: (_) {},
+        onSearch: () {},
+        minimized: minimized,
+        searchActive: searchActive,
+      ),
     ),
   );
 
@@ -220,6 +227,36 @@ void main() {
     expect(glyphs(t, SheenIcons.mapFill), isNotEmpty);
     expect(glyphs(t, SheenIcons.heart).every((i) => !i.filled), isTrue);
     expect(glyphs(t, SheenIcons.heart), isNotEmpty);
+  });
+
+  testWidgets('the selected tab goes back to its outline while search is on', (t) async {
+    await t.pumpWidget(
+      host(
+        SizedBox(
+          width: 700,
+          child: SheenTopTabBar(items: paired, index: 1, searchActive: true, onSelect: (_) {}),
+        ),
+      ),
+    );
+    expect(glyphs(t, SheenIcons.mapFill), isEmpty);
+    expect(glyphs(t, SheenIcons.map).every((i) => !i.filled), isTrue);
+    await t.pumpWidget(pairedBar(1, searchActive: true));
+    await t.pump(const Duration(seconds: 1));
+    expect(glyphs(t, SheenIcons.mapFill), isEmpty);
+  });
+
+  testWidgets('the lifted lens shows the selected glyph', (t) async {
+    await t.pumpWidget(pairedBar(1));
+    await t.pump(const Duration(seconds: 1));
+    final press = await t.startGesture(t.getCenter(find.text('Map').first));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 200));
+    final inLens = find.descendant(of: find.byKey(const ValueKey('tab-lens-lifted')), matching: find.byType(SheenIcon));
+    final names = t.widgetList<SheenIcon>(inLens).map((i) => i.name);
+    expect(names, contains(SheenIcons.mapFill));
+    expect(names, isNot(contains(SheenIcons.map)));
+    await press.up();
+    await t.pumpAndSettle();
   });
 
   group('SheenTopTabBar', () {

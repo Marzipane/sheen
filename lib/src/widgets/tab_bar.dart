@@ -30,7 +30,8 @@ class SheenTabItem {
   @Deprecated('Not needed for a glyph with no filled form, which shows its outline by itself.')
   final bool filled;
 
-  /// The glyph of the selected tab. With it, the other tabs show [icon] as an outline.
+  /// The glyph of the selected tab, such as [SheenIcons.homeFill]. With it, the other tabs show [icon] as an outline,
+  /// so [icon] has to be the plain stroke name, such as [SheenIcons.home]: a `.fill` name stays solid.
   final String? selectedIcon;
 
   /// The label under the glyph.

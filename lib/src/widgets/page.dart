@@ -162,14 +162,15 @@ class _SheenPageState extends State<SheenPage> {
             right: inset + 52,
             height: 44,
             child: IgnorePointer(
-              child: ExcludeSemantics(
-                child: Center(
-                  child: w.barTitle != null
-                      ? SheenGlass(
-                          padding: const EdgeInsets.symmetric(horizontal: SheenSpace.l, vertical: SheenSpace.s),
-                          child: SheenToolbarTitle(w.barTitle!),
-                        )
-                      : AnimatedOpacity(
+              child: Center(
+                child: w.barTitle != null
+                    ? SheenGlass(
+                        padding: const EdgeInsets.symmetric(horizontal: SheenSpace.l, vertical: SheenSpace.s),
+                        child: SheenToolbarTitle(w.barTitle!),
+                      )
+                    // repeats the large title, so screen readers skip it
+                    : ExcludeSemantics(
+                        child: AnimatedOpacity(
                           key: const ValueKey('sheen-page-title'),
                           opacity: _collapsed ? 1 : 0,
                           duration: _collapsed ? SheenMotion.fadeIn : SheenMotion.fadeOut,
@@ -180,7 +181,7 @@ class _SheenPageState extends State<SheenPage> {
                             style: t.type.headline.copyWith(color: t.colors.text),
                           ),
                         ),
-                ),
+                      ),
               ),
             ),
           ),

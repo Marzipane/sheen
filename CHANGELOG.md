@@ -1,9 +1,10 @@
 ## 0.6.5
 
 - `SheenTabItem.selectedIcon`: the selected tab shows it filled and the others show `icon` as an outline, on the full,
-  minimized and top bars and on the lifted lens.
-- `SheenPage.barTitle`: a short name in a glass capsule in the top bar, always shown, for a page whose large title asks
-  a question.
+  minimized and top bars and on the lifted lens. `icon` has to be a plain stroke name: a `.fill` name stays solid.
+- `SheenPage.barTitle`: a short name in a glass capsule in the top bar, always shown and read by screen readers, for a
+  page whose large title asks a question.
+- `SheenIcons.home`: the outline of `SheenIcons.homeFill`.
 
 ## 0.6.4
 

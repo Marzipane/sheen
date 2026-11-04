@@ -57,6 +57,8 @@ const Map<String, String> sheenStrokeIcons = {
       r'''<path d="M12 19.5s-7.5-4.4-7.5-10A4.2 4.2 0 0 1 12 7a4.2 4.2 0 0 1 7.5 2.5c0 5.6-7.5 10-7.5 10Z"></path>''',
   'help':
       r'''<circle cx="12" cy="12" r="8.5"></circle><path d="M9.6 9.5a2.5 2.5 0 0 1 4.8.8c0 1.7-2.4 2-2.4 3.6"></path><path d="M12 16.8v.3"></path>''',
+  'home':
+      r'''<path d="M3.5 11 12 4l8.5 7"></path><path d="M6 9.5V19a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V9.5"></path><path d="M10 20v-5.5h4V20"></path>''',
   'hourglass':
       r'''<path d="M7 3.5h10"></path><path d="M7 20.5h10"></path><path d="M8 3.5c0 4 4 5 4 8.5 0-3.5 4-4.5 4-8.5"></path><path d="M8 20.5c0-4 4-5 4-8.5 0 3.5 4 4.5 4 8.5"></path>''',
   'id-card':

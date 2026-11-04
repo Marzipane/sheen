@@ -120,6 +120,9 @@ abstract final class SheenIcons {
   /// The help icon.
   static const String help = 'help';
 
+  /// The home icon.
+  static const String home = 'home';
+
   /// The hourglass icon.
   static const String hourglass = 'hourglass';
 
@@ -385,6 +388,7 @@ abstract final class SheenIcons {
     grip,
     heart,
     help,
+    home,
     hourglass,
     idCard,
     image,
