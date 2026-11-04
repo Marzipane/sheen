@@ -16,7 +16,11 @@ Widget opener(void Function(BuildContext c) open) => host(
 
 void main() {
   testWidgets('at large text the header wraps instead of cutting its words', (t) async {
+    t.view
+      ..devicePixelRatio = 1
+      ..physicalSize = const Size(375, 800);
     t.platformDispatcher.textScaleFactorTestValue = 3;
+    addTearDown(t.view.reset);
     addTearDown(t.platformDispatcher.clearAllTestValues);
     await t.pumpWidget(
       opener(
