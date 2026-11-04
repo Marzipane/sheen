@@ -83,7 +83,7 @@ class SheenStatusScreen extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(inset, pad.top + 24, inset, pad.bottom + 16),
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: box.maxHeight - pad.top - pad.bottom - 40),
-            // No intrinsic measuring, so details can hold anything. The empty boxes share the spare height: two gaps
+            // No intrinsic measuring, so details can hold any widget that sizes itself, list rows included. The empty boxes share the spare height: two gaps
             // above the content and three below it keep the content a little above the middle.
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
+import 'package:sheen/src/widgets/tab_circle.dart';
 
 /// One tab of the [SheenTabBar]: a glyph from the design kit and its label (a translated string).
 @immutable
@@ -14,12 +15,18 @@ import 'package:sheen/sheen.dart';
 /// {@category Navigation}
 class SheenTabItem {
   /// A tab with [icon] and [label].
-  const SheenTabItem({required this.icon, required this.label, this.badge, this.filled = true});
+  const SheenTabItem({
+    required this.icon,
+    required this.label,
+    this.badge,
+    @Deprecated('Not needed for a glyph with no filled form, which shows its outline by itself.') this.filled = true,
+  });
 
-  /// The glyph ([SheenIcons]).
+  /// The glyph ([SheenIcons]): filled when it has a filled form, otherwise its outline.
   final String icon;
 
-  /// Draws [icon] filled; false draws its outline, for a glyph with no filled form.
+  /// False keeps the outline of a stroke name such as [SheenIcons.heart]. A `.fill` name stays solid.
+  @Deprecated('Not needed for a glyph with no filled form, which shows its outline by itself.')
   final bool filled;
 
   /// The label under the glyph.
@@ -55,8 +62,8 @@ class SheenTabItem {
 ///   onSearch: openSearch,
 /// )
 /// ```
-/// Tab glyphs are drawn filled, so use names that have a filled glyph (`SheenIcons.*Fill` lists them) or your own, or
-/// set [SheenTabItem.filled] to false. The circle need not be search: [searchIcon], [searchLabel] and [searchVariant]
+/// Tab glyphs are drawn filled when they have a filled form (`SheenIcons.*Fill` lists them), otherwise as their outline.
+/// The circle need not be search: [searchIcon], [searchLabel] and [searchVariant]
 /// make it another action, such as a prominent plus.
 ///
 /// {@category Navigation}
@@ -99,7 +106,7 @@ class SheenTabBar extends StatefulWidget {
   /// The search circle's glass; [SheenGlassVariant.prominent] gives it the accent, for the screen's main action.
   final SheenGlassVariant searchVariant;
 
-  /// Search is the active destination: the search circle carries the lens, no tab does.
+  /// Search is the active destination: the circle is marked as current (a lens, or a ring on prominent glass), no tab is.
   final bool searchActive;
 
   /// Shrinks the bar to the current tab, the [accessory] and search, for example while a list scrolls down.
@@ -402,7 +409,6 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
   }
 
   Widget _search(double size, double icon) {
-    final t = context.sheen;
     final on = widget.searchActive;
     return SheenPressable(
       onTap: widget.onSearch,
@@ -417,8 +423,8 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
           child: Stack(
             alignment: Alignment.center,
             children: [
-              if (on) const Positioned.fill(child: SheenLens(shape: CircleBorder())),
-              SheenIcon(widget.searchIcon, size: icon, stroke: 2.3, color: on ? t.colors.accentText : _circleInk),
+              if (on) Positioned.fill(child: tabCircleMark(context.sheen.colors, widget.searchVariant)),
+              SheenIcon(widget.searchIcon, size: icon, stroke: 2.3, color: _circleInk),
             ],
           ),
         ),
@@ -428,15 +434,14 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
 
   /// The search circle's face on the full bar: the glass is the bar's own (one shape with the capsule).
   Widget _searchFace() {
-    final t = context.sheen;
     final on = widget.searchActive;
     final face = SizedBox.square(
       dimension: SheenTabBar.height,
       child: Stack(
         alignment: Alignment.center,
         children: [
-          if (on) const Positioned.fill(child: SheenLens(shape: CircleBorder())),
-          SheenIcon(widget.searchIcon, size: 25, stroke: 2.3, color: on ? t.colors.accentText : _circleInk),
+          if (on) Positioned.fill(child: tabCircleMark(context.sheen.colors, widget.searchVariant)),
+          SheenIcon(widget.searchIcon, size: 25, stroke: 2.3, color: _circleInk),
         ],
       ),
     );
@@ -451,10 +456,11 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
     );
   }
 
-  /// The glyph's colour on the circle's glass.
   Color get _circleInk {
-    final c = context.sheen.colors;
-    return widget.searchVariant == SheenGlassVariant.prominent ? c.onAccent : c.text;
+    final colors = context.sheen.colors;
+    return widget.searchActive
+        ? tabCircleActiveInk(colors, widget.searchVariant)
+        : tabCircleInk(colors, widget.searchVariant);
   }
 
   Widget _full() {
@@ -580,7 +586,7 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
               child: SizedBox.square(
                 dimension: SheenTabBar.minimizedHeight,
                 child: Center(
-                  child: SheenIcon(current.icon, filled: current.filled, size: 24, color: t.colors.accentText),
+                  child: SheenIcon(current.icon, filled: tabGlyphFilled(current), size: 24, color: t.colors.accentText),
                 ),
               ),
             ),
@@ -673,7 +679,7 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
 Widget _face(BuildContext context, SheenTabItem item, Color color, {Animation<double>? dip, bool fringe = false}) {
   final t = context.sheen;
   final badge = item.badge;
-  Widget glyph(Color c) => SheenIcon(item.icon, filled: item.filled, size: 25, color: c);
+  Widget glyph(Color c) => SheenIcon(item.icon, filled: tabGlyphFilled(item), size: 25, color: c);
   final icon = Stack(
     clipBehavior: Clip.none,
     children: [

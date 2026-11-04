@@ -1,10 +1,20 @@
+## 0.6.4
+
+- `SheenTabBar` with `searchVariant: prominent` keeps its glyph readable while `searchActive` is on: in 0.6.3 accent ink
+  on accent glass nearly vanished. The active state now shows a ring in the label colour, because the lens barely shows
+  on accent glass.
+- `SheenTopTabBar.searchIcon` and `searchVariant`, as on `SheenTabBar`.
+- Tab glyphs with no filled form show their outline by themselves, on both bars. `SheenTabItem.filled` from 0.6.3 is
+  deprecated: it is not needed for those glyphs, and `filled: false` still keeps the outline of a stroke name with both forms, such as `SheenIcons.heart`.
+- Corrected from 0.6.3: `SheenStatusScreen.details` takes any widget that sizes itself, list rows included. A widget that
+  needs a bounded height, such as `Expanded` or a `ListView`, does not fit there.
+
 ## 0.6.3
 
 - `SheenTabBar.searchIcon` and `searchVariant`: the circle beside the tabs can be another action, such as a prominent
   plus, on the full and the minimized bar. The defaults stay a search circle on regular glass.
-- `SheenTabItem.filled`: false draws a tab's glyph as an outline, for a glyph with no filled form.
-- `SheenStatusScreen` no longer measures its content, so `details` can hold anything, list rows included. The layout is
-  the same: the content a little above the middle, the actions at the bottom, and a scroll when it is too tall.
+- `SheenTabItem.filled` (deprecated in 0.6.4): false draws a tab's glyph as an outline.
+- `SheenStatusScreen` no longer measures its content, so `details` can hold list rows. The layout is the same: the content a little above the middle, the actions at the bottom, and a scroll when it is too tall.
 - `llms.txt` is current again.
 
 ## 0.6.2

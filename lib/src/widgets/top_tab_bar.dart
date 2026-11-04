@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
+import 'package:sheen/src/widgets/tab_circle.dart';
 
 /// The tab bar of a wide window (iPadOS style): the tabs at the top centre, glyph and label side by side on one glass
 /// capsule with the selected tab on a lens, and, when [onSearch] is given, search as its own circle at the end.
@@ -18,6 +19,8 @@ class SheenTopTabBar extends StatelessWidget {
     required this.onSelect,
     this.onSearch,
     this.searchLabel,
+    this.searchIcon = SheenIcons.search,
+    this.searchVariant = SheenGlassVariant.regular,
     this.searchActive = false,
   });
 
@@ -36,7 +39,13 @@ class SheenTopTabBar extends StatelessWidget {
   /// The search circle's label for screen readers; [SheenStrings.search] when null.
   final String? searchLabel;
 
-  /// Search is the current destination: the search circle carries the lens, no tab does.
+  /// The search circle's glyph ([SheenIcons]); another glyph makes it another action.
+  final String searchIcon;
+
+  /// The search circle's glass; [SheenGlassVariant.prominent] gives it the accent, for the screen's main action.
+  final SheenGlassVariant searchVariant;
+
+  /// Search is the current destination: the circle is marked as current (a lens, or a ring on prominent glass), no tab is.
   final bool searchActive;
 
   /// The bar height in points.
@@ -81,7 +90,7 @@ class SheenTopTabBar extends StatelessWidget {
                               children: [
                                 SheenIcon(
                                   items[i].icon,
-                                  filled: items[i].filled,
+                                  filled: tabGlyphFilled(items[i]),
                                   size: 19,
                                   color: i == index && !searchActive ? t.colors.accentText : t.colors.text,
                                 ),
@@ -116,17 +125,20 @@ class SheenTopTabBar extends StatelessWidget {
             minSize: 0,
             child: SheenGlass(
               shape: const CircleBorder(),
+              variant: searchVariant,
               child: SizedBox.square(
                 dimension: height,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    if (searchActive) const Positioned.fill(child: SheenLens(shape: CircleBorder())),
+                    if (searchActive) Positioned.fill(child: tabCircleMark(t.colors, searchVariant)),
                     SheenIcon(
-                      SheenIcons.search,
+                      searchIcon,
                       size: 21,
                       stroke: 2.2,
-                      color: searchActive ? t.colors.accentText : t.colors.text,
+                      color: searchActive
+                          ? tabCircleActiveInk(t.colors, searchVariant)
+                          : tabCircleInk(t.colors, searchVariant),
                     ),
                   ],
                 ),

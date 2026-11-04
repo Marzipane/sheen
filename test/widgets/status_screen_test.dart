@@ -57,7 +57,7 @@ void main() {
     expect(find.byType(SheenPrimaryButton), findsNothing);
   });
 
-  testWidgets('details can hold any widget, such as list rows', (t) async {
+  testWidgets('details can hold widgets that size themselves, such as list rows', (t) async {
     await t.pumpWidget(
       host(
         SheenStatusScreen(
@@ -78,7 +78,7 @@ void main() {
     expect(find.text('Call us'), findsOneWidget);
   });
 
-  testWidgets('a short screen keeps the content above the middle and the action at the bottom', (t) async {
+  testWidgets('a short screen shares its spare height two parts above the content, three below', (t) async {
     await t.pumpWidget(
       host(
         SheenStatusScreen(
@@ -90,9 +90,15 @@ void main() {
         ),
       ),
     );
-    final height = t.view.physicalSize.height / t.view.devicePixelRatio;
-    expect(t.getCenter(find.text('No connection')).dy, lessThan(height / 2));
-    expect(t.getBottomLeft(find.byType(SheenPrimaryButton)).dy, greaterThan(height * .85));
+    final top = t.getCenter(find.byType(SheenIcon).first).dy - 36;
+    final contentBottom = t.getBottomLeft(find.text('Check it.')).dy;
+    final actions = t.getTopLeft(find.byType(SheenPrimaryButton)).dy;
+    const padding = 24.0;
+    const gapBeforeActions = 24.0;
+    final above = top - padding;
+    final below = actions - contentBottom - gapBeforeActions;
+    expect(above / below, closeTo(2 / 3, .01));
+    expect(above, greaterThan(50));
   });
 
   testWidgets('a tall screen scrolls instead of overflowing', (t) async {
