@@ -180,6 +180,48 @@ void main() {
     expect(prominent(t), isFalse);
   });
 
+  const paired = [
+    SheenTabItem(icon: SheenIcons.heart, selectedIcon: SheenIcons.heartFill, label: 'Saved'),
+    SheenTabItem(icon: SheenIcons.map, selectedIcon: SheenIcons.mapFill, label: 'Map'),
+  ];
+
+  Widget pairedBar(int index, {bool minimized = false}) => host(
+    SizedBox(
+      width: 390,
+      child: SheenTabBar(items: paired, index: index, onSelect: (_) {}, onSearch: () {}, minimized: minimized),
+    ),
+  );
+
+  testWidgets('selectedIcon fills only the selected tab', (t) async {
+    await t.pumpWidget(pairedBar(0));
+    expect(glyphs(t, SheenIcons.heartFill), isNotEmpty);
+    expect(glyphs(t, SheenIcons.heart), isEmpty);
+    expect(glyphs(t, SheenIcons.map), isNotEmpty);
+    expect(glyphs(t, SheenIcons.map).every((i) => !i.filled), isTrue);
+    expect(glyphs(t, SheenIcons.mapFill), isEmpty);
+  });
+
+  testWidgets('the minimized bar shows the selected glyph', (t) async {
+    await t.pumpWidget(pairedBar(1, minimized: true));
+    await t.pump(const Duration(seconds: 1));
+    expect(glyphs(t, SheenIcons.mapFill), isNotEmpty);
+    expect(t.takeException(), isNull);
+  });
+
+  testWidgets('the top bar takes selectedIcon too', (t) async {
+    await t.pumpWidget(
+      host(
+        SizedBox(
+          width: 700,
+          child: SheenTopTabBar(items: paired, index: 1, onSelect: (_) {}),
+        ),
+      ),
+    );
+    expect(glyphs(t, SheenIcons.mapFill), isNotEmpty);
+    expect(glyphs(t, SheenIcons.heart).every((i) => !i.filled), isTrue);
+    expect(glyphs(t, SheenIcons.heart), isNotEmpty);
+  });
+
   group('SheenTopTabBar', () {
     testWidgets('takes the same circle as the tab bar', (t) async {
       for (final active in [false, true]) {

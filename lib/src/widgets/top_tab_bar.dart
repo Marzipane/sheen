@@ -57,6 +57,7 @@ class SheenTopTabBar extends StatelessWidget {
   Widget _build(BuildContext context) {
     final t = context.sheen;
     final reduced = SheenMotion.reduced(context);
+    TabGlyph glyphOf(int i) => i == index && !searchActive ? tabSelectedGlyph(items[i]) : tabIdleGlyph(items[i]);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -89,8 +90,8 @@ class SheenTopTabBar extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 SheenIcon(
-                                  items[i].icon,
-                                  filled: tabGlyphFilled(items[i]),
+                                  glyphOf(i).name,
+                                  filled: glyphOf(i).filled,
                                   size: 19,
                                   color: i == index && !searchActive ? t.colors.accentText : t.colors.text,
                                 ),

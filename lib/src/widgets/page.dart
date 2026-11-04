@@ -29,6 +29,7 @@ class SheenPage extends StatefulWidget {
     required this.title,
     required this.children,
     this.subtitle,
+    this.barTitle,
     this.close = false,
     this.trailing,
     this.leading,
@@ -43,6 +44,9 @@ class SheenPage extends StatefulWidget {
 
   /// A line under the large title.
   final String? subtitle;
+
+  /// A short name in a glass capsule in the top bar, always shown; the large title then says what the page asks.
+  final String? barTitle;
 
   /// The content, below the title.
   final List<Widget> children;
@@ -160,17 +164,22 @@ class _SheenPageState extends State<SheenPage> {
             child: IgnorePointer(
               child: ExcludeSemantics(
                 child: Center(
-                  child: AnimatedOpacity(
-                    key: const ValueKey('sheen-page-title'),
-                    opacity: _collapsed ? 1 : 0,
-                    duration: _collapsed ? SheenMotion.fadeIn : SheenMotion.fadeOut,
-                    child: Text(
-                      w.title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: t.type.headline.copyWith(color: t.colors.text),
-                    ),
-                  ),
+                  child: w.barTitle != null
+                      ? SheenGlass(
+                          padding: const EdgeInsets.symmetric(horizontal: SheenSpace.l, vertical: SheenSpace.s),
+                          child: SheenToolbarTitle(w.barTitle!),
+                        )
+                      : AnimatedOpacity(
+                          key: const ValueKey('sheen-page-title'),
+                          opacity: _collapsed ? 1 : 0,
+                          duration: _collapsed ? SheenMotion.fadeIn : SheenMotion.fadeOut,
+                          child: Text(
+                            w.title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: t.type.headline.copyWith(color: t.colors.text),
+                          ),
+                        ),
                 ),
               ),
             ),

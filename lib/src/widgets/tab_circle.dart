@@ -32,11 +32,36 @@ Widget tabCircleMark(SheenColors colors, SheenGlassVariant variant) {
   );
 }
 
-/// A tab's glyph is filled when it has a filled form and the tab allows it; otherwise its outline shows.
-///
-/// {@category Navigation}
-bool tabGlyphFilled(SheenTabItem item) {
+bool _filledAllowed(SheenTabItem item, String name) {
   // ignore: deprecated_member_use_from_same_package
   final allowed = item.filled;
-  return allowed && sheenFilledIcons.containsKey(item.icon.replaceAll('.fill', ''));
+  return allowed && sheenFilledIcons.containsKey(name.replaceAll('.fill', ''));
+}
+
+/// What a tab draws: a glyph's name and whether it is filled.
+///
+/// {@category Navigation}
+class TabGlyph {
+  /// A glyph.
+  const TabGlyph({required this.name, required this.filled});
+
+  /// The name ([SheenIcons]).
+  final String name;
+
+  /// Drawn filled.
+  final bool filled;
+}
+
+/// The glyph of a tab that is not selected: filled when it has a filled form, unless the tab has a selected icon.
+///
+/// {@category Navigation}
+TabGlyph tabIdleGlyph(SheenTabItem item) =>
+    TabGlyph(name: item.icon, filled: item.selectedIcon == null && _filledAllowed(item, item.icon));
+
+/// The glyph of the selected tab.
+///
+/// {@category Navigation}
+TabGlyph tabSelectedGlyph(SheenTabItem item) {
+  final name = item.selectedIcon ?? item.icon;
+  return TabGlyph(name: name, filled: _filledAllowed(item, name));
 }

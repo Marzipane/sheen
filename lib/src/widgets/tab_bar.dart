@@ -19,6 +19,7 @@ class SheenTabItem {
     required this.icon,
     required this.label,
     this.badge,
+    this.selectedIcon,
     @Deprecated('Not needed for a glyph with no filled form, which shows its outline by itself.') this.filled = true,
   });
 
@@ -28,6 +29,9 @@ class SheenTabItem {
   /// False keeps the outline of a stroke name such as [SheenIcons.heart]. A `.fill` name stays solid.
   @Deprecated('Not needed for a glyph with no filled form, which shows its outline by itself.')
   final bool filled;
+
+  /// The glyph of the selected tab. With it, the other tabs show [icon] as an outline.
+  final String? selectedIcon;
 
   /// The label under the glyph.
   final String label;
@@ -385,6 +389,7 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
                       context,
                       widget.items[i],
                       i == hover ? t.colors.accentText : t.colors.text,
+                      drawing: i == hover ? tabSelectedGlyph(widget.items[i]) : tabIdleGlyph(widget.items[i]),
                       fringe: !_reduced && i == hover,
                     ),
                   ),
@@ -572,6 +577,7 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
   Widget _minimized() {
     final t = context.sheen;
     final current = widget.items[widget.index];
+    final glyph = tabSelectedGlyph(current);
     return SizedBox(
       height: SheenTabBar.minimizedHeight,
       child: Row(
@@ -586,7 +592,7 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
               child: SizedBox.square(
                 dimension: SheenTabBar.minimizedHeight,
                 child: Center(
-                  child: SheenIcon(current.icon, filled: tabGlyphFilled(current), size: 24, color: t.colors.accentText),
+                  child: SheenIcon(glyph.name, filled: glyph.filled, size: 24, color: t.colors.accentText),
                 ),
               ),
             ),
@@ -676,10 +682,17 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
 
 /// A tab's glyph (with its badge) over its label, in [color]; [dip] scales the glyph, [fringe] adds the slight
 /// colour fringe a zooming lens gives its glyph.
-Widget _face(BuildContext context, SheenTabItem item, Color color, {Animation<double>? dip, bool fringe = false}) {
+Widget _face(
+  BuildContext context,
+  SheenTabItem item,
+  Color color, {
+  required TabGlyph drawing,
+  Animation<double>? dip,
+  bool fringe = false,
+}) {
   final t = context.sheen;
   final badge = item.badge;
-  Widget glyph(Color c) => SheenIcon(item.icon, filled: tabGlyphFilled(item), size: 25, color: c);
+  Widget glyph(Color c) => SheenIcon(drawing.name, filled: drawing.filled, size: 25, color: c);
   final icon = Stack(
     clipBehavior: Clip.none,
     children: [
@@ -769,7 +782,13 @@ class _TabState extends State<_Tab> with SingleTickerProviderStateMixin {
       semanticLabel: widget.item.label,
       selected: widget.selected,
       minSize: 0,
-      child: _face(context, widget.item, widget.selected ? t.colors.accentText : t.colors.text, dip: _dip),
+      child: _face(
+        context,
+        widget.item,
+        widget.selected ? t.colors.accentText : t.colors.text,
+        drawing: widget.selected ? tabSelectedGlyph(widget.item) : tabIdleGlyph(widget.item),
+        dip: _dip,
+      ),
     );
   }
 }

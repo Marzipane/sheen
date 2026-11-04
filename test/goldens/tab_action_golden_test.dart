@@ -42,6 +42,28 @@ void main() {
     ('prominent plus, active', () => _bar(active: true)),
     ('prominent plus, minimized', () => _bar(minimized: true)),
     ('prominent plus, minimized and active', () => _bar(minimized: true, active: true)),
+    (
+      'selectedIcon: only the selected tab is filled',
+      () => overPhoto(
+        SheenTabBar(
+          items: const [
+            SheenTabItem(icon: SheenIcons.heart, selectedIcon: SheenIcons.heartFill, label: 'Saved'),
+            SheenTabItem(icon: SheenIcons.map, selectedIcon: SheenIcons.mapFill, label: 'Map'),
+            SheenTabItem(icon: SheenIcons.user, selectedIcon: SheenIcons.userFill, label: 'Profile'),
+          ],
+          index: 1,
+          onSelect: (_) {},
+          onSearch: () {},
+        ),
+      ),
+    ),
+    (
+      'SheenPage with barTitle',
+      () => const SizedBox(
+        height: 220,
+        child: SheenPage(title: 'Choose your language', barTitle: 'Language', children: [SizedBox(height: 20)]),
+      ),
+    ),
     ('top tab bar, prominent plus', _topBar),
     ('top tab bar, prominent plus, active', () => _topBar(active: true)),
   ]);
