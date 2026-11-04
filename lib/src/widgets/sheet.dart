@@ -274,10 +274,10 @@ class SheenSheetBody extends StatelessWidget {
     this.subtitle,
   });
 
-  /// The title in the header.
+  /// The title in the header. Long text wraps.
   final String title;
 
-  /// A second line under the title, such as "172 results · 20–22 Oct".
+  /// A line under the title, such as "172 results · 20–22 Oct". Long text wraps, like the title.
   final String? subtitle;
 
   /// The close button's label for screen readers; [SheenStrings.cancel] when null.
@@ -316,68 +316,73 @@ class SheenSheetBody extends StatelessWidget {
         ),
         child: ClipPath(
           clipper: const ShapeBorderClipper(shape: shape),
-          child: Column(
-            children: [
-              const SizedBox(height: 6),
-              Semantics(
-                label: cancel,
-                child: Container(
-                  width: 36,
-                  height: 5,
-                  decoration: BoxDecoration(
-                    color: t.colors.textTertiary.withValues(alpha: .6),
-                    borderRadius: BorderRadius.circular(3),
+          child: LayoutBuilder(
+            builder: (context, box) => Column(
+              children: [
+                const SizedBox(height: 6),
+                Semantics(
+                  label: cancel,
+                  child: Container(
+                    width: 36,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: t.colors.textTertiary.withValues(alpha: .6),
+                      borderRadius: BorderRadius.circular(3),
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(12, 5, 12, 8),
-                child: Row(
-                  children: [
-                    SheenIconButton(icon: SheenIcons.close, semanticLabel: cancel, stroke: 2.2, onTap: onCancel),
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
+                // Text can make the header tall on a short sheet: it takes half at most and scrolls, so the body stays.
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxHeight: box.maxHeight / 2),
+                  child: SingleChildScrollView(
+                    primary: false,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(12, 5, 12, 8),
+                      child: Row(
                         children: [
-                          Semantics(
-                            header: true,
-                            child: Text(
-                              title,
-                              textAlign: TextAlign.center,
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                              style: t.type.headline.copyWith(color: t.colors.text),
+                          SheenIconButton(icon: SheenIcons.close, semanticLabel: cancel, stroke: 2.2, onTap: onCancel),
+                          Expanded(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Semantics(
+                                  header: true,
+                                  child: Text(
+                                    title,
+                                    textAlign: TextAlign.center,
+                                    style: t.type.headline.copyWith(color: t.colors.text),
+                                  ),
+                                ),
+                                if (subtitle != null)
+                                  Text(
+                                    subtitle!,
+                                    textAlign: TextAlign.center,
+                                    style: t.type.caption.copyWith(color: t.colors.textSecondary),
+                                  ),
+                              ],
                             ),
                           ),
-                          if (subtitle != null)
-                            Text(
-                              subtitle!,
-                              textAlign: TextAlign.center,
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                              style: t.type.caption.copyWith(color: t.colors.textSecondary),
-                            ),
+                          if (trailing != null)
+                            ConstrainedBox(constraints: const BoxConstraints(minWidth: 44), child: trailing)
+                          else if (doneLabel != null)
+                            // without [onDone] Done waits for a valid choice: dimmed and inert (SheenIconButton's disabled state)
+                            SheenIconButton(
+                              icon: SheenIcons.check,
+                              semanticLabel: doneLabel!,
+                              stroke: 2.6,
+                              variant: SheenGlassVariant.prominent,
+                              onTap: onDone,
+                            )
+                          else
+                            const SizedBox(width: 44),
                         ],
                       ),
                     ),
-                    if (trailing != null)
-                      ConstrainedBox(constraints: const BoxConstraints(minWidth: 44), child: trailing)
-                    else if (doneLabel != null)
-                      // without [onDone] Done waits for a valid choice: dimmed and inert (SheenIconButton's disabled state)
-                      SheenIconButton(
-                        icon: SheenIcons.check,
-                        semanticLabel: doneLabel!,
-                        stroke: 2.6,
-                        variant: SheenGlassVariant.prominent,
-                        onTap: onDone,
-                      )
-                    else
-                      const SizedBox(width: 44),
-                  ],
+                  ),
                 ),
-              ),
-              Expanded(child: SheenNested(child: child)),
-            ],
+                Expanded(child: SheenNested(child: child)),
+              ],
+            ),
           ),
         ),
       ),

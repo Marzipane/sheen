@@ -40,8 +40,10 @@ void main() {
     );
     expect(find.bySemanticsLabel('Language'), findsOneWidget);
     expect(t.getSemantics(find.bySemanticsLabel('Language')).flagsCollection.isHeader, isTrue);
-    await t.pumpWidget(host(const SheenPage(title: 'Trips', children: [SizedBox(height: 20)])));
-    expect(find.bySemanticsLabel('Trips'), findsOneWidget);
+    await t.pumpWidget(host(const SheenPage(title: 'Trips', children: [SizedBox(height: 3000)])));
+    await t.drag(find.byType(Scrollable).first, const Offset(0, -1500));
+    await t.pumpAndSettle();
+    expect(find.bySemanticsLabel('Trips'), findsNothing, reason: 'the small title repeats one a reader already heard');
     semantics.dispose();
   });
 

@@ -5,7 +5,8 @@
 - `SheenPage.barTitle`: a short name in a glass capsule in the top bar, always shown and read by screen readers, for a
   page whose large title asks a question.
 - `SheenIcons.home`: the outline of `SheenIcons.homeFill`.
-- A sheet's title and subtitle wrap to three lines instead of cutting off at large text sizes.
+- A sheet's title and subtitle wrap instead of cutting off, at any text size, so a long one moves the
+  sheet's content down. The header takes half the sheet at most and scrolls, so the content stays on a short sheet.
 
 ## 0.6.4
 

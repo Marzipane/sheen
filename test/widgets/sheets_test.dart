@@ -15,31 +15,46 @@ Widget opener(void Function(BuildContext c) open) => host(
 );
 
 void main() {
-  testWidgets('at large text the header wraps instead of cutting its words', (t) async {
+  Future<void> openSheet(WidgetTester t, Size screen, {bool startLarge = true, String title = 'A new version'}) async {
     t.view
       ..devicePixelRatio = 1
-      ..physicalSize = const Size(375, 800);
-    t.platformDispatcher.textScaleFactorTestValue = 3;
+      ..physicalSize = screen;
     addTearDown(t.view.reset);
-    addTearDown(t.platformDispatcher.clearAllTestValues);
     await t.pumpWidget(
-      opener(
-        (c) => showSheenSheet<void>(
-          context: c,
-          title: 'A new version is ready',
-          subtitle: 'Version 2.6.0 has arrived.',
-          builder: (_, _) => const SizedBox(),
+      host(
+        textScale: 3.1,
+        Builder(
+          builder: (c) => GestureDetector(
+            onTap: () => showSheenSheet<void>(
+              context: c,
+              title: title,
+              subtitle: 'Version 2.6.0 has arrived.',
+              startLarge: startLarge,
+              builder: (_, _) => const Text('body', key: ValueKey('body')),
+            ),
+            child: const Text('open'),
+          ),
         ),
       ),
     );
     await t.tap(find.text('open'));
     await t.pumpAndSettle();
-    final title = t.renderObject<RenderParagraph>(find.text('A new version is ready'));
-    final subtitle = t.renderObject<RenderParagraph>(find.text('Version 2.6.0 has arrived.'));
-    expect(title.didExceedMaxLines, isFalse);
-    expect(subtitle.didExceedMaxLines, isFalse);
+  }
+
+  testWidgets('at large text the header wraps instead of cutting its words', (t) async {
+    await openSheet(t, const Size(375, 800));
+    expect(t.renderObject<RenderParagraph>(find.text('A new version')).didExceedMaxLines, isFalse);
+    expect(t.renderObject<RenderParagraph>(find.text('Version 2.6.0 has arrived.')).didExceedMaxLines, isFalse);
     expect(t.takeException(), isNull);
   });
+
+  for (final (name, screen) in [('a small phone', const Size(320, 568)), ('landscape', const Size(844, 390))]) {
+    testWidgets('on $name at the medium height a tall header leaves the body on screen', (t) async {
+      await openSheet(t, screen, startLarge: false, title: 'A new version of this app is ready for you to install now');
+      expect(t.takeException(), isNull);
+      expect(t.getTopLeft(find.byKey(const ValueKey('body'))).dy, lessThan(screen.height));
+    });
+  }
 
   group('date wheel sheet', () {
     testWidgets('Done returns the date shown; Cancel returns null', (t) async {
