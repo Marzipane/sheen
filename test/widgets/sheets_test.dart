@@ -1,6 +1,7 @@
 import 'dart:ui' show Tristate;
 
 import 'package:flutter/material.dart' as m;
+import 'package:flutter/rendering.dart' show RenderParagraph;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sheen/sheen.dart';
@@ -14,6 +15,28 @@ Widget opener(void Function(BuildContext c) open) => host(
 );
 
 void main() {
+  testWidgets('at large text the header wraps instead of cutting its words', (t) async {
+    t.platformDispatcher.textScaleFactorTestValue = 3;
+    addTearDown(t.platformDispatcher.clearAllTestValues);
+    await t.pumpWidget(
+      opener(
+        (c) => showSheenSheet<void>(
+          context: c,
+          title: 'A new version is ready',
+          subtitle: 'Version 2.6.0 has arrived.',
+          builder: (_, _) => const SizedBox(),
+        ),
+      ),
+    );
+    await t.tap(find.text('open'));
+    await t.pumpAndSettle();
+    final title = t.renderObject<RenderParagraph>(find.text('A new version is ready'));
+    final subtitle = t.renderObject<RenderParagraph>(find.text('Version 2.6.0 has arrived.'));
+    expect(title.didExceedMaxLines, isFalse);
+    expect(subtitle.didExceedMaxLines, isFalse);
+    expect(t.takeException(), isNull);
+  });
+
   group('date wheel sheet', () {
     testWidgets('Done returns the date shown; Cancel returns null', (t) async {
       Future<DateTime?>? result;

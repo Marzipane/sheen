@@ -344,7 +344,7 @@ class SheenSheetBody extends StatelessWidget {
                             child: Text(
                               title,
                               textAlign: TextAlign.center,
-                              maxLines: 1,
+                              maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: t.type.headline.copyWith(color: t.colors.text),
                             ),
@@ -353,7 +353,7 @@ class SheenSheetBody extends StatelessWidget {
                             Text(
                               subtitle!,
                               textAlign: TextAlign.center,
-                              maxLines: 1,
+                              maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: t.type.caption.copyWith(color: t.colors.textSecondary),
                             ),
