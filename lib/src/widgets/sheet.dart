@@ -256,6 +256,11 @@ class SheenNested extends InheritedWidget {
   bool updateShouldNotify(SheenNested oldWidget) => false;
 }
 
+const double _grabberTop = 6, _grabberRadius = 3, _headerTop = 5;
+
+// the width of the close button, kept on the other side so the title stays centred
+const double _headerButton = 44;
+
 /// The surface of a sheet: the grabber, a header with a close button, the title and Done (or [trailing]), and the
 /// content, marked [SheenNested]. For [showSheenCustomSheet].
 ///
@@ -319,7 +324,7 @@ class SheenSheetBody extends StatelessWidget {
           child: LayoutBuilder(
             builder: (context, box) => Column(
               children: [
-                const SizedBox(height: 6),
+                const SizedBox(height: _grabberTop),
                 Semantics(
                   label: cancel,
                   child: Container(
@@ -327,7 +332,7 @@ class SheenSheetBody extends StatelessWidget {
                     height: 5,
                     decoration: BoxDecoration(
                       color: t.colors.textTertiary.withValues(alpha: .6),
-                      borderRadius: BorderRadius.circular(3),
+                      borderRadius: BorderRadius.circular(_grabberRadius),
                     ),
                   ),
                 ),
@@ -337,7 +342,7 @@ class SheenSheetBody extends StatelessWidget {
                   child: SingleChildScrollView(
                     primary: false,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 5, 12, 8),
+                      padding: const EdgeInsets.fromLTRB(SheenSpace.m, _headerTop, SheenSpace.m, SheenSpace.s),
                       child: Row(
                         children: [
                           SheenIconButton(icon: SheenIcons.close, semanticLabel: cancel, stroke: 2.2, onTap: onCancel),
@@ -374,7 +379,7 @@ class SheenSheetBody extends StatelessWidget {
                               onTap: onDone,
                             )
                           else
-                            const SizedBox(width: 44),
+                            const SizedBox(width: _headerButton),
                         ],
                       ),
                     ),
