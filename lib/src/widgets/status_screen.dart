@@ -83,55 +83,67 @@ class SheenStatusScreen extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(inset, pad.top + 24, inset, pad.bottom + 16),
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: box.maxHeight - pad.top - pad.bottom - 40),
-            child: IntrinsicHeight(
-              child: Column(
-                children: [
-                  const Spacer(flex: 2),
-                  Container(
-                    width: 72,
-                    height: 72,
-                    decoration: BoxDecoration(color: color.withValues(alpha: .14), shape: BoxShape.circle),
-                    child: Center(child: SheenIcon(icon, size: 32, stroke: 2, color: color)),
-                  ),
-                  const SizedBox(height: 20),
-                  Semantics(
-                    header: true,
-                    child: Text(
-                      title,
+            // No intrinsic measuring, so details can hold anything. The empty boxes share the spare height: two gaps
+            // above the content and three below it keep the content a little above the middle.
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SizedBox.shrink(),
+                const SizedBox.shrink(),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 72,
+                      height: 72,
+                      decoration: BoxDecoration(color: color.withValues(alpha: .14), shape: BoxShape.circle),
+                      child: Center(child: SheenIcon(icon, size: 32, stroke: 2, color: color)),
+                    ),
+                    const SizedBox(height: 20),
+                    Semantics(
+                      header: true,
+                      child: Text(
+                        title,
+                        textAlign: TextAlign.center,
+                        style: t.type.title.copyWith(color: t.colors.text),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      message,
                       textAlign: TextAlign.center,
-                      style: t.type.title.copyWith(color: t.colors.text),
+                      style: t.type.body.copyWith(color: t.colors.textSecondary, height: 1.45),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    message,
-                    textAlign: TextAlign.center,
-                    style: t.type.body.copyWith(color: t.colors.textSecondary, height: 1.45),
-                  ),
-                  if (details.isNotEmpty) ...[
-                    const SizedBox(height: 18),
-                    DefaultTextStyle.merge(
-                      textAlign: TextAlign.center,
-                      style: t.type.headline.copyWith(color: t.colors.text),
-                      child: Column(children: details),
-                    ),
+                    if (details.isNotEmpty) ...[
+                      const SizedBox(height: 18),
+                      DefaultTextStyle.merge(
+                        textAlign: TextAlign.center,
+                        style: t.type.headline.copyWith(color: t.colors.text),
+                        child: Column(children: details),
+                      ),
+                    ],
                   ],
-                  const Spacer(flex: 3),
-                  const SizedBox(height: 24),
-                  if (primaryLabel != null)
-                    SheenPrimaryButton(
-                      label: primaryLabel!,
-                      expand: true,
-                      height: 54,
-                      loading: primaryLoading,
-                      onPressed: primaryLoading ? null : onPrimary,
-                    ),
-                  if (secondaryLabel != null) ...[
-                    const SizedBox(height: 12),
-                    SheenSecondaryButton(label: secondaryLabel!, icon: secondaryIcon, onPressed: onSecondary),
+                ),
+                const SizedBox.shrink(),
+                const SizedBox(height: 24),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (primaryLabel != null)
+                      SheenPrimaryButton(
+                        label: primaryLabel!,
+                        expand: true,
+                        height: 54,
+                        loading: primaryLoading,
+                        onPressed: primaryLoading ? null : onPrimary,
+                      ),
+                    if (secondaryLabel != null) ...[
+                      const SizedBox(height: 12),
+                      SheenSecondaryButton(label: secondaryLabel!, icon: secondaryIcon, onPressed: onSecondary),
+                    ],
                   ],
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

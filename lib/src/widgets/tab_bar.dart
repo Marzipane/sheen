@@ -7,17 +7,20 @@ import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
 
-/// One tab of the [SheenTabBar]: a filled glyph from the design kit and its label (a translated string).
+/// One tab of the [SheenTabBar]: a glyph from the design kit and its label (a translated string).
 @immutable
-/// One tab of a [SheenTabBar] or [SheenTopTabBar]: a filled glyph and its label.
+/// One tab of a [SheenTabBar] or [SheenTopTabBar]: a glyph and its label.
 ///
 /// {@category Navigation}
 class SheenTabItem {
   /// A tab with [icon] and [label].
-  const SheenTabItem({required this.icon, required this.label, this.badge});
+  const SheenTabItem({required this.icon, required this.label, this.badge, this.filled = true});
 
-  /// The glyph ([SheenIcons]); drawn filled.
+  /// The glyph ([SheenIcons]).
   final String icon;
+
+  /// Draws [icon] filled; false draws its outline, for a glyph with no filled form.
+  final bool filled;
 
   /// The label under the glyph.
   final String label;
@@ -52,7 +55,9 @@ class SheenTabItem {
 ///   onSearch: openSearch,
 /// )
 /// ```
-/// Tab glyphs are drawn filled, so use names that have a filled glyph (`SheenIcons.*Fill` lists them) or your own.
+/// Tab glyphs are drawn filled, so use names that have a filled glyph (`SheenIcons.*Fill` lists them) or your own, or
+/// set [SheenTabItem.filled] to false. The circle need not be search: [searchIcon], [searchLabel] and [searchVariant]
+/// make it another action, such as a prominent plus.
 ///
 /// {@category Navigation}
 class SheenTabBar extends StatefulWidget {
@@ -64,6 +69,8 @@ class SheenTabBar extends StatefulWidget {
     required this.onSelect,
     required this.onSearch,
     this.searchLabel,
+    this.searchIcon = SheenIcons.search,
+    this.searchVariant = SheenGlassVariant.regular,
     this.searchActive = false,
     this.minimized = false,
     this.accessory,
@@ -85,6 +92,12 @@ class SheenTabBar extends StatefulWidget {
 
   /// The search circle's label for screen readers; [SheenStrings.search] when null.
   final String? searchLabel;
+
+  /// The search circle's glyph ([SheenIcons]); another glyph makes it another action.
+  final String searchIcon;
+
+  /// The search circle's glass; [SheenGlassVariant.prominent] gives it the accent, for the screen's main action.
+  final SheenGlassVariant searchVariant;
 
   /// Search is the active destination: the search circle carries the lens, no tab does.
   final bool searchActive;
@@ -377,7 +390,7 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
           dimension: SheenTabBar.height,
           child: Center(
             child: SheenIcon(
-              SheenIcons.search,
+              widget.searchIcon,
               size: 25,
               stroke: 2.3,
               color: onSearch ? t.colors.accentText : t.colors.text,
@@ -398,13 +411,14 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
       minSize: 0,
       child: SheenGlass(
         shape: const CircleBorder(),
+        variant: widget.searchVariant,
         child: SizedBox.square(
           dimension: size,
           child: Stack(
             alignment: Alignment.center,
             children: [
               if (on) const Positioned.fill(child: SheenLens(shape: CircleBorder())),
-              SheenIcon(SheenIcons.search, size: icon, stroke: 2.3, color: on ? t.colors.accentText : t.colors.text),
+              SheenIcon(widget.searchIcon, size: icon, stroke: 2.3, color: on ? t.colors.accentText : _circleInk),
             ],
           ),
         ),
@@ -416,22 +430,31 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
   Widget _searchFace() {
     final t = context.sheen;
     final on = widget.searchActive;
+    final face = SizedBox.square(
+      dimension: SheenTabBar.height,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          if (on) const Positioned.fill(child: SheenLens(shape: CircleBorder())),
+          SheenIcon(widget.searchIcon, size: 25, stroke: 2.3, color: on ? t.colors.accentText : _circleInk),
+        ],
+      ),
+    );
     return SheenPressable(
       onTap: widget.onSearch,
       semanticLabel: widget.searchLabel ?? SheenStrings.of(context).search,
       selected: on,
       minSize: 0,
-      child: SizedBox.square(
-        dimension: SheenTabBar.height,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            if (on) const Positioned.fill(child: SheenLens(shape: CircleBorder())),
-            SheenIcon(SheenIcons.search, size: 25, stroke: 2.3, color: on ? t.colors.accentText : t.colors.text),
-          ],
-        ),
-      ),
+      child: widget.searchVariant == SheenGlassVariant.regular
+          ? face
+          : SheenGlass(shape: const CircleBorder(), variant: widget.searchVariant, child: face),
     );
+  }
+
+  /// The glyph's colour on the circle's glass.
+  Color get _circleInk {
+    final c = context.sheen.colors;
+    return widget.searchVariant == SheenGlassVariant.prominent ? c.onAccent : c.text;
   }
 
   Widget _full() {
@@ -556,7 +579,9 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
               shape: const CircleBorder(),
               child: SizedBox.square(
                 dimension: SheenTabBar.minimizedHeight,
-                child: Center(child: SheenIcon(current.icon, filled: true, size: 24, color: t.colors.accentText)),
+                child: Center(
+                  child: SheenIcon(current.icon, filled: current.filled, size: 24, color: t.colors.accentText),
+                ),
               ),
             ),
           ),
@@ -648,7 +673,7 @@ class _SheenTabBarState extends State<SheenTabBar> with TickerProviderStateMixin
 Widget _face(BuildContext context, SheenTabItem item, Color color, {Animation<double>? dip, bool fringe = false}) {
   final t = context.sheen;
   final badge = item.badge;
-  Widget glyph(Color c) => SheenIcon(item.icon, filled: true, size: 25, color: c);
+  Widget glyph(Color c) => SheenIcon(item.icon, filled: item.filled, size: 25, color: c);
   final icon = Stack(
     clipBehavior: Clip.none,
     children: [

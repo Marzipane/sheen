@@ -56,4 +56,60 @@ void main() {
     expect(t.takeException(), isNull);
     expect(find.byType(SheenPrimaryButton), findsNothing);
   });
+
+  testWidgets('details can hold any widget, such as list rows', (t) async {
+    await t.pumpWidget(
+      host(
+        SheenStatusScreen(
+          icon: SheenIcons.wrench,
+          title: 'We are updating',
+          message: 'Back in a few minutes.',
+          details: [
+            SheenListGroup(
+              children: [SheenListRow(title: 'Call us', icon: SheenIcons.phone, onTap: () {})],
+            ),
+          ],
+          primaryLabel: 'Try again',
+          onPrimary: () {},
+        ),
+      ),
+    );
+    expect(t.takeException(), isNull);
+    expect(find.text('Call us'), findsOneWidget);
+  });
+
+  testWidgets('a short screen keeps the content above the middle and the action at the bottom', (t) async {
+    await t.pumpWidget(
+      host(
+        SheenStatusScreen(
+          icon: SheenIcons.wifi,
+          title: 'No connection',
+          message: 'Check it.',
+          primaryLabel: 'Try again',
+          onPrimary: () {},
+        ),
+      ),
+    );
+    final height = t.view.physicalSize.height / t.view.devicePixelRatio;
+    expect(t.getCenter(find.text('No connection')).dy, lessThan(height / 2));
+    expect(t.getBottomLeft(find.byType(SheenPrimaryButton)).dy, greaterThan(height * .85));
+  });
+
+  testWidgets('a tall screen scrolls instead of overflowing', (t) async {
+    await t.pumpWidget(
+      host(
+        SheenStatusScreen(
+          icon: SheenIcons.wifi,
+          title: 'No connection',
+          message: 'Check it.',
+          details: [for (var i = 0; i < 12; i++) SheenListRow(title: 'Row $i')],
+          primaryLabel: 'Try again',
+          onPrimary: () {},
+        ),
+        textScale: 2,
+      ),
+    );
+    expect(t.takeException(), isNull);
+    expect(find.byType(SingleChildScrollView), findsOneWidget);
+  });
 }

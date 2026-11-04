@@ -1,3 +1,12 @@
+## 0.6.3
+
+- `SheenTabBar.searchIcon` and `searchVariant`: the circle beside the tabs can be another action, such as a prominent
+  plus, on the full and the minimized bar. The defaults stay a search circle on regular glass.
+- `SheenTabItem.filled`: false draws a tab's glyph as an outline, for a glyph with no filled form.
+- `SheenStatusScreen` no longer measures its content, so `details` can hold anything, list rows included. The layout is
+  the same: the content a little above the middle, the actions at the bottom, and a scroll when it is too tall.
+- `llms.txt` is current again.
+
 ## 0.6.2
 
 - `SheenChapterList` shows how long each chapter is on the right ("30 min", "1 h 5 min") and where it starts under
