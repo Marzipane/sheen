@@ -6,7 +6,8 @@
   page whose large title asks a question.
 - `SheenIcons.home`: the outline of `SheenIcons.homeFill`.
 - A sheet's title and subtitle wrap instead of cutting off, at any text size, so a long one moves the
-  sheet's content down. The header takes half the sheet at most and scrolls, so the content stays on a short sheet.
+  sheet's content down. The header takes half the sheet at most and its text scrolls, so the content and the buttons stay on a short
+  sheet.
 
 ## 0.6.4
 

@@ -52,7 +52,9 @@ void main() {
     testWidgets('on $name at the medium height a tall header leaves the body on screen', (t) async {
       await openSheet(t, screen, startLarge: false, title: 'A new version of this app is ready for you to install now');
       expect(t.takeException(), isNull);
-      expect(t.getTopLeft(find.byKey(const ValueKey('body'))).dy, lessThan(screen.height));
+      final body = t.getTopLeft(find.byKey(const ValueKey('body'))).dy;
+      expect(body, lessThan(screen.height));
+      expect(t.getBottomLeft(find.byType(SheenIconButton)).dy, lessThanOrEqualTo(body), reason: 'close stays in view');
     });
   }
 

@@ -336,17 +336,18 @@ class SheenSheetBody extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Text can make the header tall on a short sheet: it takes half at most and scrolls, so the body stays.
-                ConstrainedBox(
-                  constraints: BoxConstraints(maxHeight: box.maxHeight / 2),
-                  child: SingleChildScrollView(
-                    primary: false,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(SheenSpace.m, _headerTop, SheenSpace.m, SheenSpace.s),
-                      child: Row(
-                        children: [
-                          SheenIconButton(icon: SheenIcons.close, semanticLabel: cancel, stroke: 2.2, onTap: onCancel),
-                          Expanded(
+                // Text can make the header tall on a short sheet: it takes half at most and only the text scrolls, so the body and
+                // the buttons stay.
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(SheenSpace.m, _headerTop, SheenSpace.m, SheenSpace.s),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxHeight: box.maxHeight / 2),
+                    child: Row(
+                      children: [
+                        SheenIconButton(icon: SheenIcons.close, semanticLabel: cancel, stroke: 2.2, onTap: onCancel),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            primary: false,
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -367,21 +368,21 @@ class SheenSheetBody extends StatelessWidget {
                               ],
                             ),
                           ),
-                          if (trailing != null)
-                            ConstrainedBox(constraints: const BoxConstraints(minWidth: 44), child: trailing)
-                          else if (doneLabel != null)
-                            // without [onDone] Done waits for a valid choice: dimmed and inert (SheenIconButton's disabled state)
-                            SheenIconButton(
-                              icon: SheenIcons.check,
-                              semanticLabel: doneLabel!,
-                              stroke: 2.6,
-                              variant: SheenGlassVariant.prominent,
-                              onTap: onDone,
-                            )
-                          else
-                            const SizedBox(width: _headerButton),
-                        ],
-                      ),
+                        ),
+                        if (trailing != null)
+                          ConstrainedBox(constraints: const BoxConstraints(minWidth: 44), child: trailing)
+                        else if (doneLabel != null)
+                          // without [onDone] Done waits for a valid choice: dimmed and inert (SheenIconButton's disabled state)
+                          SheenIconButton(
+                            icon: SheenIcons.check,
+                            semanticLabel: doneLabel!,
+                            stroke: 2.6,
+                            variant: SheenGlassVariant.prominent,
+                            onTap: onDone,
+                          )
+                        else
+                          const SizedBox(width: _headerButton),
+                      ],
                     ),
                   ),
                 ),
