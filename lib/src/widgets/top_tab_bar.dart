@@ -81,7 +81,7 @@ class SheenTopTabBar extends StatelessWidget {
                               children: [
                                 SheenIcon(
                                   items[i].icon,
-                                  filled: true,
+                                  filled: items[i].filled,
                                   size: 19,
                                   color: i == index && !searchActive ? t.colors.accentText : t.colors.text,
                                 ),
