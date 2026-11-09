@@ -172,7 +172,7 @@ Cards, grouped lists with tinted glyph tiles, accordions, key-value cards, a car
 
 ## Layout
 
-`SheenPage` is a full page with a large title that collapses into the toolbar; `SheenSectionLabel` and `SheenSectionNote` frame groups; `SheenScrollEdge` and `SheenEdgeFade` soften edges; `SheenLayout` gives the readable width and the wide-window breakpoints.
+`SheenPage` is a full page with a large title that collapses into the toolbar (or no title, for a page whose content is its own heading); `SheenSectionLabel` and `SheenSectionNote` frame groups; `SheenScrollEdge` and `SheenEdgeFade` soften edges; `SheenLayout` gives the readable width and the wide-window breakpoints.
 
 - [SheenBottomBarSpace](https://pub.dev/documentation/sheen/latest/sheen/SheenBottomBarSpace-class.html): How much of the bottom of a scroll view a floating bar covers, such as SheenPage's bottom bar. sheen's text fields below it scroll themselves clear of the bar when they take focus and the keyboard comes up.
 - [SheenEdgeFade](https://pub.dev/documentation/sheen/latest/sheen/SheenEdgeFade-class.html): Fades the start and end edges of a horizontal child into color over width points, to say that it scrolls on. Use it around any sideways list on a plain background; SheenChipRow does.

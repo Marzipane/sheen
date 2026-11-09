@@ -1,3 +1,10 @@
+## 0.6.7
+
+- `SheenPage.title` is optional. A page without one, such as a welcome screen whose content is its own heading, starts
+  its content at the top, shows no small title in the bar and gives screen readers no empty header. A `subtitle` or a
+  `barTitle` still shows without it. The field is now a `String?`, so code that reads `page.title` gets a nullable
+  value; every page that passes a title looks and behaves as before.
+
 ## 0.6.6
 
 - `SheenTextField.leading`: a fixed piece at the start of the field, before the text, such as a country code or a

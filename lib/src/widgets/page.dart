@@ -19,6 +19,9 @@ import 'package:sheen/sheen.dart';
 /// )
 /// ```
 ///
+/// A page without a [title], such as a welcome screen whose content is its own heading, shows its content from the top
+/// and no small title.
+///
 /// It needs no `Scaffold`; put it in any route.
 ///
 /// {@category Layout}
@@ -26,8 +29,8 @@ class SheenPage extends StatefulWidget {
   /// A page titled [title] showing [children] in a scroll view.
   const SheenPage({
     super.key,
-    required this.title,
     required this.children,
+    this.title,
     this.subtitle,
     this.barTitle,
     this.close = false,
@@ -39,8 +42,8 @@ class SheenPage extends StatefulWidget {
     this.controller,
   });
 
-  /// The large title.
-  final String title;
+  /// The large title; without one the content starts at the top and no small title fades into the bar.
+  final String? title;
 
   /// A line under the large title.
   final String? subtitle;
@@ -122,6 +125,7 @@ class _SheenPageState extends State<SheenPage> {
     final pad = MediaQuery.paddingOf(context);
     final inset = context.contentInset;
     final w = widget;
+    final title = w.title;
     final canGoBack = w.onBack != null || (ModalRoute.of(context)?.impliesAppBarDismissal ?? false);
     return ColoredBox(
       color: t.colors.background,
@@ -134,23 +138,25 @@ class _SheenPageState extends State<SheenPage> {
               controller: _controller,
               padding: EdgeInsets.fromLTRB(inset, pad.top + 64, inset, pad.bottom + (w.bottom == null ? 32 : 112)),
               children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 4, 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Semantics(
-                        header: true,
-                        child: Text(w.title, style: t.type.largeTitle.copyWith(color: t.colors.text)),
-                      ),
-                      if (w.subtitle != null)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 4),
-                          child: Text(w.subtitle!, style: t.type.subhead.copyWith(color: t.colors.textSecondary)),
-                        ),
-                    ],
+                if (title != null || w.subtitle != null)
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 4, 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (title != null)
+                          Semantics(
+                            header: true,
+                            child: Text(title, style: t.type.largeTitle.copyWith(color: t.colors.text)),
+                          ),
+                        if (w.subtitle != null)
+                          Padding(
+                            padding: EdgeInsets.only(top: title == null ? 0 : 4),
+                            child: Text(w.subtitle!, style: t.type.subhead.copyWith(color: t.colors.textSecondary)),
+                          ),
+                      ],
+                    ),
                   ),
-                ),
                 ...w.children,
               ],
             ),
@@ -163,25 +169,27 @@ class _SheenPageState extends State<SheenPage> {
             height: 44,
             child: IgnorePointer(
               child: Center(
-                child: w.barTitle != null
-                    ? SheenGlass(
-                        padding: const EdgeInsets.symmetric(horizontal: SheenSpace.l, vertical: SheenSpace.s),
-                        child: SheenToolbarTitle(w.barTitle!),
-                      )
-                    // repeats the large title, so screen readers skip it
-                    : ExcludeSemantics(
-                        child: AnimatedOpacity(
-                          key: const ValueKey('sheen-page-title'),
-                          opacity: _collapsed ? 1 : 0,
-                          duration: _collapsed ? SheenMotion.fadeIn : SheenMotion.fadeOut,
-                          child: Text(
-                            w.title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: t.type.headline.copyWith(color: t.colors.text),
-                          ),
-                        ),
+                child: switch ((w.barTitle, title)) {
+                  (final String bar, _) => SheenGlass(
+                    padding: const EdgeInsets.symmetric(horizontal: SheenSpace.l, vertical: SheenSpace.s),
+                    child: SheenToolbarTitle(bar),
+                  ),
+                  // repeats the large title, so screen readers skip it
+                  (null, final String large) => ExcludeSemantics(
+                    child: AnimatedOpacity(
+                      key: const ValueKey('sheen-page-title'),
+                      opacity: _collapsed ? 1 : 0,
+                      duration: _collapsed ? SheenMotion.fadeIn : SheenMotion.fadeOut,
+                      child: Text(
+                        large,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: t.type.headline.copyWith(color: t.colors.text),
                       ),
+                    ),
+                  ),
+                  (null, null) => const SizedBox.shrink(),
+                },
               ),
             ),
           ),
