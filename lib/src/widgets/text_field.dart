@@ -8,7 +8,8 @@ import '../foundation/material_bridge.dart';
 /// A labelled text field: the label above, a 50-point field with 14-point corners and a hairline ring; focused, a
 /// 2-point accent ring; with an [error], a red ring and the message under it.
 ///
-/// A password hides its text ([obscureText]) and can carry a show/hide button in [trailing]; a picker field
+/// A fixed piece before the text, such as a country code, goes in [leading]. A password hides its text ([obscureText])
+/// and can carry a show/hide button in [trailing]; a picker field
 /// ([readOnly]) opens its picker through [onTap] and takes no typing.
 /// ```dart
 /// SheenTextField(
@@ -40,6 +41,7 @@ class SheenTextField extends StatefulWidget {
     this.inputFormatters,
     this.fill,
     this.obscureText = false,
+    this.leading,
     this.trailing,
     this.readOnly = false,
     this.onTap,
@@ -93,6 +95,10 @@ class SheenTextField extends StatefulWidget {
 
   /// Hides the text, for passwords.
   final bool obscureText;
+
+  /// A fixed piece at the start of the field, before the text: a country code, a currency. It sits at the start edge,
+  /// so it moves to the right in a right-to-left language.
+  final Widget? leading;
 
   /// A button at the end of the field (show/hide password, clear).
   final Widget? trailing;
@@ -187,6 +193,7 @@ class _SheenTextFieldState extends State<SheenTextField> {
           ),
           child: Row(
             children: [
+              if (widget.leading != null) ...[widget.leading!, const SizedBox(width: 8)],
               Expanded(
                 child: SheenMaterialBridge(
                   child: TextField(

@@ -294,6 +294,24 @@ void main() {
     expect(shown, 1);
   });
 
+  testWidgets('SheenTextField: a leading piece sits before the text, at the start edge in both directions', (t) async {
+    Future<void> pump(TextDirection dir) => t.pumpWidget(
+      app(
+        Directionality(
+          textDirection: dir,
+          child: const SizedBox(
+            width: 300,
+            child: SheenTextField(label: 'Mobile', placeholder: '50 000 0000', leading: Text('+971')),
+          ),
+        ),
+      ),
+    );
+    await pump(TextDirection.ltr);
+    expect(t.getTopLeft(find.text('+971')).dx, lessThan(t.getTopLeft(find.byType(EditableText)).dx));
+    await pump(TextDirection.rtl);
+    expect(t.getTopLeft(find.text('+971')).dx, greaterThan(t.getTopLeft(find.byType(EditableText)).dx));
+  });
+
   testWidgets('SheenTextField: read-only fields open their picker on tap and take no typing', (t) async {
     var taps = 0;
     await t.pumpWidget(
