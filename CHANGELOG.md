@@ -1,3 +1,8 @@
+## 0.6.6
+
+- `SheenTextField.leading`: a fixed piece at the start of the field, before the text, such as a country code or a
+  currency. It sits at the start edge, so it moves to the right in a right-to-left language.
+
 ## 0.6.5
 
 - `SheenTabItem.selectedIcon`: the selected tab shows it filled and the others show `icon` as an outline, on the full,
