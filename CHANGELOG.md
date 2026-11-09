@@ -10,7 +10,10 @@
   them as one heading. Pages without it look the same.
 - `SheenListRow.titleWeight`: the title's weight, such as semibold for rows that name things rather than settings.
   Rows without it keep the body weight.
-- `SheenRadius.check` and `SheenControlSize` (`check`, `checkOutline`, `checkMark`): the check box's sizes as tokens.
+- `SheenActionBar.value` is optional: without it and without `leading`, the bar holds only its action, which spans
+  the bar, for a page whose one action sits on glass at the bottom. Bars with a value look the same.
+- `SheenRadius.check`, `SheenRadius.actionBar` and `SheenControlSize` (`check`, `checkOutline`, `checkMark`,
+  `actionBarInset`): the check box's and the action bar's sizes as tokens.
 
 ## 0.6.9
 
