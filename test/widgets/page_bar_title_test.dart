@@ -5,6 +5,8 @@ import 'package:sheen/sheen.dart';
 import '../helpers.dart';
 
 void main() {
+  barDetailTests();
+
   testWidgets('barTitle shows in a capsule beside the large title, before any scroll', (t) async {
     await t.pumpWidget(
       host(const SheenPage(title: 'Choose your language', barTitle: 'Language', children: [SizedBox(height: 20)])),
@@ -50,5 +52,19 @@ void main() {
   testWidgets('without barTitle the large title fades into the bar as before', (t) async {
     await t.pumpWidget(host(const SheenPage(title: 'Trips', children: [SizedBox(height: 20)])));
     expect(find.byKey(const ValueKey('sheen-page-title')), findsOneWidget);
+  });
+}
+
+void barDetailTests() {
+  testWidgets('barDetail is a second line under barTitle in the same capsule, read with it', (t) async {
+    final semantics = t.ensureSemantics();
+    await t.pumpWidget(
+      host(const SheenPage(title: 'Delivery address', barTitle: 'Checkout', barDetail: 'Step 2 of 4', children: [])),
+    );
+    final glass = find.ancestor(of: find.text('Checkout'), matching: find.byType(SheenGlass));
+    expect(find.descendant(of: glass, matching: find.text('Step 2 of 4')), findsOneWidget);
+    expect(t.getTopLeft(find.text('Step 2 of 4')).dy, greaterThan(t.getTopLeft(find.text('Checkout')).dy));
+    expect(find.bySemanticsLabel('Checkout, Step 2 of 4'), findsOneWidget);
+    semantics.dispose();
   });
 }

@@ -5,6 +5,11 @@
   `detail` line goes under the label, and an `error` shows in the danger colour with the box outlined in it while
   empty. A screen reader hears one checkbox with the label, detail, error and state. The row is at least `SheenSpace.hit`
   tall, and without `onChanged` it is disabled.
+- `SheenPage.barDetail` and `SheenToolbarTitle.detail`: a second line under the bar title in the same capsule, such
+  as "Step 2 of 4" under "Checkout". The two lines take the sizes `SheenToolbarSummary` uses, and a screen reader hears
+  them as one heading. Pages without it look the same.
+- `SheenListRow.titleWeight`: the title's weight, such as semibold for rows that name things rather than settings.
+  Rows without it keep the body weight.
 - `SheenRadius.check` and `SheenControlSize` (`check`, `checkOutline`, `checkMark`): the check box's sizes as tokens.
 
 ## 0.6.9

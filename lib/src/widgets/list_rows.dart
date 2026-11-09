@@ -55,6 +55,7 @@ class SheenListRow extends StatelessWidget {
     super.key,
     required this.title,
     this.subtitle,
+    this.titleWeight,
     this.icon,
     this.iconColor,
     this.value,
@@ -69,6 +70,10 @@ class SheenListRow extends StatelessWidget {
 
   /// A second line under the title.
   final String? subtitle;
+
+  /// The title's weight, such as [FontWeight.w600] for rows that name things rather than settings; the body weight
+  /// when null.
+  final FontWeight? titleWeight;
 
   /// A glyph on a coloured tile at the start ([SheenIcons]).
   final String? icon;
@@ -125,12 +130,18 @@ class SheenListRow extends StatelessWidget {
               ],
               Expanded(
                 child: subtitle == null
-                    ? Text(title, style: t.type.body.copyWith(color: t.colors.text))
+                    ? Text(
+                        title,
+                        style: t.type.body.copyWith(color: t.colors.text, fontWeight: titleWeight),
+                      )
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(title, style: t.type.body.copyWith(color: t.colors.text)),
+                          Text(
+                            title,
+                            style: t.type.body.copyWith(color: t.colors.text, fontWeight: titleWeight),
+                          ),
                           Text(subtitle!, style: t.type.footnote.copyWith(color: t.colors.textSecondary)),
                         ],
                       ),
