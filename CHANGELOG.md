@@ -1,3 +1,12 @@
+## 0.6.10
+
+- `SheenCheck`: a check box with its label beside it, for an agreement or an opt-in in a form. The box fills with the
+  accent when ticked and its tick mirrors right to left. A tap anywhere on the row asks for the other value. An optional
+  `detail` line goes under the label, and an `error` shows in the danger colour with the box outlined in it while
+  empty. A screen reader hears one checkbox with the label, detail, error and state. The row is at least `SheenSpace.hit`
+  tall, and without `onChanged` it is disabled.
+- `SheenRadius.check` and `SheenControlSize` (`check`, `checkOutline`, `checkMark`): the check box's sizes as tokens.
+
 ## 0.6.9
 
 - `SheenColors.fillTonal`: the fill of tonal controls, `surfaceMuted` in light and white at 8 % in dark.
