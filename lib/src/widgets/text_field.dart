@@ -206,7 +206,12 @@ class _SheenTextFieldState extends State<SheenTextField> {
                   child: SheenMaterialBridge(
                     child: TextField(
                       // Flutter's 20 points around a focused field, plus any bar floating over the bottom
-                      scrollPadding: EdgeInsets.fromLTRB(20, 20, 20, 20 + SheenBottomBarSpace.of(context)),
+                      scrollPadding: EdgeInsets.fromLTRB(
+                        SheenSpace.xl,
+                        SheenSpace.xl,
+                        SheenSpace.xl,
+                        SheenSpace.xl + SheenBottomBarSpace.of(context),
+                      ),
                       keyboardAppearance: t.brightness,
                       controller: widget.controller,
                       textDirection: widget.textDirection,
@@ -235,7 +240,7 @@ class _SheenTextFieldState extends State<SheenTextField> {
                     ),
                   ),
                 ),
-                if (widget.trailing != null) ...[const SizedBox(width: 8), widget.trailing!],
+                if (widget.trailing != null) ...[const SizedBox(width: SheenSpace.s), widget.trailing!],
               ],
             ),
           ),
