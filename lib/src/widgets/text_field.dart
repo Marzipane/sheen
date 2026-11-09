@@ -197,45 +197,47 @@ class _SheenTextFieldState extends State<SheenTextField> {
             shadows: widget.fill != null || nested || t.isDark ? null : SheenCard.lightShadow,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SheenRadius.field), side: ring),
           ),
-          child: Row(
-            textDirection: widget.textDirection,
-            children: [
-              if (widget.leading != null) ...[widget.leading!, const SizedBox(width: SheenSpace.s)],
-              Expanded(
-                child: SheenMaterialBridge(
-                  child: TextField(
-                    // Flutter's 20 points around a focused field, plus any bar floating over the bottom
-                    scrollPadding: EdgeInsets.fromLTRB(20, 20, 20, 20 + SheenBottomBarSpace.of(context)),
-                    keyboardAppearance: t.brightness,
-                    controller: widget.controller,
-                    textDirection: widget.textDirection,
-                    focusNode: _focus,
-                    enabled: widget.enabled,
-                    onChanged: widget.onChanged,
-                    onSubmitted: widget.onSubmitted,
-                    onTap: widget.onTap,
-                    readOnly: widget.readOnly,
-                    obscureText: widget.obscureText,
-                    autocorrect: widget.autocorrect && !widget.obscureText,
-                    enableSuggestions: !widget.obscureText,
-                    keyboardType: widget.keyboardType,
-                    textInputAction: widget.textInputAction,
-                    autofillHints: widget.autofillHints,
-                    textCapitalization: widget.textCapitalization,
-                    inputFormatters: widget.inputFormatters,
-                    cursorColor: t.colors.accentText,
-                    style: t.type.body.copyWith(color: t.colors.text),
-                    decoration: InputDecoration(
-                      isCollapsed: true,
-                      border: InputBorder.none,
-                      hintText: widget.placeholder,
-                      hintStyle: t.type.body.copyWith(color: t.colors.textTertiary),
+          child: _directed(
+            widget.textDirection,
+            Row(
+              children: [
+                if (widget.leading != null) ...[widget.leading!, const SizedBox(width: SheenSpace.s)],
+                Expanded(
+                  child: SheenMaterialBridge(
+                    child: TextField(
+                      // Flutter's 20 points around a focused field, plus any bar floating over the bottom
+                      scrollPadding: EdgeInsets.fromLTRB(20, 20, 20, 20 + SheenBottomBarSpace.of(context)),
+                      keyboardAppearance: t.brightness,
+                      controller: widget.controller,
+                      textDirection: widget.textDirection,
+                      focusNode: _focus,
+                      enabled: widget.enabled,
+                      onChanged: widget.onChanged,
+                      onSubmitted: widget.onSubmitted,
+                      onTap: widget.onTap,
+                      readOnly: widget.readOnly,
+                      obscureText: widget.obscureText,
+                      autocorrect: widget.autocorrect && !widget.obscureText,
+                      enableSuggestions: !widget.obscureText,
+                      keyboardType: widget.keyboardType,
+                      textInputAction: widget.textInputAction,
+                      autofillHints: widget.autofillHints,
+                      textCapitalization: widget.textCapitalization,
+                      inputFormatters: widget.inputFormatters,
+                      cursorColor: t.colors.accentText,
+                      style: t.type.body.copyWith(color: t.colors.text),
+                      decoration: InputDecoration(
+                        isCollapsed: true,
+                        border: InputBorder.none,
+                        hintText: widget.placeholder,
+                        hintStyle: t.type.body.copyWith(color: t.colors.textTertiary),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              if (widget.trailing != null) ...[const SizedBox(width: 8), widget.trailing!],
-            ],
+                if (widget.trailing != null) ...[const SizedBox(width: 8), widget.trailing!],
+              ],
+            ),
           ),
         ),
         if (hasError) ...[
@@ -249,3 +251,7 @@ class _SheenTextFieldState extends State<SheenTextField> {
     );
   }
 }
+
+/// [child] under [direction] when one is set, so the text and the prefix inside a field read that way.
+Widget _directed(TextDirection? direction, Widget child) =>
+    direction == null ? child : Directionality(textDirection: direction, child: child);

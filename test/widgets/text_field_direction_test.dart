@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sheen/sheen.dart';
@@ -20,6 +21,11 @@ void main() {
 
     expect(t.getRect(find.text('+971')).right, lessThan(t.getRect(find.byType(EditableText)).left));
     expect(t.widget<EditableText>(find.byType(EditableText)).textDirection, TextDirection.ltr);
+    // the prefix itself reads left to right too: "+971", not "971+"
+    final prefix = t.renderObject<RenderParagraph>(
+      find.descendant(of: find.text('+971'), matching: find.byType(RichText)),
+    );
+    expect(prefix.textDirection, TextDirection.ltr);
     // the label keeps the page's direction, at the right
     final label = t.getRect(find.text('رقم الجوال'));
     final field = t.getRect(find.byType(SheenTextField));
