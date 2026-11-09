@@ -1,3 +1,15 @@
+## 0.6.9
+
+- `SheenColors.fillTonal`: the fill of tonal controls, `surfaceMuted` in light and white at 8 % in dark.
+  `SheenSecondaryButton` and the second action of `SheenAlert` use it instead of a colour of their own. Optional in the
+  `SheenColors` constructor: a palette that sets none follows its `surfaceMuted`, also after `copyWith`, so existing
+  palettes look and behave as in 0.6.8.
+- `SheenButtonInset.secondary` and `.floating`: the padding of the capsule buttons as tokens. The gaps next to their
+  icons, and between `SheenTextField.leading` and the text, use `SheenSpace.s`. Nothing moves: the values are the same.
+- A `SheenPrimaryButton` with a `subLabel` no longer joins the two lines with a comma for screen readers. The second
+  line stays readable on its own, so the platform reads the label and then the second line, once each, in any language.
+  Its spinner and icon stay hidden from screen readers, as in 0.6.8.
+
 ## 0.6.8
 
 - `SheenPage` keeps clear of the keyboard itself, as a `Scaffold` does: its `bottom` bar sits right on the keyboard

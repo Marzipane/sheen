@@ -14,6 +14,7 @@ Import `package:sheen/sheen.dart`, and `package:sheen/travel.dart` for the booki
 
 The theme and the tokens every widget reads. Put a `SheenScope` above your screens; read the theme with `context.sheen`.
 
+- [SheenButtonInset](https://pub.dev/documentation/sheen/latest/sheen/SheenButtonInset-class.html): Inner padding of the capsule buttons. Their heights come from a 48 pt minimum, so the vertical padding only keeps the label off the edge at large text sizes.
 - [SheenColors](https://pub.dev/documentation/sheen/latest/sheen/SheenColors-class.html): The colours of a sheen theme, one set per brightness.
 - [SheenIcon](https://pub.dev/documentation/sheen/latest/sheen/SheenIcon-class.html): An icon from sheen's set, drawn from SVG paths on a 24 × 24 grid.
 - [SheenIcons](https://pub.dev/documentation/sheen/latest/sheen/SheenIcons-class.html): The names of the built-in icons, for SheenIcon.

@@ -50,12 +50,17 @@ class SheenPrimaryButton extends StatelessWidget {
     final enabled = onPressed != null && !loading;
     final text = t.type.headline.copyWith(color: t.colors.onAccent);
     Widget content(bool pressed) {
+      // The pressable says [label]; its visible copy is hidden from screen readers so it isn't read twice. The second
+      // line stays readable, so a screen reader says both, once each.
+      final title = ExcludeSemantics(
+        child: Text(label, style: text, maxLines: 1, overflow: TextOverflow.ellipsis),
+      );
       final labelWidget = subLabel == null
-          ? Text(label, style: text, maxLines: 1, overflow: TextOverflow.ellipsis)
+          ? title
           : Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(label, style: text, maxLines: 1, overflow: TextOverflow.ellipsis),
+                title,
                 Text(
                   subLabel!,
                   style: t.type.caption.copyWith(
@@ -78,10 +83,13 @@ class SheenPrimaryButton extends StatelessWidget {
                   mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (loading) ...[const SheenSpinner(), const SizedBox(width: 8)],
+                    if (loading) ...[
+                      const ExcludeSemantics(child: SheenSpinner()),
+                      const SizedBox(width: SheenSpace.s),
+                    ],
                     if (icon != null && !loading) ...[
-                      SheenIcon(icon!, size: 19, stroke: 2, color: t.colors.onAccent),
-                      const SizedBox(width: 8),
+                      ExcludeSemantics(child: SheenIcon(icon!, size: 19, stroke: 2, color: t.colors.onAccent)),
+                      const SizedBox(width: SheenSpace.s),
                     ],
                     Flexible(child: labelWidget),
                   ],
@@ -104,10 +112,9 @@ class SheenPrimaryButton extends StatelessWidget {
       opacity: onPressed == null ? .4 : 1,
       child: SheenPressable(
         onTap: enabled ? onPressed : null,
-        // the label is said once: the visible text under it is not read again
-        semanticLabel: subLabel == null ? label : '$label, $subLabel',
+        semanticLabel: label,
         minSize: 0,
-        builder: (c, pressed) => ExcludeSemantics(child: content(pressed && enabled)),
+        builder: (c, pressed) => content(pressed && enabled),
       ),
     );
   }
@@ -153,18 +160,15 @@ class SheenSecondaryButton extends StatelessWidget {
       child: ExcludeSemantics(
         child: Container(
           constraints: BoxConstraints(minHeight: 48, minWidth: expand ? double.infinity : 0),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-          decoration: ShapeDecoration(
-            shape: const StadiumBorder(),
-            color: t.isDark ? const Color.fromRGBO(255, 255, 255, .08) : t.colors.surfaceMuted,
-          ),
+          padding: SheenButtonInset.secondary,
+          decoration: ShapeDecoration(shape: const StadiumBorder(), color: t.colors.fillTonal),
           child: Row(
             mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               if (icon != null) ...[
                 SheenIcon(icon!, size: 20, stroke: 1.9, filled: filledIcon, color: t.colors.text),
-                const SizedBox(width: 8),
+                const SizedBox(width: SheenSpace.s),
               ],
               Flexible(
                 child: Text(
@@ -219,13 +223,13 @@ class SheenFloatingButton extends StatelessWidget {
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: 48),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+              padding: SheenButtonInset.floating,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   if (icon != null) ...[
                     SheenIcon(icon!, size: 18, filled: filledIcon, color: t.colors.text),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: SheenSpace.s),
                   ],
                   Text(label, style: t.type.sized(t.type.headline, 16).copyWith(color: t.colors.text)),
                 ],
