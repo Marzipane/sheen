@@ -16,6 +16,7 @@ The theme and the tokens every widget reads. Put a `SheenScope` above your scree
 
 - [SheenButtonInset](https://pub.dev/documentation/sheen/latest/sheen/SheenButtonInset-class.html): Inner padding of the capsule buttons. Their heights come from a 48 pt minimum, so the vertical padding only keeps the label off the edge at large text sizes.
 - [SheenColors](https://pub.dev/documentation/sheen/latest/sheen/SheenColors-class.html): The colours of a sheen theme, one set per brightness.
+- [SheenControlSize](https://pub.dev/documentation/sheen/latest/sheen/SheenControlSize-class.html): Sizes of small controls drawn by sheen itself.
 - [SheenIcon](https://pub.dev/documentation/sheen/latest/sheen/SheenIcon-class.html): An icon from sheen's set, drawn from SVG paths on a 24 × 24 grid.
 - [SheenIcons](https://pub.dev/documentation/sheen/latest/sheen/SheenIcons-class.html): The names of the built-in icons, for SheenIcon.
 - [SheenOnPhoto](https://pub.dev/documentation/sheen/latest/sheen/SheenOnPhoto-class.html): Text and icons over photos: white with a soft shadow in both themes, because a photo's lower edge is always darkened behind them.
@@ -85,8 +86,9 @@ Springs written as Apple writes them (a duration and a bounce): `SheenMotion.pre
 
 ## Inputs
 
-`SheenTextField`, `SheenPasswordField`, `SheenSearchField` and `SheenCodeField` (one-time codes), plus `SheenSwitch`, `SheenSlider` and `SheenStepper`. The fields use Flutter's `TextField` and work under any app.
+`SheenTextField`, `SheenPasswordField`, `SheenSearchField` and `SheenCodeField` (one-time codes), plus `SheenSwitch`, `SheenCheck` (a check box with its label, for an agreement or an opt-in), `SheenSlider` and `SheenStepper`. The fields use Flutter's `TextField` and work under any app.
 
+- [SheenCheck](https://pub.dev/documentation/sheen/latest/sheen/SheenCheck-class.html): A check box with its label beside it, for an agreement or an opt-in in a form: the box fills with the accent when ticked, its tick mirrors right to left, and a tap anywhere on the row asks for the other value.
 - [SheenCodeField](https://pub.dev/documentation/sheen/latest/sheen/SheenCodeField-class.html): A one-time-code field: one box per digit, the next box ringed in the accent while the field has focus.
 - [SheenPasswordField](https://pub.dev/documentation/sheen/latest/sheen/SheenPasswordField-class.html): A password field: a SheenTextField whose text stays hidden until the person taps the eye button.
 - [SheenSearchField](https://pub.dev/documentation/sheen/latest/sheen/SheenSearchField-class.html): A search field in a glass capsule: the search glyph, the field and, while it has text, a clear button.

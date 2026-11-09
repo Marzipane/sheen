@@ -62,6 +62,29 @@ abstract final class SheenRadius {
 
   /// Grouped lists.
   static const double group = 20;
+
+  /// A check box ([SheenCheck]).
+  static const double check = 7;
+
+  /// The glass bar at the bottom of a page ([SheenActionBar]).
+  static const double actionBar = 36;
+}
+
+/// Sizes of small controls drawn by sheen itself.
+///
+/// {@category Foundation}
+abstract final class SheenControlSize {
+  /// The side of a check box ([SheenCheck]).
+  static const double check = 24;
+
+  /// The outline of an empty check box.
+  static const double checkOutline = 2;
+
+  /// The stroke of the tick in a ticked check box.
+  static const double checkMark = 2.5;
+
+  /// The space between [SheenActionBar]'s edge and its action button.
+  static const double actionBarInset = 10;
 }
 
 /// Widths for larger windows (tablets, desktop, the web).

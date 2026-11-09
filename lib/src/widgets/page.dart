@@ -37,6 +37,7 @@ class SheenPage extends StatefulWidget {
     this.title,
     this.subtitle,
     this.barTitle,
+    this.barDetail,
     this.close = false,
     this.trailing,
     this.leading,
@@ -54,6 +55,9 @@ class SheenPage extends StatefulWidget {
 
   /// A short name in a glass capsule in the top bar, always shown; the large title then says what the page asks.
   final String? barTitle;
+
+  /// A second line under [barTitle] in the same capsule, such as the step of a flow; a screen reader hears both.
+  final String? barDetail;
 
   /// The content, below the title.
   final List<Widget> children;
@@ -199,8 +203,11 @@ class _SheenPageState extends State<SheenPage> {
               child: Center(
                 child: switch ((w.barTitle, title)) {
                   (final String bar, _) => SheenGlass(
-                    padding: const EdgeInsets.symmetric(horizontal: SheenSpace.l, vertical: SheenSpace.s),
-                    child: SheenToolbarTitle(bar),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: SheenSpace.l,
+                      vertical: w.barDetail == null ? SheenSpace.s : SheenSpace.xs,
+                    ),
+                    child: SheenToolbarTitle(bar, detail: w.barDetail),
                   ),
                   // repeats the large title, so screen readers skip it
                   (null, final String large) => ExcludeSemantics(

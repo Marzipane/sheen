@@ -18,10 +18,10 @@ import 'package:sheen/sheen.dart';
 ///
 /// {@category Navigation}
 class SheenActionBar extends StatelessWidget {
-  /// A bar showing [value] and an [actionLabel] button.
+  /// A bar showing [value] and an [actionLabel] button; without [value] and [leading] the button spans the bar.
   const SheenActionBar({
     super.key,
-    required this.value,
+    this.value,
     required this.actionLabel,
     required this.onAction,
     this.caption,
@@ -29,8 +29,8 @@ class SheenActionBar extends StatelessWidget {
     this.leading,
   });
 
-  /// The figure, already formatted (a total, a count).
-  final String value;
+  /// The figure, already formatted (a total, a count); null for a bar that holds only its action.
+  final String? value;
 
   /// A line under [value], such as "Total for 3 nights".
   final String? caption;
@@ -53,12 +53,28 @@ class SheenActionBar extends StatelessWidget {
   // A bar: its text stays at the system size, as UIKit tab, navigation and tool bars do under Dynamic Type.
   Widget _build(BuildContext context) {
     final t = context.sheen;
+    final figure = value;
+    if (figure == null && leading == null) {
+      return SheenGlass(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SheenRadius.actionBar)),
+        child: Padding(
+          padding: const EdgeInsets.all(SheenControlSize.actionBarInset),
+          child: SheenPrimaryButton(
+            label: actionLabel,
+            onPressed: onAction,
+            loading: loading,
+            height: 52,
+            expand: true,
+          ),
+        ),
+      );
+    }
     return SheenGlass(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(36)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SheenRadius.actionBar)),
       child: SizedBox(
         height: 72,
         child: Padding(
-          padding: const EdgeInsetsDirectional.only(start: 22, end: 10),
+          padding: const EdgeInsetsDirectional.only(start: 22, end: SheenControlSize.actionBarInset),
           child: Row(
             children: [
               Expanded(
@@ -73,7 +89,7 @@ class SheenActionBar extends StatelessWidget {
                           fit: BoxFit.scaleDown,
                           alignment: AlignmentDirectional.centerStart,
                           child: SheenRollingDigits(
-                            value,
+                            figure ?? '',
                             style: t.type.sized(t.type.price, 18).copyWith(color: t.colors.text, height: 1.25),
                           ),
                         ),
@@ -87,7 +103,7 @@ class SheenActionBar extends StatelessWidget {
                       ],
                     ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: SheenControlSize.actionBarInset),
               SheenPrimaryButton(label: actionLabel, onPressed: onAction, loading: loading, height: 52),
             ],
           ),

@@ -121,11 +121,14 @@ class SheenToolbarSummary extends StatelessWidget {
 ///
 /// {@category Navigation}
 class SheenToolbarTitle extends StatelessWidget {
-  /// A title showing [text].
-  const SheenToolbarTitle(this.text, {super.key});
+  /// A title showing [text], with [detail] under it.
+  const SheenToolbarTitle(this.text, {super.key, this.detail});
 
   /// The title.
   final String text;
+
+  /// A second, smaller line under the title, such as the step of a flow.
+  final String? detail;
 
   @override
   Widget build(BuildContext context) => MediaQuery.withNoTextScaling(child: Builder(builder: _build));
@@ -133,13 +136,35 @@ class SheenToolbarTitle extends StatelessWidget {
   // A bar: its text stays at the system size, as UIKit tab, navigation and tool bars do under Dynamic Type.
   Widget _build(BuildContext context) {
     final t = context.sheen;
-    return Semantics(
-      header: true,
-      child: Text(
-        text,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: t.type.headline.copyWith(color: t.colors.text),
+    final title = Text(
+      text,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: t.type.headline.copyWith(color: t.colors.text),
+    );
+    final line = detail;
+    if (line == null) return Semantics(header: true, child: title);
+    // two lines in the bar's height, as SheenToolbarSummary sets them
+    return MergeSemantics(
+      child: Semantics(
+        header: true,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              text,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: t.type.subhead.copyWith(fontWeight: FontWeight.w600, color: t.colors.text, height: 1.2),
+            ),
+            Text(
+              line,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: t.type.caption.copyWith(color: t.colors.textSecondary, height: 1.2),
+            ),
+          ],
+        ),
       ),
     );
   }

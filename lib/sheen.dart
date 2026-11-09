@@ -30,6 +30,7 @@ export 'src/widgets/banner.dart';
 export 'src/widgets/buttons.dart';
 export 'src/widgets/card_swiper.dart';
 export 'src/widgets/cards.dart';
+export 'src/widgets/check.dart';
 export 'src/widgets/chip_row.dart';
 export 'src/widgets/choice.dart';
 export 'src/widgets/code_field.dart';

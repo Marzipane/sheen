@@ -1,3 +1,23 @@
+## 0.6.10
+
+- `SheenCheck`: a check box with its label beside it, for an agreement or an opt-in in a form. The box fills with the
+  accent when ticked and its tick mirrors right to left. A tap anywhere on the row asks for the other value. An optional
+  `detail` line goes under the label, and an `error` shows in the danger colour with the box outlined in it while
+  empty. A screen reader hears one checkbox with the label, detail, error and state. The row is at least `SheenSpace.hit`
+  tall, and without `onChanged` it is disabled.
+- `SheenPage.barDetail` and `SheenToolbarTitle.detail`: a second line under the bar title in the same capsule, such
+  as "Step 2 of 4" under "Checkout". The two lines take the sizes `SheenToolbarSummary` uses, and a screen reader hears
+  them as one heading. Pages without it look the same.
+- `SheenListRow.titleWeight`: the title's weight, such as semibold for rows that name things rather than settings.
+  Rows without it keep the body weight.
+- `SheenTextField.textDirection`: the direction of the text and `leading` inside the box, such as left to right for a
+  phone number, an e-mail address or a code in a right-to-left language. The label keeps the page's direction. Fields
+  without it follow the page, as before.
+- `SheenActionBar.value` is optional: without it and without `leading`, the bar holds only its action, which spans
+  the bar, for a page whose one action sits on glass at the bottom. Bars with a value look the same.
+- `SheenRadius.check`, `SheenRadius.actionBar` and `SheenControlSize` (`check`, `checkOutline`, `checkMark`,
+  `actionBarInset`): the check box's and the action bar's sizes as tokens.
+
 ## 0.6.9
 
 - `SheenColors.fillTonal`: the fill of tonal controls, `surfaceMuted` in light and white at 8 % in dark.
