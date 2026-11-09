@@ -83,7 +83,10 @@ class SheenPrimaryButton extends StatelessWidget {
                   mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (loading) ...[const ExcludeSemantics(child: SheenSpinner()), const SizedBox(width: SheenSpace.s)],
+                    if (loading) ...[
+                      const ExcludeSemantics(child: SheenSpinner()),
+                      const SizedBox(width: SheenSpace.s),
+                    ],
                     if (icon != null && !loading) ...[
                       ExcludeSemantics(child: SheenIcon(icon!, size: 19, stroke: 2, color: t.colors.onAccent)),
                       const SizedBox(width: SheenSpace.s),

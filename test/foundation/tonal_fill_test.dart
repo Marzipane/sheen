@@ -7,7 +7,11 @@ import '../helpers.dart';
 void main() {
   test('the tonal fill is the muted surface in light and white at 8 % in dark', () {
     expect(SheenColors.light().fillTonal, SheenColors.light().surfaceMuted);
-    expect(SheenColors.dark().fillTonal, const Color.fromRGBO(255, 255, 255, .08), reason: 'the exact value it replaces');
+    expect(
+      SheenColors.dark().fillTonal,
+      const Color.fromRGBO(255, 255, 255, .08),
+      reason: 'the exact value it replaces',
+    );
   });
 
   test('a palette built from its parts takes the muted surface as its tonal fill unless given one', () {
@@ -31,6 +35,17 @@ void main() {
       sheet: dark.sheet,
     );
     expect(built.fillTonal, const Color(0xFF123456));
+    expect(
+      built.copyWith(surfaceMuted: const Color(0xFF0F0F0F)).fillTonal,
+      const Color(0xFF0F0F0F),
+      reason: 'it follows',
+    );
+    expect(SheenColors.light().copyWith(surfaceMuted: const Color(0xFF0F0F0F)).fillTonal, const Color(0xFF0F0F0F));
+    expect(
+      SheenColors.dark().copyWith(surfaceMuted: const Color(0xFF0F0F0F)).fillTonal,
+      const Color.fromRGBO(255, 255, 255, .08),
+      reason: 'a fill set on its own stays',
+    );
     expect(built.copyWith(fillTonal: const Color(0xFF654321)).fillTonal, const Color(0xFF654321));
     expect(built == built.copyWith(fillTonal: const Color(0xFF654321)), isFalse, reason: 'it takes part in equality');
   });
@@ -42,9 +57,15 @@ void main() {
 
   for (final brightness in Brightness.values) {
     testWidgets('a secondary button and an alert\'s second action fill with the tonal fill ($brightness)', (t) async {
+      // a fill unlike the muted surface, so a control that paints surfaceMuted fails here
+      const marker = Color(0xFF00FF7F);
+      final base = brightness == Brightness.dark ? SheenThemeData.dark() : SheenThemeData.light();
+      final theme = base.copyWith(colors: base.colors.copyWith(fillTonal: marker));
+      expect(theme.colors.surfaceMuted, isNot(marker));
       await t.pumpWidget(
         host(
           brightness: brightness,
+          theme: theme,
           Column(
             children: [
               SheenSecondaryButton(label: 'Later', onPressed: () {}),
@@ -60,9 +81,9 @@ void main() {
           ),
         ),
       );
-      final expected = (brightness == Brightness.dark ? SheenColors.dark() : SheenColors.light()).fillTonal;
+      const expected = marker;
       final fills = t
-          .widgetList<DecoratedBox>(find.byType(DecoratedBox))
+          .widgetList<DecoratedBox>(find.descendant(of: find.byType(SheenAlert), matching: find.byType(DecoratedBox)))
           .map((b) => b.decoration)
           .whereType<ShapeDecoration>()
           .where((d) => d.shape is StadiumBorder)
