@@ -42,6 +42,7 @@ class SheenTextField extends StatefulWidget {
     this.fill,
     this.obscureText = false,
     this.leading,
+    this.textDirection,
     this.trailing,
     this.readOnly = false,
     this.onTap,
@@ -99,6 +100,11 @@ class SheenTextField extends StatefulWidget {
   /// A fixed piece at the start of the field, before the text: a country code, a currency. It sits at the start edge,
   /// so it moves to the right in a right-to-left language.
   final Widget? leading;
+
+  /// The direction of the text and [leading] inside the box, such as [TextDirection.ltr] for a phone number, an
+  /// e-mail address or a code in a right-to-left language; the page's direction when null. The label keeps the
+  /// page's direction.
+  final TextDirection? textDirection;
 
   /// A button at the end of the field (show/hide password, clear).
   final Widget? trailing;
@@ -192,6 +198,7 @@ class _SheenTextFieldState extends State<SheenTextField> {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SheenRadius.field), side: ring),
           ),
           child: Row(
+            textDirection: widget.textDirection,
             children: [
               if (widget.leading != null) ...[widget.leading!, const SizedBox(width: SheenSpace.s)],
               Expanded(
@@ -201,6 +208,7 @@ class _SheenTextFieldState extends State<SheenTextField> {
                     scrollPadding: EdgeInsets.fromLTRB(20, 20, 20, 20 + SheenBottomBarSpace.of(context)),
                     keyboardAppearance: t.brightness,
                     controller: widget.controller,
+                    textDirection: widget.textDirection,
                     focusNode: _focus,
                     enabled: widget.enabled,
                     onChanged: widget.onChanged,

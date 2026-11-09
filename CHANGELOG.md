@@ -10,6 +10,9 @@
   them as one heading. Pages without it look the same.
 - `SheenListRow.titleWeight`: the title's weight, such as semibold for rows that name things rather than settings.
   Rows without it keep the body weight.
+- `SheenTextField.textDirection`: the direction of the text and `leading` inside the box, such as left to right for a
+  phone number, an e-mail address or a code in a right-to-left language. The label keeps the page's direction. Fields
+  without it follow the page, as before.
 - `SheenActionBar.value` is optional: without it and without `leading`, the bar holds only its action, which spans
   the bar, for a page whose one action sits on glass at the bottom. Bars with a value look the same.
 - `SheenRadius.check`, `SheenRadius.actionBar` and `SheenControlSize` (`check`, `checkOutline`, `checkMark`,
