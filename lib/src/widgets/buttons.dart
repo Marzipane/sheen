@@ -104,9 +104,10 @@ class SheenPrimaryButton extends StatelessWidget {
       opacity: onPressed == null ? .4 : 1,
       child: SheenPressable(
         onTap: enabled ? onPressed : null,
-        semanticLabel: label,
+        // the label is said once: the visible text under it is not read again
+        semanticLabel: subLabel == null ? label : '$label, $subLabel',
         minSize: 0,
-        builder: (c, pressed) => content(pressed && enabled),
+        builder: (c, pressed) => ExcludeSemantics(child: content(pressed && enabled)),
       ),
     );
   }
@@ -149,30 +150,32 @@ class SheenSecondaryButton extends StatelessWidget {
       onTap: onPressed,
       semanticLabel: label,
       minSize: 0,
-      child: Container(
-        constraints: BoxConstraints(minHeight: 48, minWidth: expand ? double.infinity : 0),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-        decoration: ShapeDecoration(
-          shape: const StadiumBorder(),
-          color: t.isDark ? const Color.fromRGBO(255, 255, 255, .08) : t.colors.surfaceMuted,
-        ),
-        child: Row(
-          mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (icon != null) ...[
-              SheenIcon(icon!, size: 20, stroke: 1.9, filled: filledIcon, color: t.colors.text),
-              const SizedBox(width: 8),
-            ],
-            Flexible(
-              child: Text(
-                label,
-                style: t.type.sized(t.type.headline, 16).copyWith(color: t.colors.text),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+      child: ExcludeSemantics(
+        child: Container(
+          constraints: BoxConstraints(minHeight: 48, minWidth: expand ? double.infinity : 0),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+          decoration: ShapeDecoration(
+            shape: const StadiumBorder(),
+            color: t.isDark ? const Color.fromRGBO(255, 255, 255, .08) : t.colors.surfaceMuted,
+          ),
+          child: Row(
+            mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (icon != null) ...[
+                SheenIcon(icon!, size: 20, stroke: 1.9, filled: filledIcon, color: t.colors.text),
+                const SizedBox(width: 8),
+              ],
+              Flexible(
+                child: Text(
+                  label,
+                  style: t.type.sized(t.type.headline, 16).copyWith(color: t.colors.text),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -211,20 +214,22 @@ class SheenFloatingButton extends StatelessWidget {
       onTap: onPressed,
       semanticLabel: label,
       minSize: 0,
-      child: SheenGlass(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 48),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (icon != null) ...[
-                  SheenIcon(icon!, size: 18, filled: filledIcon, color: t.colors.text),
-                  const SizedBox(width: 8),
+      child: ExcludeSemantics(
+        child: SheenGlass(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 48),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (icon != null) ...[
+                    SheenIcon(icon!, size: 18, filled: filledIcon, color: t.colors.text),
+                    const SizedBox(width: 8),
+                  ],
+                  Text(label, style: t.type.sized(t.type.headline, 16).copyWith(color: t.colors.text)),
                 ],
-                Text(label, style: t.type.sized(t.type.headline, 16).copyWith(color: t.colors.text)),
-              ],
+              ),
             ),
           ),
         ),
@@ -255,7 +260,9 @@ class SheenTextLink extends StatelessWidget {
     return SheenPressable(
       onTap: onPressed,
       semanticLabel: label,
-      child: Text(label, style: t.type.sized(t.type.headline, size).copyWith(color: t.colors.accentText)),
+      child: ExcludeSemantics(
+        child: Text(label, style: t.type.sized(t.type.headline, size).copyWith(color: t.colors.accentText)),
+      ),
     );
   }
 }

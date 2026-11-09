@@ -110,20 +110,22 @@ class SheenAlert extends StatelessWidget {
         onTap: onTap,
         semanticLabel: label,
         minSize: 0,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 48, minWidth: double.infinity),
-          child: primary
-              ? SheenGlass(
-                  variant: SheenGlassVariant.prominent,
-                  child: Center(heightFactor: 1, child: text),
-                )
-              : DecoratedBox(
-                  decoration: ShapeDecoration(
-                    shape: const StadiumBorder(),
-                    color: t.isDark ? const Color.fromRGBO(255, 255, 255, .08) : t.colors.surfaceMuted,
+        child: ExcludeSemantics(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 48, minWidth: double.infinity),
+            child: primary
+                ? SheenGlass(
+                    variant: SheenGlassVariant.prominent,
+                    child: Center(heightFactor: 1, child: text),
+                  )
+                : DecoratedBox(
+                    decoration: ShapeDecoration(
+                      shape: const StadiumBorder(),
+                      color: t.isDark ? const Color.fromRGBO(255, 255, 255, .08) : t.colors.surfaceMuted,
+                    ),
+                    child: Center(heightFactor: 1, child: text),
                   ),
-                  child: Center(heightFactor: 1, child: text),
-                ),
+          ),
         ),
       );
     }

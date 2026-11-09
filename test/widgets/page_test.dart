@@ -96,6 +96,44 @@ void main() {
     expect(field.bottom, lessThanOrEqualTo(bar.top), reason: 'the focused field is not under the bar');
   });
 
+  testWidgets('with no Scaffold above it, the bottom bar and a focused field stay above the keyboard', (t) async {
+    t.view.physicalSize = const Size(1206, 2622);
+    t.view.devicePixelRatio = 3;
+    addTearDown(t.view.reset);
+    final phone = TextEditingController();
+    addTearDown(phone.dispose);
+    await t.pumpWidget(
+      host(
+        SheenPage(
+          title: 'Sign in',
+          bottom: SheenPrimaryButton(label: 'Send code', expand: true, onPressed: () {}),
+          children: [
+            const SizedBox(height: 560),
+            SheenTextField(label: 'Phone', controller: phone),
+          ],
+        ),
+      ),
+    );
+    await t.tap(find.byType(EditableText));
+    const keyboard = 336.0;
+    t.view.viewInsets = const FakeViewPadding(bottom: keyboard * 3);
+    await t.pumpAndSettle();
+    final screen = t.view.physicalSize / t.view.devicePixelRatio;
+    final bar = t.getRect(find.byType(SheenPrimaryButton));
+    final field = t.getRect(find.byType(EditableText));
+    expect(bar.bottom, lessThanOrEqualTo(screen.height - keyboard - 16), reason: 'the bar is above the keyboard');
+    expect(bar.bottom, greaterThan(screen.height - keyboard - 40), reason: 'and right on top of it');
+    expect(field.bottom, lessThanOrEqualTo(bar.top), reason: 'the focused field is not under the bar');
+
+    t.view.resetViewInsets();
+    await t.pumpAndSettle();
+    expect(
+      t.getRect(find.byType(SheenPrimaryButton)).bottom,
+      greaterThan(screen.height - 60),
+      reason: 'with the keyboard gone the bar is back over the home indicator',
+    );
+  });
+
   testWidgets('a section label is an upper-case header; a note follows a group', (t) async {
     final handle = t.ensureSemantics();
     await t.pumpWidget(
