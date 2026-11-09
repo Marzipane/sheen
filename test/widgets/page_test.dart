@@ -96,6 +96,40 @@ void main() {
     expect(field.bottom, lessThanOrEqualTo(bar.top), reason: 'the focused field is not under the bar');
   });
 
+  for (final direction in TextDirection.values) {
+    testWidgets(
+      'a number field focused with the keyboard up leaves the bottom button visible and tappable ($direction)',
+      (t) async {
+        t.view.physicalSize = const Size(1206, 2622);
+        t.view.devicePixelRatio = 3;
+        addTearDown(t.view.reset);
+        final phone = TextEditingController();
+        addTearDown(phone.dispose);
+        var sent = 0;
+        await t.pumpWidget(
+          host(
+            direction: direction,
+            SheenPage(
+              title: 'Sign in',
+              bottom: SheenPrimaryButton(label: 'Send code', expand: true, onPressed: () => sent++),
+              children: [SheenTextField(label: 'Phone', controller: phone, keyboardType: TextInputType.phone)],
+            ),
+          ),
+        );
+        await t.tap(find.byType(EditableText));
+        t.view.viewInsets = const FakeViewPadding(bottom: 336 * 3);
+        await t.pumpAndSettle();
+        await t.enterText(find.byType(EditableText), '501234567');
+        final screen = t.view.physicalSize / t.view.devicePixelRatio;
+        final button = t.getRect(find.byType(SheenPrimaryButton));
+        expect(button.bottom, lessThanOrEqualTo(screen.height - 336), reason: 'the button is above the keyboard');
+        await t.tap(find.byType(SheenPrimaryButton));
+        expect(sent, 1, reason: 'a tap on the button reaches it');
+        expect(phone.text, '501234567', reason: 'the number is kept');
+      },
+    );
+  }
+
   testWidgets('with no Scaffold above it, the bottom bar and a focused field stay above the keyboard', (t) async {
     t.view.physicalSize = const Size(1206, 2622);
     t.view.devicePixelRatio = 3;
