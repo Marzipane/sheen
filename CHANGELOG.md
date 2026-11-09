@@ -1,3 +1,13 @@
+## 0.6.8
+
+- `SheenPage` keeps clear of the keyboard itself, as a `Scaffold` does: its `bottom` bar sits right on the keyboard
+  while it is up, and a focused field scrolls clear of both. Before, a page with no `Scaffold` above it left the bar
+  under the keyboard, so a number pad (which has no return key) hid the only way on. A `Scaffold` above the page that
+  already avoided the keyboard leaves it nothing to do.
+- A screen reader says a button's label once. `SheenPrimaryButton`, `SheenSecondaryButton`, `SheenFloatingButton`,
+  `SheenTextLink` and the actions of `SheenAlert` read their visible text a second time in 0.6.7 ("Send code, Send
+  code"). A primary button with a `subLabel` reads both lines, once each.
+
 ## 0.6.7
 
 - `SheenPage.title` is optional. A page without one, such as a welcome screen whose content is its own heading, starts

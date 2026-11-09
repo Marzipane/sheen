@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/widgets.dart';
 
 import 'package:sheen/sheen.dart';
@@ -6,7 +8,8 @@ import 'package:sheen/sheen.dart';
 ///
 /// The title scrolls with the content; once it has scrolled away, a small title fades in at the top. A glass back
 /// button (or a close button, for a page presented rather than pushed) and an optional [trailing] control float over a
-/// [SheenScrollEdge]; an optional [bottom] bar, usually one primary action, stays above the home indicator. On wide
+/// [SheenScrollEdge]; an optional [bottom] bar, usually one primary action, stays above the home indicator, or above
+/// the keyboard while it is up, and a focused field scrolls clear of both. On wide
 /// windows the content is centred at a readable width ([SheenLayout.readable]).
 ///
 /// ```dart
@@ -22,7 +25,8 @@ import 'package:sheen/sheen.dart';
 /// A page without a [title], such as a welcome screen whose content is its own heading, shows its content from the top
 /// and no small title.
 ///
-/// It needs no `Scaffold`; put it in any route.
+/// It needs no `Scaffold`; put it in any route. It keeps clear of the keyboard itself, the way a `Scaffold` does, and a
+/// `Scaffold` above it that already did leaves it nothing to do.
 ///
 /// {@category Layout}
 class SheenPage extends StatefulWidget {
@@ -120,6 +124,30 @@ class _SheenPageState extends State<SheenPage> {
 
   @override
   Widget build(BuildContext context) {
+    // As a Scaffold does: the page ends at the top of the keyboard, and what's inside sees no keyboard and no home
+    // indicator under it, so the bottom bar sits right on the keyboard and fields scroll into what is left.
+    final mq = MediaQuery.of(context);
+    final keyboard = mq.viewInsets.bottom;
+    // one tree with the keyboard up or down, so a focused field keeps its place and focus
+    double over(double v) => math.max(0, v - keyboard);
+    return ColoredBox(
+      color: context.sheen.colors.background,
+      child: Padding(
+        padding: EdgeInsets.only(bottom: keyboard),
+        child: MediaQuery(
+          data: mq
+              .removeViewInsets(removeBottom: true)
+              .copyWith(
+                padding: mq.padding.copyWith(bottom: over(mq.padding.bottom)),
+                viewPadding: mq.viewPadding.copyWith(bottom: over(mq.viewPadding.bottom)),
+              ),
+          child: Builder(builder: _page),
+        ),
+      ),
+    );
+  }
+
+  Widget _page(BuildContext context) {
     final t = context.sheen;
     final strings = SheenStrings.of(context);
     final pad = MediaQuery.paddingOf(context);
