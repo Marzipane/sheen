@@ -119,10 +119,7 @@ class SheenAlert extends StatelessWidget {
                     child: Center(heightFactor: 1, child: text),
                   )
                 : DecoratedBox(
-                    decoration: ShapeDecoration(
-                      shape: const StadiumBorder(),
-                      color: t.isDark ? const Color.fromRGBO(255, 255, 255, .08) : t.colors.surfaceMuted,
-                    ),
+                    decoration: ShapeDecoration(shape: const StadiumBorder(), color: t.colors.fillTonal),
                     child: Center(heightFactor: 1, child: text),
                   ),
           ),

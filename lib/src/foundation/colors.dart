@@ -29,7 +29,8 @@ class SheenColors with Diagnosticable {
     required this.danger,
     required this.rating,
     required this.sheet,
-  });
+    Color? fillTonal,
+  }) : fillTonal = fillTonal ?? surfaceMuted;
 
   /// The light palette.
   ///
@@ -59,6 +60,7 @@ class SheenColors with Diagnosticable {
     background: Color(0xFF05070B),
     surface: Color(0xFF0E1219),
     surfaceMuted: Color(0xFF161B24),
+    fillTonal: Color.fromRGBO(255, 255, 255, .08),
     track: Color(0xFF212734),
     separator: Color(0x17FFFFFF),
     text: Color(0xFFF5F6F8),
@@ -101,6 +103,10 @@ class SheenColors with Diagnosticable {
 
   /// Inputs, secondary buttons and surfaces nested in a [surface].
   final Color surfaceMuted;
+
+  /// The fill of tonal controls, such as a secondary button or an alert's second action: [surfaceMuted] in light, white
+  /// at 8 % in dark, so the control lifts off the dark background instead of sinking into it.
+  final Color fillTonal;
 
   /// Tracks of sliders, progress bars and switches; skeleton placeholders.
   final Color track;
@@ -166,6 +172,7 @@ class SheenColors with Diagnosticable {
     Color? background,
     Color? surface,
     Color? surfaceMuted,
+    Color? fillTonal,
     Color? track,
     Color? separator,
     Color? text,
@@ -183,6 +190,7 @@ class SheenColors with Diagnosticable {
     background: background ?? this.background,
     surface: surface ?? this.surface,
     surfaceMuted: surfaceMuted ?? this.surfaceMuted,
+    fillTonal: fillTonal ?? this.fillTonal,
     track: track ?? this.track,
     separator: separator ?? this.separator,
     text: text ?? this.text,
@@ -207,6 +215,7 @@ class SheenColors with Diagnosticable {
       background: l(a.background, b.background),
       surface: l(a.surface, b.surface),
       surfaceMuted: l(a.surfaceMuted, b.surfaceMuted),
+      fillTonal: l(a.fillTonal, b.fillTonal),
       track: l(a.track, b.track),
       separator: l(a.separator, b.separator),
       text: l(a.text, b.text),
@@ -227,6 +236,7 @@ class SheenColors with Diagnosticable {
     background,
     surface,
     surfaceMuted,
+    fillTonal,
     track,
     separator,
     text,

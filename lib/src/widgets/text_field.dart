@@ -193,7 +193,7 @@ class _SheenTextFieldState extends State<SheenTextField> {
           ),
           child: Row(
             children: [
-              if (widget.leading != null) ...[widget.leading!, const SizedBox(width: 8)],
+              if (widget.leading != null) ...[widget.leading!, const SizedBox(width: SheenSpace.s)],
               Expanded(
                 child: SheenMaterialBridge(
                   child: TextField(

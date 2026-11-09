@@ -32,6 +32,18 @@ abstract final class SheenSpace {
   static const double hit = 44;
 }
 
+/// Inner padding of the capsule buttons. Their heights come from a 48 pt minimum, so the vertical padding only keeps the
+/// label off the edge at large text sizes.
+///
+/// {@category Foundation}
+abstract final class SheenButtonInset {
+  /// [SheenSecondaryButton]: 20 pt at the sides, 6 pt above and below.
+  static const EdgeInsets secondary = EdgeInsets.symmetric(horizontal: SheenSpace.xl, vertical: 6);
+
+  /// [SheenFloatingButton]: 18 pt at the sides, 6 pt above and below, a little tighter for a glass capsule over content.
+  static const EdgeInsets floating = EdgeInsets.symmetric(horizontal: 18, vertical: 6);
+}
+
 /// Corner radii. Capsules use height / 2; a nested corner uses the outer radius minus the inset.
 ///
 /// {@category Foundation}

@@ -21,10 +21,17 @@ void main() {
     expect(await spoken(t, SheenPrimaryButton(label: 'Send code', onPressed: () {}), SheenPrimaryButton), 'Send code');
   });
 
-  testWidgets('a primary button with a second line reads both, once each', (t) async {
+  testWidgets('a primary button with a second line reads both, once each, joined by the platform', (t) async {
     expect(
       await spoken(t, SheenPrimaryButton(label: 'Pay', subLabel: 'AED 120', onPressed: () {}), SheenPrimaryButton),
-      'Pay, AED 120',
+      'Pay\nAED 120',
+    );
+  });
+
+  testWidgets('a loading primary button still says its label once', (t) async {
+    expect(
+      await spoken(t, SheenPrimaryButton(label: 'Send code', loading: true, onPressed: () {}), SheenPrimaryButton),
+      'Send code',
     );
   });
 
