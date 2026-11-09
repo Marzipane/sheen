@@ -64,7 +64,7 @@ void barDetailTests() {
     final glass = find.ancestor(of: find.text('Checkout'), matching: find.byType(SheenGlass));
     expect(find.descendant(of: glass, matching: find.text('Step 2 of 4')), findsOneWidget);
     expect(t.getTopLeft(find.text('Step 2 of 4')).dy, greaterThan(t.getTopLeft(find.text('Checkout')).dy));
-    expect(find.bySemanticsLabel('Checkout, Step 2 of 4'), findsOneWidget);
+    expect(find.bySemanticsLabel('Checkout\nStep 2 of 4'), findsOneWidget);
     semantics.dispose();
   });
 }

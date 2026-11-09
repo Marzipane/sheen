@@ -145,10 +145,9 @@ class SheenToolbarTitle extends StatelessWidget {
     final line = detail;
     if (line == null) return Semantics(header: true, child: title);
     // two lines in the bar's height, as SheenToolbarSummary sets them
-    return Semantics(
-      header: true,
-      label: '$text, $line',
-      child: ExcludeSemantics(
+    return MergeSemantics(
+      child: Semantics(
+        header: true,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
