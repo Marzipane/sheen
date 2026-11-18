@@ -105,7 +105,10 @@ class _SheenPressableState extends State<SheenPressable> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     final reduced = _reduced;
+    // A node of its own: a scroll view or another merging parent would otherwise read the text next to it into this
+    // button, and a screen reader could not reach it alone.
     return Semantics(
+      container: true,
       button: true,
       enabled: _enabled,
       selected: widget.selected,
