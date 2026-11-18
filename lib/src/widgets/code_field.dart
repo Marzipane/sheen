@@ -5,7 +5,7 @@ import 'package:sheen/sheen.dart';
 
 /// A one-time-code field: one box per digit, the next box ringed in the accent while the field has focus.
 ///
-/// It takes digits only, offers one-time-code autofill (the code from a text message on iOS and Android) and calls
+/// It takes digits only (Eastern Arabic ٠-٩ and Persian ۰-۹, typed, pasted or autofilled, become 0-9), offers one-time-code autofill (the code from a text message on iOS and Android) and calls
 /// [onCompleted] once each time the code reaches [length] digits. The boxes shrink to fit narrow screens, always left
 /// to right. Screen readers read it as one field with [semanticLabel].
 ///
@@ -118,7 +118,11 @@ class _SheenCodeFieldState extends State<SheenCodeField> {
                     keyboardType: TextInputType.number,
                     keyboardAppearance: t.brightness,
                     autofillHints: const [AutofillHints.oneTimeCode],
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(n)],
+                    inputFormatters: [
+                      const _WesternDigits(),
+                      FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(n),
+                    ],
                   ),
                 ),
               ),
@@ -162,4 +166,23 @@ class _SheenCodeFieldState extends State<SheenCodeField> {
       },
     );
   }
+}
+
+/// Eastern Arabic (U+0660-0669) and Persian (U+06F0-06F9) digits as 0-9, so a code typed on an Arabic or Persian
+/// keyboard, or pasted from a message written in one, is not dropped by the digits-only filter after it.
+class _WesternDigits extends TextInputFormatter {
+  const _WesternDigits();
+
+  static const _arabicZero = 0x0660, _persianZero = 0x06F0, _zero = 0x30;
+
+  static int _western(int unit) => switch (unit) {
+    >= _arabicZero && <= _arabicZero + 9 => _zero + unit - _arabicZero,
+    >= _persianZero && <= _persianZero + 9 => _zero + unit - _persianZero,
+    _ => unit,
+  };
+
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) =>
+      // each of these digits is one UTF-16 unit, as its 0-9 is, so the selection and composing ranges stay right
+      newValue.copyWith(text: String.fromCharCodes(newValue.text.codeUnits.map(_western)));
 }
