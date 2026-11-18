@@ -89,7 +89,7 @@ Springs written as Apple writes them (a duration and a bounce): `SheenMotion.pre
 
 `SheenTextField`, `SheenPasswordField`, `SheenSearchField` and `SheenCodeField` (one-time codes), plus `SheenSwitch`, `SheenCheck` (a check box with its label, for an agreement or an opt-in), `SheenSlider` and `SheenStepper`. The fields use Flutter's `TextField` and work under any app.
 
-- [SheenCheck](https://pub.dev/documentation/sheen/latest/sheen/SheenCheck-class.html): A check box with its label beside it, for an agreement or an opt-in in a form: the box fills with the accent when ticked, its tick mirrors right to left, and a tap anywhere on the row asks for the other value.
+- [SheenCheck](https://pub.dev/documentation/sheen/latest/sheen/SheenCheck-class.html): A check box with its label beside it, for an agreement or an opt-in in a form: the box fills with the accent when ticked, its tick reads the same in both directions (a tick is not a directional glyph), and a tap anywhere on the row asks for the other value.
 - [SheenCodeField](https://pub.dev/documentation/sheen/latest/sheen/SheenCodeField-class.html): A one-time-code field: one box per digit, the next box ringed in the accent while the field has focus.
 - [SheenPasswordField](https://pub.dev/documentation/sheen/latest/sheen/SheenPasswordField-class.html): A password field: a SheenTextField whose text stays hidden until the person taps the eye button.
 - [SheenSearchField](https://pub.dev/documentation/sheen/latest/sheen/SheenSearchField-class.html): A search field in a glass capsule: the search glyph, the field and, while it has text, a clear button.
@@ -176,12 +176,14 @@ Cards, grouped lists with tinted glyph tiles, accordions, key-value cards, a car
 
 ## Layout
 
-`SheenPage` is a full page with a large title that collapses into the toolbar (or no title, for a page whose content is its own heading); `SheenSectionLabel` and `SheenSectionNote` frame groups; `SheenScrollEdge` and `SheenEdgeFade` soften edges; `SheenLayout` gives the readable width and the wide-window breakpoints.
+`SheenPage` is a full page with a large title that collapses into the toolbar (or no title, for a page whose content is its own heading); `SheenSectionLabel` and `SheenSectionNote` frame groups; `SheenLinkText` is a note with links inside it ("Details are in the Privacy policy"); `SheenScrollEdge` and `SheenEdgeFade` soften edges; `SheenLayout` gives the readable width and the wide-window breakpoints.
 
 - [SheenBottomBarSpace](https://pub.dev/documentation/sheen/latest/sheen/SheenBottomBarSpace-class.html): How much of the bottom of a scroll view a floating bar covers, such as SheenPage's bottom bar. sheen's text fields below it scroll themselves clear of the bar when they take focus and the keyboard comes up.
 - [SheenEdgeFade](https://pub.dev/documentation/sheen/latest/sheen/SheenEdgeFade-class.html): Fades the start and end edges of a horizontal child into color over width points, to say that it scrolls on. Use it around any sideways list on a plain background; SheenChipRow does.
 - [SheenLayout](https://pub.dev/documentation/sheen/latest/sheen/SheenLayout-class.html): Widths for larger windows (tablets, desktop, the web).
 - [SheenLayoutContext](https://pub.dev/documentation/sheen/latest/sheen/SheenLayoutContext.html): context.contentInset: the side inset of a readable column in this window.
+- [SheenLink](https://pub.dev/documentation/sheen/latest/sheen/SheenLink-class.html): A link inside a SheenLinkText: the words people tap and what a tap does.
+- [SheenLinkText](https://pub.dev/documentation/sheen/latest/sheen/SheenLinkText-class.html): A paragraph in the secondary text colour with links inside it, such as "Details are in the Privacy policy."
 - [SheenPage](https://pub.dev/documentation/sheen/latest/sheen/SheenPage-class.html): A full-screen page with an iOS-style large title.
 - [SheenScrollEdge](https://pub.dev/documentation/sheen/latest/sheen/SheenScrollEdge-class.html): A soft fade of the page background under a floating bar, where a classic app would draw a bar background (the iOS 26 scroll edge effect). Place it in a Stack at the top (under a toolbar) or the bottom (under a tab or action bar).
 - [SheenSectionLabel](https://pub.dev/documentation/sheen/latest/sheen/SheenSectionLabel-class.html): A small upper-case label over a group of rows, such as "PERSONAL DETAILS"; a header for screen readers.

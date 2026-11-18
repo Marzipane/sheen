@@ -159,6 +159,7 @@ void main() {
               iconColor: const Color(0xFF30A46C),
               trailing: SheenSwitch(value: true, onChanged: (_) {}, semanticLabel: 'Notifications'),
             ),
+            SheenListRow(title: 'Sign out', tone: SheenTone.danger, onTap: () {}),
           ],
         ),
       ),

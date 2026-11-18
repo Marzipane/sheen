@@ -95,7 +95,31 @@ void main() {
           SheenTextField(label: 'First name', placeholder: 'As in the passport'),
           SizedBox(height: 12),
           SheenTextField(label: 'Email', placeholder: 'name@example.com', error: 'Enter a valid email'),
+          SizedBox(height: 12),
+          SheenTextField(label: 'Email', placeholder: 'name@example.com', hint: 'For receipts and invoices.'),
         ],
+      ),
+    ),
+    (
+      'SheenCheck · SheenLinkText',
+      () => SizedBox(
+        width: 358,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SheenCheck(
+              value: true,
+              onChanged: (_) {},
+              label: 'Send me offers',
+              detail: 'You can turn this off anytime.',
+            ),
+            SheenCheck(value: false, onChanged: (_) {}, label: 'Help improve the app'),
+            SheenLinkText(
+              'We record sign-ins and devices. Details are in the {privacy}.',
+              links: {'privacy': SheenLink('Privacy policy', onTap: () {})},
+            ),
+          ],
+        ),
       ),
     ),
     (

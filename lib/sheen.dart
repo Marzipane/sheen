@@ -42,6 +42,7 @@ export 'src/widgets/document_sheet.dart';
 export 'src/widgets/form_sheet.dart';
 export 'src/widgets/icon_buttons.dart';
 export 'src/widgets/key_value_card.dart';
+export 'src/widgets/link_text.dart';
 export 'src/widgets/list_rows.dart';
 export 'src/widgets/menu.dart';
 export 'src/widgets/page.dart';

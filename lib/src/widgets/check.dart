@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:sheen/sheen.dart';
 
 /// A check box with its label beside it, for an agreement or an opt-in in a form: the box fills with the accent when
-/// ticked, its tick mirrors right to left, and a tap anywhere on the row asks for the other value.
+/// ticked, its tick reads the same in both directions (a tick is not a directional glyph), and a tap anywhere on the row asks for the other value.
 ///
 /// [detail] is a line under the label, such as why the box is needed. [error] shows under both in the danger colour,
 /// and outlines the box in that colour while it is empty.
@@ -76,7 +76,7 @@ class SheenCheck extends StatelessWidget {
                         borderRadius: BorderRadius.circular(SheenRadius.check),
                         border: value ? null : Border.all(color: outline, width: SheenControlSize.checkOutline),
                       ),
-                      child: value ? CustomPaint(painter: _Tick(c.onAccent, Directionality.of(context))) : null,
+                      child: value ? CustomPaint(painter: _Tick(c.onAccent)) : null,
                     ),
                   ),
                   const SizedBox(width: SheenSpace.m),
@@ -107,20 +107,15 @@ class SheenCheck extends StatelessWidget {
   }
 }
 
-/// The tick, its short arm at the start, mirrored right to left.
+/// The tick, its short arm on the left in both directions: a tick is not a directional glyph, and mirrored it reads
+/// as a chevron.
 class _Tick extends CustomPainter {
-  const _Tick(this.color, this.direction);
+  const _Tick(this.color);
 
   final Color color;
-  final TextDirection direction;
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (direction == TextDirection.rtl) {
-      canvas
-        ..translate(size.width, 0)
-        ..scale(-1, 1);
-    }
     final path = Path()
       ..moveTo(size.width * .27, size.height * .52)
       ..lineTo(size.width * .44, size.height * .68)
@@ -137,5 +132,5 @@ class _Tick extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_Tick old) => old.color != color || old.direction != direction;
+  bool shouldRepaint(_Tick old) => old.color != color;
 }
