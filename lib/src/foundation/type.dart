@@ -33,6 +33,21 @@ abstract final class SheenTracking {
   }
 }
 
+/// The font weights of the type scale, for a text that takes a weight of its own, such as
+/// `SheenListRow(titleWeight: SheenWeight.semibold)`.
+///
+/// {@category Foundation}
+abstract final class SheenWeight {
+  /// Running text: [SheenType.body], [SheenType.subhead] and the smaller styles.
+  static const FontWeight regular = FontWeight.w400;
+
+  /// Emphasis: [SheenType.headline] and [SheenType.tabLabel].
+  static const FontWeight semibold = FontWeight.w600;
+
+  /// Titles: [SheenType.largeTitle] and [SheenType.title].
+  static const FontWeight bold = FontWeight.w700;
+}
+
 /// The type scale of a sheen theme.
 ///
 /// The family is the platform's system font (SF Pro on iOS, Roboto or Noto on Android) unless you set one with

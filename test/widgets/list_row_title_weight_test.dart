@@ -34,4 +34,30 @@ void main() {
     );
     expect(t.widget<Text>(find.text('Plain')).style!.fontWeight, SheenType.standard.body.fontWeight);
   });
+
+  testWidgets('a weight token reaches the title style', (t) async {
+    await t.pumpWidget(
+      host(
+        const SizedBox(
+          width: 360,
+          child: SheenListGroup(
+            children: [
+              SheenListRow(title: 'Semibold', titleWeight: SheenWeight.semibold),
+              SheenListRow(title: 'Bold', subtitle: 'Under it', titleWeight: SheenWeight.bold),
+            ],
+          ),
+        ),
+      ),
+    );
+    expect(t.widget<Text>(find.text('Semibold')).style!.fontWeight, SheenWeight.semibold);
+    expect(t.widget<Text>(find.text('Bold')).style!.fontWeight, SheenWeight.bold);
+  });
+
+  test('the weight tokens are the type scale\'s own weights', () {
+    for (final type in [SheenType.standard, SheenType.material]) {
+      expect(type.body.fontWeight, SheenWeight.regular);
+      expect(type.headline.fontWeight, SheenWeight.semibold);
+      expect(type.title.fontWeight, SheenWeight.bold);
+    }
+  });
 }

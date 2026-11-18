@@ -71,8 +71,8 @@ class SheenListRow extends StatelessWidget {
   /// A second line under the title.
   final String? subtitle;
 
-  /// The title's weight, such as [FontWeight.w600] for rows that name things rather than settings; the body weight
-  /// when null.
+  /// The title's weight, a [SheenWeight] such as [SheenWeight.semibold] for rows that name things rather than settings;
+  /// the body weight when null.
   final FontWeight? titleWeight;
 
   /// A glyph on a coloured tile at the start ([SheenIcons]).
