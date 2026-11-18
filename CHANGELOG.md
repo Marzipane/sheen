@@ -1,3 +1,15 @@
+## 0.6.11
+
+- `SheenCodeField` takes Eastern Arabic (٠-٩) and Persian (۰-۹) digits as 0-9, whether they are typed, pasted or
+  autofilled. Before, the digits-only filter dropped them, so a code from an Arabic or Persian keyboard or message never
+  arrived. `onCompleted` and the controller get the 0-9 code. Other characters are still dropped.
+- `SheenPressable` is a semantics node of its own. On a scrolling page (`SheenPage`, a `ListView`) the rows of a
+  `SheenListGroup` next to static rows were read as one button with every row's text, so a screen reader could not reach
+  a single row. Each tappable row is now its own button with its own label and tap. Nothing changes on screen.
+- `SheenWeight` (`regular`, `semibold`, `bold`): the type scale's font weights as tokens, for a text that takes a weight
+  of its own, such as `SheenListRow(titleWeight: SheenWeight.semibold)`. The type scale uses them; the values are the
+  same.
+
 ## 0.6.10
 
 - `SheenCheck`: a check box with its label beside it, for an agreement or an opt-in in a form. The box fills with the

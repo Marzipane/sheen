@@ -33,6 +33,21 @@ abstract final class SheenTracking {
   }
 }
 
+/// The font weights of the type scale, for a text that takes a weight of its own, such as
+/// `SheenListRow(titleWeight: SheenWeight.semibold)`.
+///
+/// {@category Foundation}
+abstract final class SheenWeight {
+  /// Running text: [SheenType.body], [SheenType.subhead] and the smaller styles.
+  static const FontWeight regular = FontWeight.w400;
+
+  /// Emphasis: [SheenType.headline] and [SheenType.tabLabel].
+  static const FontWeight semibold = FontWeight.w600;
+
+  /// Titles: [SheenType.largeTitle] and [SheenType.title].
+  static const FontWeight bold = FontWeight.w700;
+}
+
 /// The type scale of a sheen theme.
 ///
 /// The family is the platform's system font (SF Pro on iOS, Roboto or Noto on Android) unless you set one with
@@ -108,63 +123,63 @@ class SheenType with Diagnosticable {
     largeTitle: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 34,
-      fontWeight: FontWeight.w700,
+      fontWeight: SheenWeight.bold,
       letterSpacing: -0.272,
       height: 1.1,
     ),
     title: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 22,
-      fontWeight: FontWeight.w700,
+      fontWeight: SheenWeight.bold,
       letterSpacing: -0.484,
       height: 1.2,
     ),
     headline: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 17,
-      fontWeight: FontWeight.w600,
+      fontWeight: SheenWeight.semibold,
       letterSpacing: -0.442,
       height: 1.25,
     ),
     body: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 17,
-      fontWeight: FontWeight.w400,
+      fontWeight: SheenWeight.regular,
       letterSpacing: -0.442,
       height: 1.3,
     ),
     subhead: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 15,
-      fontWeight: FontWeight.w400,
+      fontWeight: SheenWeight.regular,
       letterSpacing: -0.24,
       height: 1.3,
     ),
     footnote: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 13,
-      fontWeight: FontWeight.w400,
+      fontWeight: SheenWeight.regular,
       letterSpacing: -0.078,
       height: 1.3,
     ),
     caption: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 12,
-      fontWeight: FontWeight.w400,
+      fontWeight: SheenWeight.regular,
       letterSpacing: 0,
       height: 1.25,
     ),
     tabLabel: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 10,
-      fontWeight: FontWeight.w600,
+      fontWeight: SheenWeight.semibold,
       letterSpacing: 0.22,
       height: 1.2,
     ),
     price: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 17,
-      fontWeight: FontWeight.w700,
+      fontWeight: SheenWeight.bold,
       letterSpacing: -0.442,
       height: 1.2,
       fontFeatures: _tabular,
@@ -172,7 +187,7 @@ class SheenType with Diagnosticable {
     timer: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 16,
-      fontWeight: FontWeight.w700,
+      fontWeight: SheenWeight.bold,
       letterSpacing: -0.32,
       height: 1.2,
       fontFeatures: _tabular,
@@ -186,63 +201,63 @@ class SheenType with Diagnosticable {
     largeTitle: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 34,
-      fontWeight: FontWeight.w700,
+      fontWeight: SheenWeight.bold,
       letterSpacing: -0.68,
       height: 1.1,
     ),
     title: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 22,
-      fontWeight: FontWeight.w700,
+      fontWeight: SheenWeight.bold,
       letterSpacing: -0.22,
       height: 1.2,
     ),
     headline: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 17,
-      fontWeight: FontWeight.w600,
+      fontWeight: SheenWeight.semibold,
       letterSpacing: 0,
       height: 1.25,
     ),
     body: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 17,
-      fontWeight: FontWeight.w400,
+      fontWeight: SheenWeight.regular,
       letterSpacing: 0,
       height: 1.3,
     ),
     subhead: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 15,
-      fontWeight: FontWeight.w400,
+      fontWeight: SheenWeight.regular,
       letterSpacing: 0,
       height: 1.3,
     ),
     footnote: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 13,
-      fontWeight: FontWeight.w400,
+      fontWeight: SheenWeight.regular,
       letterSpacing: 0,
       height: 1.3,
     ),
     caption: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 12,
-      fontWeight: FontWeight.w400,
+      fontWeight: SheenWeight.regular,
       letterSpacing: 0,
       height: 1.25,
     ),
     tabLabel: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 10,
-      fontWeight: FontWeight.w600,
+      fontWeight: SheenWeight.semibold,
       letterSpacing: 0.1,
       height: 1.2,
     ),
     price: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 17,
-      fontWeight: FontWeight.w700,
+      fontWeight: SheenWeight.bold,
       letterSpacing: 0,
       height: 1.2,
       fontFeatures: _tabular,
@@ -250,7 +265,7 @@ class SheenType with Diagnosticable {
     timer: TextStyle(
       leadingDistribution: TextLeadingDistribution.even,
       fontSize: 16,
-      fontWeight: FontWeight.w700,
+      fontWeight: SheenWeight.bold,
       letterSpacing: 0,
       height: 1.2,
       fontFeatures: _tabular,
