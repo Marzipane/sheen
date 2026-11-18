@@ -1,3 +1,19 @@
+## 0.6.12
+
+- `SheenTextField.hint`: a line inside the box under the text, in the secondary text colour, such as why the field
+  is asked for ("For receipts and invoices."). Unlike `placeholder` it stays while the field has text. Fields without
+  it look the same.
+- `SheenLinkText` and `SheenLink`: a paragraph in the secondary text colour with links inside it, such as "Details are
+  in the Privacy policy". The text marks each link with its key in braces (`'Details are in the {privacy}.'`), so a
+  translation puts the links where its grammar needs them. Links are in the accent text colour and take taps in a box
+  at least `SheenSpace.hit` wide and tall around their words without moving the lines apart; the paragraph keeps room
+  above its first line and below its last for that box. A screen reader hears each link as a link, with its own
+  `semanticLabel` when given.
+- `SheenListRow.tone`: an action row, such as Sign out in `SheenTone.danger`. Its title takes the tone's colour and it
+  has no chevron. Rows without it look the same.
+- `SheenCheck` no longer mirrors its tick right to left. A tick is not a directional glyph, and mirrored it read as a
+  chevron in Arabic. The box still sits at the start of the row.
+
 ## 0.6.11
 
 - `SheenCodeField` takes Eastern Arabic (٠-٩) and Persian (۰-۹) digits as 0-9, whether they are typed, pasted or
