@@ -48,6 +48,9 @@ class SheenListGroup extends StatelessWidget {
 /// under it, an optional [value], then [trailing] (a switch) or, for a tappable row, a chevron that mirrors in
 /// right-to-left text. At least 50 points high.
 ///
+/// A row with a [tone] is an action rather than a setting, such as Sign out in [SheenTone.danger]: its title takes the
+/// tone's colour and it has no chevron.
+///
 /// {@category Content}
 class SheenListRow extends StatelessWidget {
   /// A row titled [title].
@@ -56,6 +59,7 @@ class SheenListRow extends StatelessWidget {
     required this.title,
     this.subtitle,
     this.titleWeight,
+    this.tone,
     this.icon,
     this.iconColor,
     this.value,
@@ -74,6 +78,10 @@ class SheenListRow extends StatelessWidget {
   /// The title's weight, a [SheenWeight] such as [SheenWeight.semibold] for rows that name things rather than settings;
   /// the body weight when null.
   final FontWeight? titleWeight;
+
+  /// The tone of an action row, such as [SheenTone.danger] for Sign out: the title in the tone's colour, and no
+  /// chevron. Null for a setting or a place to go.
+  final SheenTone? tone;
 
   /// A glyph on a coloured tile at the start ([SheenIcons]).
   final String? icon;
@@ -99,6 +107,7 @@ class SheenListRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = context.sheen;
+    final titleStyle = t.type.body.copyWith(color: tone?.color(t.colors) ?? t.colors.text, fontWeight: titleWeight);
     final valueText = Text(
       value ?? '',
       maxLines: 1,
@@ -130,18 +139,12 @@ class SheenListRow extends StatelessWidget {
               ],
               Expanded(
                 child: subtitle == null
-                    ? Text(
-                        title,
-                        style: t.type.body.copyWith(color: t.colors.text, fontWeight: titleWeight),
-                      )
+                    ? Text(title, style: titleStyle)
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                            title,
-                            style: t.type.body.copyWith(color: t.colors.text, fontWeight: titleWeight),
-                          ),
+                          Text(title, style: titleStyle),
                           Text(subtitle!, style: t.type.footnote.copyWith(color: t.colors.textSecondary)),
                         ],
                       ),
@@ -164,7 +167,7 @@ class SheenListRow extends StatelessWidget {
               if (trailing != null) ...[
                 const SizedBox(width: 12),
                 trailing!,
-              ] else if (onTap != null) ...[
+              ] else if (onTap != null && tone == null) ...[
                 const SizedBox(width: 12),
                 SheenIcon(SheenIcons.chevron, size: 16, stroke: 2, color: t.colors.textTertiary),
               ],
