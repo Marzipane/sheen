@@ -5,6 +5,11 @@ import 'package:sheen/sheen.dart';
 
 import '../helpers.dart';
 
+// as a screen reader's double tap reaches the node
+void tapNode(WidgetTester t, SemanticsNode node) => t.binding.performSemanticsAction(
+  SemanticsActionEvent(type: SemanticsAction.tap, viewId: t.view.viewId, nodeId: node.id),
+);
+
 void main() {
   testWidgets('each tappable row of a group is its own semantics node with its own label and tap', (t) async {
     final handle = t.ensureSemantics();
@@ -30,8 +35,8 @@ void main() {
     expect(number.getSemanticsData().hasAction(SemanticsAction.tap), isTrue);
     expect(email.getSemanticsData().hasAction(SemanticsAction.tap), isTrue);
 
-    t.binding.pipelineOwner.semanticsOwner!.performAction(number.id, SemanticsAction.tap);
-    t.binding.pipelineOwner.semanticsOwner!.performAction(email.id, SemanticsAction.tap);
+    tapNode(t, number);
+    tapNode(t, email);
     expect(taps, ['number', 'email']);
     handle.dispose();
   });
@@ -67,7 +72,7 @@ void main() {
     expect(resend.id, isNot(change.id));
     expect(resend.getSemanticsData().hasAction(SemanticsAction.tap), isFalse);
 
-    t.binding.pipelineOwner.semanticsOwner!.performAction(change.id, SemanticsAction.tap);
+    tapNode(t, change);
     expect(changed, 1);
     handle.dispose();
   });
