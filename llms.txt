@@ -32,6 +32,7 @@ The theme and the tokens every widget reads. Put a `SheenScope` above your scree
 - [SheenTone](https://pub.dev/documentation/sheen/latest/sheen/SheenTone.html): What a message means, which picks its colour: toasts, banners, status pills and status screens take a tone.
 - [SheenTracking](https://pub.dev/documentation/sheen/latest/sheen/SheenTracking-class.html): Apple's tracking for San Francisco by point size: the iOS table of the Human Interface Guidelines (Typography › Tracking values, read 2026-10-03).
 - [SheenType](https://pub.dev/documentation/sheen/latest/sheen/SheenType-class.html): The type scale of a sheen theme.
+- [SheenWeight](https://pub.dev/documentation/sheen/latest/sheen/SheenWeight-class.html): The font weights of the type scale, for a text that takes a weight of its own, such as SheenListRow(titleWeight: SheenWeight.semibold).
 - [sheenTextDirectionOf](https://pub.dev/documentation/sheen/latest/sheen/sheenTextDirectionOf.html): The direction text reads in, from its first letter: right to left for Hebrew and Arabic scripts, left to right for any other; null when it has no letter (the app's direction then applies).
 
 ## Glass
